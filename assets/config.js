@@ -65,12 +65,19 @@ const CONFIG = {
   supportEmail: 'info@oriontradedynamics.com',
 
   /* Numero WhatsApp in formato internazionale, SENZA «+», spazi o trattini:
-     è la forma che vuole wa.me. Esempio: 393331234567.
-     Ci arriva chi compila il questionario in richiedi.html, con le tre risposte
-     già scritte nel messaggio. Finché è DA_DEFINIRE la pagina lo dichiara e
-     offre solo la via dell'email, invece di produrre un link che non apre
-     nulla. */
-  whatsapp: 'DA_DEFINIRE_NUMERO_WHATSAPP',
+     è la forma che vuole wa.me. Ci arriva chi compila il questionario in
+     richiedi.html, con le tre risposte già scritte nel messaggio.
+
+     ⚠️ QUI VA IL NUMERO, NON IL LINK BREVE. WhatsApp Business genera anche un
+     indirizzo della forma `wa.me/message/CODICE`: è comodo da mandare a mano,
+     ma **non può portare un messaggio precompilato**. Verificato il 14 agosto
+     2026: aprendo `wa.me/message/PNSX5TR4UH4LP1?text=PROVA` si finisce allo
+     stesso identico indirizzo che si raggiunge senza `?text=` — il parametro
+     viene scartato dal reindirizzamento, in silenzio. Con quel link il
+     questionario resterebbe in piedi e le risposte non arriverebbero mai:
+     il guasto peggiore, perché non somiglia a un guasto.
+     Il numero qui sotto è quello dietro a quel link breve. */
+  whatsapp: '393513750293',
 
   /* --- Gli artefatti pubblicati -------------------------------------------
      ⚠️ NON si compilano a mano. Si verificano — e all'occorrenza si
