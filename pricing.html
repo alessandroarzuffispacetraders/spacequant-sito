@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="head.pr.t">Abbonamento — SpaceQuant</title>
+<meta name="description" data-i18n-attr="content:head.pr.d" content="Un solo abbonamento, tutte le funzioni, due dispositivi. Mensile o annuale.">
+<link rel="icon" href="assets/img/logo-small.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Vedi la nota estesa in index.html: valori assoluti, in italiano, riscritti
+     tutti insieme da tools/dominio.py. -->
+<link rel="canonical" href="https://alessandroarzuffispacetraders.github.io/spacequant-sito/pricing.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SpaceQuant">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="Abbonamento — SpaceQuant">
+<meta property="og:description" content="Un solo abbonamento, tutte le funzioni, due dispositivi. Mensile o annuale.">
+<meta property="og:url" content="https://alessandroarzuffispacetraders.github.io/spacequant-sito/pricing.html">
+<meta property="og:image" content="https://alessandroarzuffispacetraders.github.io/spacequant-sito/assets/img/social-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SpaceQuant Algo">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo-small.png" alt="">
+      <span>SpaceQuant</span>
+    </a>
+    <nav class="nav">
+      <a class="hide-sm" href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
+      <a class="hide-sm" href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
+      <a href="pricing.html" aria-current="page" data-i18n="nav.pricing">Abbonamento</a>
+      <div class="lang" role="group" aria-label="Lingua / Language">
+        <button type="button" data-lang="it" aria-pressed="true">IT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== INTESTAZIONE E I DUE PIANI =====================
+     Una sezione sola, non due: i due riquadri devono stare per intero nella
+     prima schermata: sono la risposta alla domanda con cui si arriva qui, e
+     doverli cercare scorrendo li fa sembrare qualcosa da nascondere. -->
+<section class="pr-top">
+  <div class="wrap">
+    <div class="wrap-narrow center pr-intro">
+      <h1 data-i18n="pr.title">Un abbonamento, tutte le funzioni</h1>
+      <p class="lead" data-i18n="pr.sub">
+        Non ci sono livelli, né funzioni tenute fuori per farti salire di piano:
+        una sola licenza, mensile oppure annuale a un prezzo inferiore.
+      </p>
+      <p class="text-small t3 pr-req-note" data-when="onRequest" data-i18n="pr.req.lead">
+        L'accesso si richiede: non si acquista da questa pagina.
+      </p>
+    </div>
+    <div class="plans">
+
+      <!-- Mensile -->
+      <article class="plan">
+        <h2 class="plan-name" data-i18n="pr.m.name">Mensile</h2>
+        <p class="plan-desc" data-i18n="pr.m.desc">Nessun vincolo di durata: si disdice quando vuoi.</p>
+
+        <div class="plan-price" data-when="public">
+          <span class="plan-cur" data-cfg="pricing.currency">€</span><span
+                class="plan-amount" data-cfg="pricing.monthly">—</span>
+          <span class="plan-per" data-i18n="pr.m.per">/ mese</span>
+        </div>
+        <div class="plan-price plan-price-req" data-when="onRequest">
+          <span class="plan-req" data-i18n="pr.onreq">Su richiesta</span>
+        </div>
+
+        <a class="btn btn-ghost btn-block btn-lg" data-when="public"
+           data-cfg-href="whop.monthly" href="#" data-i18n="pr.m.cta">Abbonati al mensile</a>
+        <a class="btn btn-ghost btn-block btn-lg" data-when="onRequest"
+           data-contact="mensile" href="#" data-i18n="pr.req.cta">Richiedi l'accesso</a>
+
+        <p class="plan-foot text-small t3" data-when="public" data-i18n="pr.foot">
+          Pagamento e fatturazione gestiti da Whop.
+        </p>
+        <p class="plan-foot text-small t3" data-when="onRequest" data-i18n="pr.req.foot">
+          Ti rispondiamo noi, con le condizioni e il link per iniziare.
+        </p>
+      </article>
+
+      <!-- Annuale -->
+      <article class="plan plan-featured">
+        <div class="plan-badge" id="plan-badge" data-i18n="pr.y.badge">Conviene</div>
+        <h2 class="plan-name" data-i18n="pr.y.name">Annuale</h2>
+        <p class="plan-desc" data-i18n="pr.y.desc">Lo stesso prodotto, pagato una volta l'anno.</p>
+
+        <div class="plan-price" data-when="public">
+          <span class="plan-cur" data-cfg="pricing.currency">€</span><span
+                class="plan-amount" data-cfg="pricing.yearly">—</span>
+          <span class="plan-per" data-i18n="pr.y.per">/ anno</span>
+        </div>
+        <div class="plan-price plan-price-req" data-when="onRequest">
+          <span class="plan-req" data-i18n="pr.onreq">Su richiesta</span>
+        </div>
+
+        <!-- Riempito da pricing.js solo se entrambi i prezzi sono configurati -->
+        <p class="plan-save hidden" id="plan-save"></p>
+
+        <a class="btn btn-primary btn-block btn-lg" data-when="public"
+           data-cfg-href="whop.yearly" href="#" data-i18n="pr.y.cta">Abbonati all'annuale</a>
+        <a class="btn btn-primary btn-block btn-lg" data-when="onRequest"
+           data-contact="annuale" href="#" data-i18n="pr.req.cta">Richiedi l'accesso</a>
+
+        <p class="plan-foot text-small t3" data-when="public" data-i18n="pr.foot">
+          Pagamento e fatturazione gestiti da Whop.
+        </p>
+        <p class="plan-foot text-small t3" data-when="onRequest" data-i18n="pr.req.foot">
+          Ti rispondiamo noi, con le condizioni e il link per iniziare.
+        </p>
+      </article>
+
+    </div>
+
+    <!-- La stessa riga sta dentro a entrambi i riquadri: su schermo stretto,
+         dove i due si incolonnano, ripeterla costa l'altezza che serve a far
+         entrare il secondo riquadro nella prima schermata. Lì si mostra una
+         volta sola, sotto la coppia. -->
+    <p class="plan-foot-shared text-small t3 center" data-when="public" data-i18n="pr.foot">
+      Pagamento e fatturazione gestiti da Whop.
+    </p>
+    <p class="plan-foot-shared text-small t3 center" data-when="onRequest" data-i18n="pr.req.foot">
+      Ti rispondiamo noi, con le condizioni e il link per iniziare.
+    </p>
+
+    <!-- Avviso visibile solo finché la configurazione non è completa -->
+    <div class="note note-warn hidden" id="price-todo">
+      <div class="note-title">⚠️ Configurazione incompleta</div>
+      <p id="price-todo-body">
+        Alcuni valori non sono ancora stati inseriti in
+        <code>assets/config.js</code>. Questo avviso sparisce da solo appena
+        vengono compilati, e non compare mai a configurazione completa.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COSA È INCLUSO ===================== -->
+<section class="bg-soft">
+  <div class="wrap">
+    <h2 data-i18n="pr.inc.title">Cosa comprende</h2>
+    <div class="grid grid-2 mt-3">
+      <div>
+        <ul class="list list-check">
+          <li data-i18n="pr.inc.i1">Costruzione delle strategie: setup di ingresso, albero delle condizioni, uscite, regole di gestione, dimensionamento del rischio</li>
+          <li data-i18n="pr.inc.i2">Backtest con il conteggio integrale dei segnali non diventati trade, motivo per motivo</li>
+          <li data-i18n="pr.inc.i3">Ottimizzazione dei parametri, separazione in-sample / out-of-sample, replay dei trade sul grafico</li>
+          <li data-i18n="pr.inc.i4">Export dell'Expert Advisor in MQL5, con il rifiuto esplicito di ciò che non è traducibile fedelmente</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="list list-check">
+          <li data-i18n="pr.inc.i5">Pacchetto di indicatori di verifica da confrontare barra per barra con il motore</li>
+          <li data-i18n="pr.inc.i6">Registro dei mercati con provenienza dichiarata delle specifiche di contratto</li>
+          <li data-i18n="pr.inc.i7">Due dispositivi per abbonamento, su macOS e Windows</li>
+          <li data-i18n="pr.inc.i8">Aggiornamenti dell'applicazione inclusi per tutta la durata dell'abbonamento</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note note-info">
+      <div class="note-title" data-i18n="pr.inc.note.t">Cosa ti serve avere già</div>
+      <p data-i18n="pr.inc.note.b">
+        Un Mac o un PC Windows, e MetaTrader 5 se vuoi compilare e far girare
+        l'Expert Advisor che esporti. SpaceQuant non è un broker: non esegue
+        ordini e non accede al tuo conto.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COME SI PARTE ===================== -->
+<section>
+  <div class="wrap-narrow">
+    <p class="eyebrow" data-i18n="pr.start.eyebrow">Da qui all'app</p>
+    <h2 data-i18n="pr.start.title">Quattro passaggi</h2>
+    <ol class="steps mt-3">
+      <li data-when="onRequest">
+        <h3 data-i18n="pr.start.r1.t">Ci scrivi</h3>
+        <p data-i18n="pr.start.r1.b">Ti rispondiamo con le condizioni e con il link per attivare l'abbonamento.</p>
+      </li>
+      <li data-when="public">
+        <h3 data-i18n="pr.start.s1.t">Sottoscrivi su Whop</h3>
+        <p data-i18n="pr.start.s1.b">Il pagamento avviene sulla pagina di Whop: questo sito non tratta né conserva dati di pagamento.</p>
+      </li>
+      <li>
+        <h3 data-i18n="pr.start.s2.t">Ricevi il link per scaricare</h3>
+        <p data-i18n="pr.start.s2.b">Subito dopo l'attivazione arrivi alla pagina di download, con le istruzioni per il tuo sistema. Su Mac conta scegliere la versione giusta: Apple Silicon e Intel non sono intercambiabili.</p>
+      </li>
+      <li>
+        <h3 data-i18n="pr.start.s3.t">Accedi con Whop</h3>
+        <p data-i18n="pr.start.s3.b">Al primo avvio l'app apre il browser, autorizzi con lo stesso account Whop dell'abbonamento e torni nell'applicazione.</p>
+      </li>
+      <li>
+        <h3 data-i18n="pr.start.s4.t">Lavori, anche senza rete</h3>
+        <p data-i18n="pr.start.s4.b">La licenza resta valida 14 giorni e si rinnova da sola a ogni avvio con connessione.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===================== DOMANDE ===================== -->
+<section class="bg-soft">
+  <div class="wrap-narrow">
+    <h2 data-i18n="pr.faq.title">Domande</h2>
+
+    <div class="faq">
+      <details data-when="onRequest">
+        <summary data-i18n="pr.faq.q0">Come si ottiene l'accesso?</summary>
+        <p data-i18n="pr.faq.a0">Si richiede: ci scrivi e ti mandiamo le condizioni e il link di attivazione. Non c'è una pagina di acquisto aperta, ed è una scelta: preferiamo seguire da vicino i primi utilizzi, finché c'è da imparare da ogni segnalazione.</p>
+      </details>
+      <details>
+        <summary data-i18n="pr.faq.q1">Su quanti computer posso usarlo?</summary>
+        <p data-i18n="pr.faq.a1">Due per abbonamento. Non esiste ancora una pagina per vedere quali dispositivi hai collegato o per liberarne uno: se cambi computer scrivici e liberiamo noi lo slot.</p>
+      </details>
+      <details>
+        <summary data-i18n="pr.faq.q2">Funziona senza connessione?</summary>
+        <p data-i18n="pr.faq.a2">Sì. La licenza viene rilasciata all'accesso e resta valida 14 giorni; in quel periodo l'app funziona anche completamente offline, e si rinnova da sola al primo avvio con connessione.</p>
+      </details>
+      <details>
+        <summary data-i18n="pr.faq.q3">Come si aggiorna l'applicazione?</summary>
+        <p data-i18n="pr.faq.a3">Per ora manualmente: quando esce una versione nuova la scarichi dalla pagina di download e la reinstalli sopra la precedente. Strategie e dati restano dove sono.</p>
+      </details>
+      <details>
+        <summary data-i18n="pr.faq.q4">Serve MetaTrader 5?</summary>
+        <p data-i18n="pr.faq.a4">Per costruire e misurare le strategie no. Serve se vuoi compilare l'Expert Advisor esportato e usarlo: la compilazione avviene in MetaEditor, ed è sempre da fare prima dell'uso, perché i controlli interni di SpaceQuant non sostituiscono il compilatore.</p>
+      </details>
+      <details>
+        <summary data-i18n="pr.faq.q5">Come si disdice?</summary>
+        <p data-i18n="pr.faq.a5">Dal tuo account Whop, in qualunque momento. Alla scadenza la licenza smette semplicemente di rinnovarsi.</p>
+      </details>
+      <details>
+        <summary data-i18n="pr.faq.q6">SpaceQuant fa trading al posto mio?</summary>
+        <p data-i18n="pr.faq.a6">No. Non è un broker, non esegue ordini, non accede al tuo conto e non dà consigli di investimento. Produce un file che decidi tu se compilare e dove usare, e i risultati di un backtest non sono una previsione.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:14px">
+          <img src="assets/img/logo-small.png" alt="">
+          <span>SpaceQuant</span>
+        </a>
+        <p class="text-small t3" data-i18n="ft.tag">
+          Ricerca su strategie algoritmiche, con export verificabile verso
+          MetaTrader 5.
+        </p>
+      </div>
+      <div>
+        <h4 data-i18n="ft.product">Prodotto</h4>
+        <a href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
+        <a href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
+        <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+        </div>
+      <div>
+        <h4 data-i18n="ft.support">Assistenza</h4>
+        <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">da definire</span></a>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p data-i18n="ft.d1">
+        SpaceQuant è uno strumento di ricerca e di sviluppo. Non è un broker, non
+        esegue ordini, non accede al tuo conto di trading e non fornisce
+        consulenza finanziaria.
+      </p>
+      <p data-i18n="ft.d2">
+        Un backtest è una misura su dati storici e non è una previsione dei
+        risultati futuri. Fare trading comporta il rischio di perdere il capitale
+        investito.
+      </p>
+      <p class="t3">© 2026 SpaceQuant</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/i18n.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/pricing.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# La pagina di download non è pubblicizzata: ci si arriva dal link consegnato
+# dopo l'attivazione dell'abbonamento. Tenerla fuori dagli indici evita che
+# compaia nei risultati di ricerca a chi non ha ancora un accesso.
+#
+# ⚠️ Non è una misura di sicurezza — chi ha l'indirizzo entra comunque. Va bene
+# così: l'installer senza una licenza valida non fa nulla.
+User-agent: *
+Disallow: /download.html
+
+Sitemap: https://alessandroarzuffispacetraders.github.io/spacequant-sito/sitemap.xml

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagina non trovata — SpaceQuant</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+
+<!-- ⚠️ QUESTA PAGINA NON DIPENDE DA NULLA — ed è l'unica del sito fatta così.
+     Niente foglio di stile esterno, niente script, niente immagini: stile e
+     testi stanno qui dentro.
+
+     Il motivo non è la leggerezza. Questa pagina viene mostrata all'indirizzo
+     SBAGLIATO che qualcuno ha chiesto, e quell'indirizzo può stare a qualunque
+     profondità: da `/a/b/c` un percorso relativo come `assets/style.css` cerca
+     `/a/b/assets/style.css`, che non esiste. Il risultato sarebbe una pagina
+     nuda — cioè un secondo guasto in cima al primo, proprio nel momento in cui
+     si sta spiegando a qualcuno che qualcosa è andato storto.
+
+     La via alternativa era un `<base>` con il percorso della radice, ed è quella
+     che si prova per prima: funziona online e rompe il sito in locale, dove
+     quel percorso non esiste. Una pagina d'errore che si può guardare solo in
+     produzione è una pagina che nessuno guarda.
+
+     L'unico indirizzo qui dentro è ASSOLUTO, per la stessa ragione, e lo
+     riscrive tools/dominio.py insieme a tutti gli altri. -->
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px; text-align: center;
+    background: #fff; color: #1d1d1f;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .curva { width: 132px; height: 56px; margin-bottom: 26px; }
+  .codice {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .78rem; letter-spacing: .12em; color: #86868b; margin: 0 0 .9rem;
+  }
+  h1 {
+    font-size: clamp(1.9rem, 5vw, 2.8rem); font-weight: 600;
+    letter-spacing: -.032em; line-height: 1.1; margin: 0 0 .5em;
+  }
+  p { color: #6e6e73; max-width: 30em; margin: 0 auto 2rem; }
+  a {
+    display: inline-flex; align-items: center; justify-content: center;
+    font: inherit; font-size: 1.03rem; font-weight: 600;
+    padding: 15px 28px; border-radius: 980px; text-decoration: none; color: #fff;
+    background: linear-gradient(90deg, #3b6ef5 0%, #7b3fe4 52%, #e0489f 100%);
+    box-shadow: 0 4px 16px -6px rgba(123, 63, 228, .5);
+  }
+</style>
+</head>
+<body>
+
+<!-- La curva del marchio, disegnata qui: è l'unico modo di avere il marchio
+     senza dipendere da un file che potrebbe non risolversi. -->
+<svg class="curva" viewBox="0 0 132 56" aria-hidden="true">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#3b6ef5"/>
+      <stop offset=".52" stop-color="#7b3fe4"/>
+      <stop offset="1" stop-color="#e0489f"/>
+    </linearGradient>
+  </defs>
+  <path d="M2 52C26 52 34 6 66 6s40 46 64 46" fill="none"
+        stroke="url(#g)" stroke-width="4" stroke-linecap="round"/>
+</svg>
+
+<p class="codice">404</p>
+<h1 id="t">Questa pagina non c'è</h1>
+<p id="b">L'indirizzo è sbagliato, oppure la pagina è stata spostata. Dalla pagina iniziale si arriva a tutto il resto.</p>
+<a id="c" href="https://alessandroarzuffispacetraders.github.io/spacequant-sito/">Torna alla pagina iniziale</a>
+
+<script>
+/* La stessa regola di scelta della lingua del resto del sito — ?lang=, poi la
+   scelta salvata, poi quella del browser — riscritta qui in otto righe perché
+   la pagina non carica assets/site.js. L'italiano è già nel markup: si tocca
+   qualcosa solo per andare in inglese. */
+(function () {
+  var q = new URLSearchParams(location.search).get('lang'), scelta = null;
+  try { scelta = localStorage.getItem('sq-lang'); } catch (e) {}
+  var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'it';
+  var lang = q || scelta || (nav.toLowerCase().indexOf('it') === 0 ? 'it' : 'en');
+  if (lang !== 'en') return;
+  document.documentElement.lang = 'en';
+  document.title = 'Page not found — SpaceQuant';
+  document.getElementById('t').textContent = 'This page is not here';
+  document.getElementById('b').textContent = 'The address is wrong, or the page has moved. Everything else is reachable from the home page.';
+  document.getElementById('c').textContent = 'Back to the home page';
+})();
+</script>
+</body>
+</html>

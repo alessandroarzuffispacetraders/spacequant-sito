@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Titolo e descrizione passano dal dizionario come tutto il resto: sono le due
+     stringhe più lette del sito — scheda del browser, risultato di ricerca,
+     anteprima di un link condiviso — e restavano in italiano anche in inglese.
+     Funzionano con gli stessi attributi del resto della pagina: `textContent`
+     su <title> cambia il titolo, `content` sulla meta cambia la descrizione. -->
+<title data-i18n="head.home.t">SpaceQuant — ricerca su strategie algoritmiche per MetaTrader 5</title>
+<meta name="description" data-i18n-attr="content:head.home.d" content="Piattaforma desktop di ricerca su strategie di trading algoritmico che esporta Expert Advisor per MetaTrader 5. Quando qualcosa non è calcolabile, lo dichiara invece di inventare un numero.">
+<link rel="icon" href="assets/img/logo-small.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- COME APPARE IL SITO FUORI DAL SITO — motori di ricerca e anteprima dei link.
+     ⚠️ Questi valori NON possono passare dal dizionario: i crawler dei social
+     non eseguono JavaScript, quindi leggono ciò che è scritto qui e basta.
+     Restano in italiano, come l'HTML: l'inglese è lo strato che si aggiunge nel
+     browser di chi legge, e un crawler non è nel browser di nessuno.
+
+     Gli indirizzi sono ASSOLUTI perché così li vuole la specifica, ed è il
+     motivo per cui c'è un comando che li riscrive tutti insieme:
+         python tools/dominio.py https://nuovo-indirizzo
+     Cambiarli a mano significa dimenticarne uno, e un og:image sbagliato non dà
+     errore: dà semplicemente un'anteprima vuota. -->
+<link rel="canonical" href="https://alessandroarzuffispacetraders.github.io/spacequant-sito/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SpaceQuant">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="SpaceQuant — ricerca su strategie algoritmiche per MetaTrader 5">
+<meta property="og:description" content="Piattaforma desktop di ricerca su strategie di trading algoritmico che esporta Expert Advisor per MetaTrader 5. Quando qualcosa non è calcolabile, lo dichiara invece di inventare un numero.">
+<meta property="og:url" content="https://alessandroarzuffispacetraders.github.io/spacequant-sito/">
+<meta property="og:image" content="https://alessandroarzuffispacetraders.github.io/spacequant-sito/assets/img/social-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SpaceQuant Algo">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo-small.png" alt="">
+      <span>SpaceQuant</span>
+    </a>
+    <nav class="nav">
+      <a class="hide-sm" href="#come-funziona" data-i18n="nav.how">Come funziona</a>
+      <a class="hide-sm" href="#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+      <div class="lang" role="group" aria-label="Lingua / Language">
+        <button type="button" data-lang="it" aria-pressed="true">IT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- =========================================================================
+     APERTURA CINEMATICA
+     Una pista di scorrimento in cui la scena resta ferma e avanza il contenuto:
+     il backtest va in replay mentre l'utente scorre, e torna indietro se torna
+     indietro. Ogni forma visibile è funzione dello scorrimento e di nient'altro
+     — vedi assets/cinema.js.
+
+     Il fondo passa dal nero dell'applicazione al bianco della pagina proprio
+     quando compare il portatile: da lì in poi il sito è chiaro.
+
+     Senza JavaScript, o con animazioni ridotte richieste dal sistema, questa
+     sezione diventa statica: titolo, schermata ferma e le quattro capacità in
+     elenco. Il contenuto è lo stesso, cambia solo il modo di attraversarlo.
+     ========================================================================= -->
+<section class="cine" id="cine">
+  <div class="cine-track" id="cine-track">
+    <div class="cine-stage">
+
+      <!-- Il fondo: nero finché si guarda dentro l'applicazione, bianco da
+           quando la si vede da fuori, appoggiata sul portatile. -->
+      <div class="cine-bg" aria-hidden="true"></div>
+
+      <!-- Il marchio, gigante, dietro al portatile che si allontana -->
+      <div class="cine-logo" aria-hidden="true">
+        <img src="assets/img/logo_watermark.png" alt="">
+        <span class="cine-logo-word">SpaceQuant</span>
+      </div>
+
+      <!-- 1. Il titolo d'apertura -->
+      <div class="cine-title" id="cine-title">
+        <div class="wrap">
+          <h1 data-i18n-html="home.hero.h1">Tutto il tuo backtest,<br>in un solo click.</h1>
+          <div class="btn-row hero-cta">
+            <a class="btn btn-primary btn-lg" href="pricing.html" data-i18n="home.hero.cta1">Richiedi l'accesso</a>
+          </div>
+          <p class="cine-hint" id="cine-hint">
+            <span data-i18n="home.cine.hint">Scorri</span>
+            <span class="cine-hint-arrow" aria-hidden="true"></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- 2. La scena -->
+      <div class="cine-zoom" id="cine-zoom">
+        <div class="mac" id="mac">
+
+          <div class="mac-lid">
+            <div class="mac-screen">
+              <span class="mac-camera" aria-hidden="true"></span>
+              <div class="app" id="app">
+
+                <div class="app-bar">
+                  <span class="app-sel">EURUSD — 2010-01-01 → 2026-08-12</span>
+                  <span class="app-sel app-sel-sm">M5</span>
+                  <span class="app-btn">+ <span data-i18n="home.app.indicator">Indicatore</span></span>
+                  <span class="app-btn" data-i18n="home.app.occurrences">Occorrenze</span>
+                  <span class="app-btn hide-sm" data-i18n="home.app.debug">Debug</span>
+                  <span class="app-btn app-btn-on" data-i18n="home.app.replay">Replay</span>
+                </div>
+
+                <div class="app-body">
+                  <!-- Barra strumenti di disegno, come nell'applicazione -->
+                  <div class="app-side" id="app-side" aria-hidden="true"></div>
+
+                  <div class="app-chart" id="app-chart">
+                    <!-- Due strati: il testo delle capacità passa in mezzo, così
+                         una parte del grafico gli scorre dietro e una davanti. -->
+                    <canvas id="chart-back"></canvas>
+
+                    <div class="cine-captions" id="cine-captions">
+                      <article class="cap" data-cap="1">
+                        <h2 data-i18n="home.cap1.t">Cerca nei mercati</h2>
+                        <p data-i18n="home.cap1.b">Una condizione, tutta la storia: quante volte è successa e cosa è successo dopo.</p>
+                      </article>
+                      <article class="cap" data-cap="2">
+                        <h2 data-i18n="home.cap2.t">Ottimizza le strategie</h2>
+                        <p data-i18n="home.cap2.b">Migliaia di combinazioni, con in-sample e out-of-sample tenuti separati.</p>
+                      </article>
+                      <article class="cap" data-cap="3">
+                        <h2 data-i18n="home.cap3.t">Componi portafogli</h2>
+                        <p data-i18n="home.cap3.b">Più strategie, più mercati, un conto solo. E si vede come convivono.</p>
+                      </article>
+                      <article class="cap" data-cap="4">
+                        <h2 data-i18n="home.cap4.t">Esporta in MQL5</h2>
+                        <!-- Spazio unificatore fra «MetaTrader» e «5»: senza, la
+                             riga andava a capo lasciando sotto il solo «5.» —
+                             un numero orfano, per giunta l'ultima cosa che si
+                             legge della sequenza. -->
+                        <p data-i18n="home.cap4.b">La strategia diventa un Expert Advisor che opera da solo su MetaTrader&nbsp;5.</p>
+                      </article>
+                    </div>
+
+                    <canvas id="chart-front"></canvas>
+
+                    <!-- Pannelli dell'applicazione, uno per capacità -->
+                    <div class="panel panel-opt" id="panel-opt" hidden>
+                      <div class="panel-head">
+                        <span data-i18n="home.panel.opt.t">Ottimizzazione</span>
+                        <span class="panel-num" id="opt-count">0</span>
+                      </div>
+                      <div class="opt-grid" id="opt-grid"></div>
+                    </div>
+
+                    <div class="panel panel-pf" id="panel-pf" hidden>
+                      <div class="panel-head"><span data-i18n="home.panel.pf.t">Portafoglio</span></div>
+                      <svg class="pf-svg" viewBox="0 0 240 96" preserveAspectRatio="none" aria-hidden="true">
+                        <path class="pf-line pf-1" d="" fill="none"></path>
+                        <path class="pf-line pf-2" d="" fill="none"></path>
+                        <path class="pf-line pf-3" d="" fill="none"></path>
+                      </svg>
+                    </div>
+
+                    <div class="panel panel-mql" id="panel-mql" hidden>
+                      <div class="panel-head">
+                        <span class="mql-file">SQ_EMA_CROSS_a7f31c04.mq5</span>
+                      </div>
+                      <pre class="mql-code" id="mql-code"></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Base del portatile: cerniera, corpo e incavo di apertura -->
+          <div class="mac-base" aria-hidden="true">
+            <span class="mac-hinge"></span>
+            <span class="mac-notch"></span>
+          </div>
+          <!-- I piedini di gomma. Stanno FUORI da .mac-base perché quella è
+               ritagliata in trapezio, e il ritaglio taglierebbe anche loro.
+               Due e non quattro: la vista è frontale. -->
+          <span class="mac-foot mac-foot-l" aria-hidden="true"></span>
+          <span class="mac-foot mac-foot-r" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <!-- 3. Avanzamento della sequenza -->
+      <div class="cine-rail" id="cine-rail" aria-hidden="true">
+        <span class="cine-rail-fill" id="cine-rail-fill"></span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OTTIMIZZAZIONE IN 3D =====================
+     Quattro nuvole di punti: ogni punto è una combinazione di parametri
+     provata, e ruotano lentamente mentre la pagina scorre. Disegnate in
+     canvas da assets/space3d.js. -->
+<section class="opt3d" id="ottimizzazione">
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 data-i18n="home.opt.title">Ogni combinazione provata, in un colpo d'occhio</h2>
+      <p class="lead" data-i18n="home.opt.sub">
+        Un punto per configurazione. Le superfici mostrano dove una strategia
+        regge davvero e dove invece brillava solo nel punto in cui era stata
+        scelta.
+      </p>
+    </header>
+
+    <div class="opt3d-grid" id="opt3d-grid">
+      <figure class="opt3d-cell">
+        <figcaption data-i18n="home.opt.m1">Expectancy (R)</figcaption>
+        <canvas class="opt3d-canvas" data-metric="0"></canvas>
+      </figure>
+      <figure class="opt3d-cell">
+        <figcaption data-i18n="home.opt.m2">Max drawdown (R)</figcaption>
+        <canvas class="opt3d-canvas" data-metric="1"></canvas>
+      </figure>
+      <figure class="opt3d-cell">
+        <figcaption data-i18n="home.opt.m3">Profit factor</figcaption>
+        <canvas class="opt3d-canvas" data-metric="2"></canvas>
+      </figure>
+      <figure class="opt3d-cell">
+        <figcaption data-i18n="home.opt.m4">Stagnazione più lunga (giorni)</figcaption>
+        <canvas class="opt3d-canvas" data-metric="3"></canvas>
+      </figure>
+    </div>
+
+    <p class="opt3d-note t3 text-small" data-i18n="home.opt.note">
+      Il punto in evidenza è la configurazione scelta. Gli assi sono i due
+      parametri esplorati.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== DALLA STRATEGIA AL MERCATO =====================
+     Sta PRIMA della misura sul terminale, non dopo: quel numero — 4.986 barre,
+     zero divergenze — è la verifica dell'ultimo dei cinque passaggi, e senza
+     sapere quali sono i cinque non si capisce di cosa sia la prova. -->
+<section id="come-funziona">
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 data-i18n="home.how.title">Dalla strategia al mercato, in cinque passaggi</h2>
+      <p class="lead" data-i18n="home.how.lead">
+        Nessuno dei cinque è una scatola chiusa: a ogni passaggio l'applicazione
+        dice con quali numeri sta lavorando, e dove invece si ferma.
+      </p>
+    </header>
+
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-n">1</span>
+        <h3 data-i18n="home.how.s1.t">Costruisci</h3>
+        <p data-i18n="home.how.s1.b">Setup di ingresso, albero delle condizioni, uscite, gestione del rischio.</p>
+      </div>
+      <div class="flow-step">
+        <span class="flow-n">2</span>
+        <h3 data-i18n="home.how.s2.t">Misuri</h3>
+        <p data-i18n="home.how.s2.b">Backtest, con il conto dei segnali che non sono diventati trade — motivo per motivo.</p>
+      </div>
+      <div class="flow-step">
+        <span class="flow-n">3</span>
+        <h3 data-i18n="home.how.s3.t">Ottimizzi</h3>
+        <p data-i18n="home.how.s3.b">Migliaia di combinazioni, con in-sample e out-of-sample tenuti separati.</p>
+      </div>
+      <div class="flow-step">
+        <span class="flow-n">4</span>
+        <h3 data-i18n="home.how.s4.t">Esporti</h3>
+        <p data-i18n-html="home.how.s4.b">Un file <code>.mq5</code>, oppure il motivo per cui non è traducibile.</p>
+      </div>
+      <div class="flow-step">
+        <span class="flow-n">5</span>
+        <h3 data-i18n="home.how.s5.t">Verifichi</h3>
+        <p data-i18n="home.how.s5.b">L'EA parte su MetaTrader&nbsp;5 e dichiara con quali numeri sta girando.</p>
+      </div>
+    </div>
+
+    <!-- Le due cose che il percorso non dice. Sono disegnate, non raccontate:
+         un indicatore è un file con un contratto, e il modo più corto di dirlo
+         è farlo vedere. Ciò che compare dentro i due pannelli è codice —
+         `PARAMS`, `compute`, i nomi dei file — e il codice non si traduce:
+         restano uguali in italiano e in inglese, come nell'applicazione. -->
+    <div class="feat-pair">
+
+      <article class="feat">
+        <div class="feat-art" aria-hidden="true">
+          <div class="mock">
+            <div class="mock-bar">
+              <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+              <span class="mock-name">supertrend.py</span>
+            </div>
+            <pre class="mock-code"><span class="c-k">PLUGIN_ID</span> = <span class="c-s">"supertrend"</span>
+<span class="c-k">LABEL</span>     = <span class="c-s">"SuperTrend"</span>
+<span class="c-k">PARAMS</span>    = {<span class="c-s">"period"</span>: <span class="c-n">10</span>, <span class="c-s">"mult"</span>: <span class="c-n">3.0</span>}
+<span class="c-k">PLOT</span>      = {<span class="c-s">"pane"</span>: <span class="c-s">"price"</span>}
+
+<span class="c-d">def</span> <span class="c-f">compute</span>(df, params):
+    <span class="c-c">...</span></pre>
+          </div>
+          <div class="chips">
+            <span class="chip">ema_trend</span>
+            <span class="chip">engulf</span>
+            <span class="chip">supertrend</span>
+            <span class="chip">roc</span>
+            <span class="chip chip-new" data-i18n="home.feat.ind.chip">+ il tuo</span>
+          </div>
+        </div>
+        <h3 data-i18n="home.feat.ind.t">Gli indicatori li aggiungi tu</h3>
+        <p data-i18n="home.feat.ind.b">
+          Un file con un contratto dichiarato: nome, parametri, come va
+          disegnato, la funzione che lo calcola. I tuoi e quelli in dotazione
+          stanno nello stesso posto e valgono uguale — non c'è un elenco chiuso
+          dal quale scegliere. Lo stesso vale per le condizioni della strategia.
+        </p>
+      </article>
+
+      <article class="feat">
+        <div class="feat-art" aria-hidden="true">
+          <div class="mock">
+            <div class="mock-bar">
+              <span class="mock-name mock-name-lead" data-i18n="home.feat.ai.panel">Prompt per l'AI</span>
+              <span class="mock-btn" data-i18n="home.feat.ai.copy">Copia</span>
+            </div>
+            <div class="mock-body">
+              <div class="pblock">
+                <span class="ptag" data-i18n="home.feat.ai.tag1">il contratto</span>
+                <span class="pline w90"></span><span class="pline w70"></span>
+              </div>
+              <div class="pblock">
+                <span class="ptag" data-i18n="home.feat.ai.tag2">il codice attuale</span>
+                <span class="pline w80"></span><span class="pline w95"></span><span class="pline w55"></span>
+              </div>
+              <div class="pblock pblock-you">
+                <span class="ptag ptag-you" data-i18n="home.feat.ai.tag3">la tua richiesta</span>
+                <span class="pline pline-you w85"></span>
+              </div>
+            </div>
+          </div>
+          <p class="feat-note" data-i18n="home.feat.ai.note">
+            Incolli dove vuoi · rileggi · salvi tu
+          </p>
+        </div>
+        <h3 data-i18n="home.feat.ai.t">E per scriverli, l'AI prepara il lavoro</h3>
+        <p data-i18n="home.feat.ai.b">
+          L'applicazione compone il testo da incollare: il contratto da
+          rispettare, il codice di partenza e la tua richiesta. Quello che torna
+          lo rileggi e lo salvi tu. SpaceQuant non chiama nessun servizio per
+          conto suo e non applica niente al posto tuo.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LA MISURA ===================== -->
+<section class="bg-soft" id="misura">
+  <div class="wrap-narrow center">
+    <p class="eyebrow" data-i18n="home.measure.eyebrow">Provato su un terminale vero</p>
+    <h2 class="measure-big"><span class="gradient-text">4.986</span></h2>
+    <p class="measure-cap" data-i18n-html="home.measure.cap">
+      barre confrontate una per una fra il motore e MetaTrader 5.
+      <strong>Zero divergenze.</strong>
+    </p>
+    <p data-i18n="home.measure.p1">
+      Il 13 agosto 2026 il pacchetto di verifica è stato installato in
+      MetaTrader 5, compilato e messo su un grafico AUDUSD M5. Lo scarto massimo
+      è 5×10⁻⁹: la precisione con cui il file scrive i numeri, non una
+      differenza.
+    </p>
+    <p class="text-small t3" data-i18n="home.measure.note">
+      È una misura, riportata con il suo perimetro. Non è una promessa su quello
+      che accadrà: un backtest resta una misura su dati storici.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== CHIUSURA ===================== -->
+<section class="bg-soft">
+  <div class="wrap-narrow center">
+    <h2 data-i18n="home.end.title">Provalo sui tuoi dati</h2>
+    <p class="lead" data-i18n="home.end.sub">
+      Un abbonamento, due dispositivi, macOS e Windows.
+    </p>
+    <div class="btn-row" style="justify-content:center">
+      <a class="btn btn-primary btn-lg" href="pricing.html" data-i18n="home.hero.cta1">Richiedi l'accesso</a>
+    </div>
+    <p class="text-small t3 mt-3" data-i18n="home.end.note">
+      SpaceQuant non è un broker: non esegue ordini e non accede al tuo conto.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:14px">
+          <img src="assets/img/logo-small.png" alt="">
+          <span>SpaceQuant</span>
+        </a>
+        <p class="text-small t3" data-i18n="ft.tag">
+          Ricerca su strategie algoritmiche, con export verificabile verso
+          MetaTrader 5.
+        </p>
+      </div>
+      <div>
+        <h4 data-i18n="ft.product">Prodotto</h4>
+        <a href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
+        <a href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
+        <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+        </div>
+      <div>
+        <h4 data-i18n="ft.support">Assistenza</h4>
+        <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">da definire</span></a>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p data-i18n="ft.d1">
+        SpaceQuant è uno strumento di ricerca e di sviluppo. Non è un broker, non
+        esegue ordini, non accede al tuo conto di trading e non fornisce
+        consulenza finanziaria.
+      </p>
+      <p data-i18n="ft.d2">
+        Un backtest è una misura su dati storici e non è una previsione dei
+        risultati futuri. Fare trading comporta il rischio di perdere il capitale
+        investito.
+      </p>
+      <p class="t3">© 2026 SpaceQuant</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/i18n.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/cinema.js"></script>
+<script src="assets/space3d.js"></script>
+<script src="assets/flow.js"></script>
+</body>
+</html>

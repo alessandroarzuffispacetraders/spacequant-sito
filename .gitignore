@@ -1,0 +1,36 @@
+# Cosa NON finisce online.
+#
+# Il repository `spacequant-sito` è pubblico — GitHub Pages sul piano gratuito
+# richiede che lo sia — e serve dalla propria radice: tutto ciò che è tracciato
+# qui dentro diventa un indirizzo che chiunque può aprire. Questo file è quindi
+# l'elenco di ciò che resta sulla macchina, ed è l'unica cosa che lo decide.
+
+# --- Documentazione di lavoro -------------------------------------------------
+# Non è segreta, ma è interna: decisioni, trappole, cose ancora da decidere.
+# Accanto a un sito di prodotto è materiale di cantiere, non di vetrina.
+STATO.md
+README.md
+
+# --- Strumenti ----------------------------------------------------------------
+# Il repository è la DESTINAZIONE della pubblicazione, non la sorgente del
+# progetto: le prove e i generatori vivono qui sulla macchina.
+tools/
+
+# --- Anteprima in file unico --------------------------------------------------
+# ⚠️ Non è solo peso inutile (600 KB): contiene le tre pagine dentro un file
+# solo, quindi online sarebbe una QUARTA pagina con lo stesso testo delle altre
+# tre. Due indirizzi con lo stesso contenuto si fanno concorrenza da soli nei
+# risultati di ricerca, ed è il genere di danno che non si vede.
+preview.html
+
+# --- Sorgenti delle immagini generate -----------------------------------------
+# logo.png (765 KB) e splash_white.png (1 MB) non li chiede nessuna pagina: sono
+# la materia prima di make-watermark.py e make-social.py. Online sarebbero 1,8 MB
+# che nessuno scarica mai.
+assets/img/logo.png
+assets/img/splash_white.png
+
+# --- Rumore di sistema --------------------------------------------------------
+.DS_Store
+__pycache__/
+*.pyc
