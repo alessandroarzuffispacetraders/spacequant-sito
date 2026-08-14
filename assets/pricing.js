@@ -26,26 +26,19 @@
   }
 
   /* --- Pulsanti «Richiedi l'accesso» --------------------------------------
-     Diventano un messaggio già intestato al piano scelto: chi scrive non deve
-     spiegare da dove arriva, e chi risponde sa già cosa serve.               */
+     Portano al questionario, portandosi dietro il piano scelto. Prima aprivano
+     direttamente una mail vuota con l'oggetto intestato: chi scriveva doveva
+     inventarsi cosa dire, e chi rispondeva non sapeva nulla di lui. Le tre
+     domande di richiedi.html costano venti secondi a chi le compila e fanno
+     arrivare una richiesta a cui si può rispondere nel merito.
+
+     L'indirizzo resta un link vero — non un pulsante che apre qualcosa con
+     JavaScript: si può aprire in una scheda nuova, copiare, mandare a qualcuno.
+     Il piano viaggia in chiaro nell'indirizzo, e la pagina di destinazione
+     accetta solo i due valori previsti (vedi assets/richiedi.js).            */
   function wireContactLinks() {
-    const email = CONFIG.supportEmail;
     document.querySelectorAll('[data-contact]').forEach(function (el) {
-      if (CONFIG.isPlaceholder(email) || !email) {
-        el.removeAttribute('href');
-        el.setAttribute('aria-disabled', 'true');
-        el.setAttribute('title', 'Indirizzo di contatto non ancora configurato');
-        el.style.opacity = '.5';
-        el.style.cursor = 'not-allowed';
-        el.addEventListener('click', function (e) { e.preventDefault(); });
-        return;
-      }
-      const en = document.documentElement.lang === 'en';
-      const piano = el.dataset.contact;
-      const subject = en
-        ? `SpaceQuant — access request (${piano === 'annuale' ? 'annual' : 'monthly'})`
-        : `SpaceQuant — richiesta di accesso (${piano})`;
-      el.href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject);
+      el.href = 'richiedi.html?piano=' + encodeURIComponent(el.dataset.contact);
     });
   }
 

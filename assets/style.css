@@ -1480,3 +1480,97 @@ td strong { color: var(--text); }
 .steps li:last-child::after { display: none; }
 .steps h3 { margin-bottom: .3em; }
 .steps p  { margin-bottom: 0; font-size: .96rem; }
+
+/* =============================================================================
+   17. RICHIESTA DI ACCESSO — il questionario
+   ============================================================================= */
+
+.rq-head { text-align: center; margin-bottom: clamp(2rem, 5vw, 3rem); }
+.rq-head .lead { max-width: 34em; margin: 0 auto; }
+
+/* ⚠️ L'intestazione è `sticky`: portando qui lo scorrimento con
+   `scrollIntoView`, l'elemento va a filo di viewport e finisce SOTTO di lei —
+   il titolo del risultato spariva dietro al menu. `scroll-margin-top` è la
+   riga che dice al browser di fermarsi un'intestazione più in basso. */
+.rq-form, .rq-esito, .rq-q { scroll-margin-top: calc(var(--header-h) + 24px); }
+
+.rq-form { display: grid; gap: clamp(1.4rem, 3vw, 2rem); }
+
+/* Ogni domanda è un gruppo, non un blocco di testo con dei cerchietti: il
+   `fieldset` con la sua `legend` è ciò che permette a un lettore di schermo di
+   annunciare «domanda 2 di 3» insieme all'opzione su cui si trova. */
+.rq-q {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.rq-q legend {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1.15rem; font-weight: 620; letter-spacing: -.02em;
+  color: var(--text);
+  margin-bottom: .9rem;
+  padding: 0;
+}
+.rq-n {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--grad);
+  color: #fff;
+  font-family: var(--mono); font-size: .82rem; font-weight: 700;
+}
+
+.rq-opt {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--surface);
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: border-color .15s var(--ease), background .15s var(--ease);
+}
+.rq-opt:hover { border-color: var(--border-2); background: var(--bg-soft); }
+.rq-opt input { margin: 2px 0 0; accent-color: var(--violet); flex: 0 0 auto; }
+.rq-opt:has(input:checked) {
+  border-color: var(--violet);
+  background: rgba(123, 63, 228, .04);
+}
+/* Il contorno di messa a fuoco va sull'etichetta, non sul solo cerchietto:
+   navigando da tastiera si deve vedere QUALE riga è selezionata. */
+.rq-opt:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+.rq-manca { color: var(--amber); font-weight: 600; margin: 0; }
+.rq-nota { text-align: center; margin: .8rem 0 0; }
+
+/* --- il risultato --------------------------------------------------------- */
+.rq-esito { text-align: center; }
+.rq-esito h2 { margin-bottom: 1.6rem; }
+
+.rq-qr-wrap { margin: 2.4rem 0 1.6rem; }
+.rq-qr-lead { max-width: 30em; margin: 0 auto 1rem; }
+.rq-qr {
+  width: clamp(180px, 46vw, 240px);
+  margin: 0 auto;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+.rq-qr svg { display: block; width: 100%; height: auto; }
+
+/* Su telefono il codice QR non serve — WhatsApp è sulla stessa macchina, e
+   inquadrare lo schermo che si sta usando non si può fare. */
+@media (max-width: 620px) { .rq-qr-wrap { display: none; } }
+
+.rq-copia { margin: 2rem 0 1.4rem; text-align: left; }
+.rq-copia-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: .5rem;
+}
+.rq-copia .pre { white-space: pre-wrap; word-break: break-word; }
+
+.rq-alt { margin: 0 0 1.6rem; }
+.rq-indietro { margin: 0; }
+.rq-indietro a { color: var(--t3); font-size: .9rem; }

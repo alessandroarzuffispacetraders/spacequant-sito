@@ -64,6 +64,14 @@ const CONFIG = {
   /* --- Contatti ----------------------------------------------------------- */
   supportEmail: 'info@oriontradedynamics.com',
 
+  /* Numero WhatsApp in formato internazionale, SENZA «+», spazi o trattini:
+     è la forma che vuole wa.me. Esempio: 393331234567.
+     Ci arriva chi compila il questionario in richiedi.html, con le tre risposte
+     già scritte nel messaggio. Finché è DA_DEFINIRE la pagina lo dichiara e
+     offre solo la via dell'email, invece di produrre un link che non apre
+     nulla. */
+  whatsapp: 'DA_DEFINIRE_NUMERO_WHATSAPP',
+
   /* --- Gli artefatti pubblicati -------------------------------------------
      ⚠️ NON si compilano a mano. Si verificano — e all'occorrenza si
      riscrivono — sui file veri:

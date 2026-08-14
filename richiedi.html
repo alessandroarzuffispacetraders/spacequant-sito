@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="head.rq.t">Richiedi l'accesso — SpaceQuant</title>
+<meta name="description" data-i18n-attr="content:head.rq.d" content="Tre domande sulla tua situazione, poi si continua su WhatsApp con le risposte già scritte. Meno di un minuto.">
+<link rel="icon" href="assets/img/logo-small.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Vedi la nota estesa in index.html: valori assoluti, riscritti tutti insieme
+     da tools/dominio.py. Niente canonical: questa pagina è `noindex`, e le due
+     istruzioni si contraddirebbero. Fuori dagli indici perché è un passaggio,
+     non un contenuto: chi la trova da una ricerca arriva a un modulo senza aver
+     letto niente di ciò che sta chiedendo. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SpaceQuant">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Richiedi l'accesso — SpaceQuant">
+<meta property="og:description" content="Tre domande sulla tua situazione, poi si continua su WhatsApp con le risposte già scritte.">
+<meta property="og:url" content="https://alessandroarzuffispacetraders.github.io/spacequant-sito/richiedi.html">
+<meta property="og:image" content="https://alessandroarzuffispacetraders.github.io/spacequant-sito/assets/img/social-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SpaceQuant Algo">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo-small.png" alt="">
+      <span>SpaceQuant</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html#come-funziona" class="hide-sm" data-i18n="nav.how">Come funziona</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+      <div class="lang" role="group" aria-label="Lingua">
+        <button type="button" data-lang="it" aria-pressed="true">IT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap-narrow">
+
+    <div class="rq-head">
+      <p class="eyebrow" data-i18n="rq.eyebrow">Richiesta di accesso</p>
+      <h1 data-i18n="rq.h1">Tre domande, poi ci scriviamo</h1>
+      <p class="lead" data-i18n="rq.lead">Servono a risponderti sulla tua situazione invece di mandarti una presentazione. Meno di un minuto, e le risposte finiscono da sole nel messaggio.</p>
+    </div>
+
+    <!-- Il modulo. Le risposte non vanno da nessuna parte finché non si preme
+         il pulsante finale: non c'è un server, e non c'è nulla che parta da sé. -->
+    <form id="rq-form" class="rq-form" novalidate>
+
+      <fieldset class="rq-q">
+        <legend><span class="rq-n">1</span><span data-i18n="rq.q1">Oggi come fai trading?</span></legend>
+        <label class="rq-opt"><input type="radio" name="q1" value="a-mano" required>
+          <span data-i18n="rq.q1.a">A mano, e vorrei automatizzare</span></label>
+        <label class="rq-opt"><input type="radio" name="q1" value="gia-mt5">
+          <span data-i18n="rq.q1.b">Ho già strategie automatiche che girano in MetaTrader&nbsp;5</span></label>
+        <label class="rq-opt"><input type="radio" name="q1" value="fuori-mt5">
+          <span data-i18n="rq.q1.c">Sviluppo e provo strategie, ma fuori da MetaTrader&nbsp;5</span></label>
+        <label class="rq-opt"><input type="radio" name="q1" value="imparo">
+          <span data-i18n="rq.q1.d">Sto ancora imparando</span></label>
+      </fieldset>
+
+      <fieldset class="rq-q">
+        <legend><span class="rq-n">2</span><span data-i18n="rq.q2">Come provi una strategia prima di usarla?</span></legend>
+        <label class="rq-opt"><input type="radio" name="q2" value="tester-mt5" required>
+          <span data-i18n="rq.q2.a">Con lo strategy tester di MetaTrader&nbsp;5</span></label>
+        <label class="rq-opt"><input type="radio" name="q2" value="codice">
+          <span data-i18n="rq.q2.b">Con codice mio (Python, R, altro)</span></label>
+        <label class="rq-opt"><input type="radio" name="q2" value="tradingview">
+          <span data-i18n="rq.q2.c">Su TradingView / Pine</span></label>
+        <label class="rq-opt"><input type="radio" name="q2" value="non-provo">
+          <span data-i18n="rq.q2.d">Non la provo in modo sistematico</span></label>
+      </fieldset>
+
+      <fieldset class="rq-q">
+        <legend><span class="rq-n">3</span><span data-i18n="rq.q3">Cosa vorresti fare per primo con SpaceQuant?</span></legend>
+        <label class="rq-opt"><input type="radio" name="q3" value="verificare" required>
+          <span data-i18n="rq.q3.a">Verificare una strategia che già uso</span></label>
+        <label class="rq-opt"><input type="radio" name="q3" value="cercare">
+          <span data-i18n="rq.q3.b">Cercarne di nuove, ottimizzando i parametri</span></label>
+        <label class="rq-opt"><input type="radio" name="q3" value="portare">
+          <span data-i18n="rq.q3.c">Portare in MetaTrader&nbsp;5 una strategia che ho altrove</span></label>
+        <label class="rq-opt"><input type="radio" name="q3" value="capire">
+          <span data-i18n="rq.q3.d">Capire se fa al caso mio</span></label>
+      </fieldset>
+
+      <p id="rq-manca" class="rq-manca" hidden data-i18n="rq.manca">Manca ancora una risposta.</p>
+
+      <button type="submit" id="rq-vai" class="btn btn-primary btn-lg btn-block" data-i18n="rq.cta">
+        Continua su WhatsApp
+      </button>
+      <p class="rq-nota t3 text-small" data-i18n="rq.nota">Si apre WhatsApp con il messaggio già scritto. L'invio lo premi tu, e puoi modificarlo prima.</p>
+    </form>
+
+    <!-- Il risultato. Compare al posto del modulo quando le tre risposte ci sono. -->
+    <div id="rq-esito" class="rq-esito" hidden>
+      <p class="eyebrow" data-i18n="rq.done.eyebrow">Ci siamo</p>
+      <h2 data-i18n="rq.done.h">Il messaggio è pronto</h2>
+
+      <a id="rq-link" class="btn btn-primary btn-lg" href="#" data-i18n="rq.done.cta">Apri WhatsApp</a>
+
+      <div class="rq-qr-wrap">
+        <p class="rq-qr-lead" data-i18n="rq.done.qr">Sei al computer? Inquadra questo codice col telefono: si apre la stessa chat, con lo stesso messaggio.</p>
+        <div id="rq-qr" class="rq-qr"></div>
+      </div>
+
+      <div class="rq-copia">
+        <div class="rq-copia-head">
+          <span class="mono-label" data-i18n="rq.done.msg">Il messaggio</span>
+          <button type="button" id="rq-copia" class="btn btn-ghost btn-sm" data-i18n="rq.done.copy">Copia</button>
+        </div>
+        <pre id="rq-testo" class="pre"></pre>
+      </div>
+
+      <p class="rq-alt t3 text-small">
+        <span data-i18n="rq.done.alt">Preferisci l'email?</span>
+        <a id="rq-mail" href="#" data-i18n="rq.done.altcta">Scrivi con le stesse risposte</a>
+      </p>
+
+      <p class="rq-indietro">
+        <a href="#" id="rq-torna" data-i18n="rq.done.back">← Cambia una risposta</a>
+      </p>
+    </div>
+
+    <div id="rq-nonconf" class="note note-warn" hidden>
+      <div class="note-title" data-i18n="rq.nc.t">⚠️ WhatsApp non è ancora configurato</div>
+      <p data-i18n-html="rq.nc.b">Manca il numero in <code>assets/config.js</code>. Nel frattempo la richiesta si manda per email.</p>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="disclaimer">
+      <p data-i18n="ft.d1">SpaceQuant è uno strumento di ricerca e di sviluppo. Non è un broker, non esegue ordini, non accede al tuo conto di trading e non fornisce consulenza finanziaria.</p>
+      <p class="t3">© 2026 SpaceQuant</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/i18n.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/qr.js"></script>
+<script src="assets/richiedi.js"></script>
+</body>
+</html>

@@ -22,6 +22,53 @@ const I18N_EN = {
   'head.pr.d':   'One subscription, every feature, two devices. Monthly or yearly.',
   'head.dl.t':   'Download SpaceQuant',
   'head.dl.d':   'Download SpaceQuant for macOS and Windows. Installers you can verify with SHA256.',
+  'head.rq.t':   'Request access — SpaceQuant',
+  'head.rq.d':   'Three questions about where you are, then we carry on over WhatsApp with your answers already written. Under a minute.',
+
+  /* =========================================================================
+     RICHIESTA DI ACCESSO
+     ⚠️ Le etichette che finiscono nel MESSAGGIO non stanno qui: sono in
+     assets/richiedi.js, perché sono più corte di queste. Nel modulo servono a
+     scegliere, nel messaggio a essere lette di sfuggita in una chat.
+     ========================================================================= */
+  'rq.eyebrow': 'Access request',
+  'rq.h1':      'Three questions, then we talk',
+  'rq.lead':    'They let us answer about your situation instead of sending you a brochure. Under a minute, and your answers go into the message by themselves.',
+
+  'rq.q1':   'How do you trade today?',
+  'rq.q1.a': 'By hand, and I would like to automate',
+  'rq.q1.b': 'I already have automated strategies running in MetaTrader 5',
+  'rq.q1.c': 'I build and test strategies, but outside MetaTrader 5',
+  'rq.q1.d': 'I am still learning',
+
+  'rq.q2':   'How do you test a strategy before using it?',
+  'rq.q2.a': 'With the MetaTrader 5 strategy tester',
+  'rq.q2.b': 'With my own code (Python, R, other)',
+  'rq.q2.c': 'On TradingView / Pine',
+  'rq.q2.d': 'I do not test it systematically',
+
+  'rq.q3':   'What would you do first with SpaceQuant?',
+  'rq.q3.a': 'Verify a strategy I already use',
+  'rq.q3.b': 'Find new ones by optimising the parameters',
+  'rq.q3.c': 'Bring a strategy I have elsewhere into MetaTrader 5',
+  'rq.q3.d': 'Work out whether it suits me',
+
+  'rq.manca': 'One answer is still missing.',
+  'rq.cta':   'Continue on WhatsApp',
+  'rq.nota':  'WhatsApp opens with the message already written. You press send, and you can edit it first.',
+
+  'rq.done.eyebrow': 'Here we go',
+  'rq.done.h':       'Your message is ready',
+  'rq.done.cta':     'Open WhatsApp',
+  'rq.done.qr':      'On a computer? Point your phone at this code: the same chat opens, with the same message.',
+  'rq.done.msg':     'The message',
+  'rq.done.copy':    'Copy',
+  'rq.done.alt':     'Prefer email?',
+  'rq.done.altcta':  'Write with the same answers',
+  'rq.done.back':    '← Change an answer',
+
+  'rq.nc.t': '⚠️ WhatsApp is not configured yet',
+  'rq.nc.b': 'The number is missing from <code>assets/config.js</code>. In the meantime the request goes by email.',
 
   /* --- Navigazione e piè di pagina --------------------------------------- */
   'nav.how':      'How it works',
