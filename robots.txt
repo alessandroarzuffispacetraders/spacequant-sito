@@ -7,4 +7,4 @@
 User-agent: *
 Disallow: /download.html
 
-Sitemap: https://alessandroarzuffispacetraders.github.io/spacequant-sito/sitemap.xml
+Sitemap: https://spacequantalgo.com/sitemap.xml

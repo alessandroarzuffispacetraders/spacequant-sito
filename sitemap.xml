@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generato da tools/dominio.py — non si modifica a mano.
-     Contiene solo le pagine indicizzabili: download.html è noindex
-     e metterla qui vorrebbe dire chiedere di indicizzare una pagina
-     che chiede di non esserlo. -->
+     Contiene solo le pagine indicizzabili — quelle senza `noindex`.
+     Elencare qui una pagina che chiede di non essere indicizzata
+     vuol dire dare ai motori due istruzioni opposte. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://alessandroarzuffispacetraders.github.io/spacequant-sito/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <loc>https://spacequantalgo.com/</loc>
+    <lastmod>2026-08-18</lastmod>
   </url>
   <url>
-    <loc>https://alessandroarzuffispacetraders.github.io/spacequant-sito/pricing.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <loc>https://spacequantalgo.com/pricing.html</loc>
+    <lastmod>2026-08-18</lastmod>
   </url>
 </urlset>
