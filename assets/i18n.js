@@ -120,10 +120,11 @@ const I18N_EN = {
 
 
 
-  'home.measure.eyebrow': 'Tested on a real terminal',
-  'home.measure.cap':     'bars compared one by one between the engine and MetaTrader 5. <strong>Zero divergences.</strong>',
-  'home.measure.note':    'It is a measurement, reported with its scope attached. It is not a promise about what will happen: a backtest remains a measurement over historical data.',
-  'home.measure.p1':      'On 13 August 2026 the verification package was installed in MetaTrader 5, compiled and attached to an AUDUSD M5 chart. The largest deviation is 5×10⁻⁹: the precision with which the file writes numbers, not a difference.',
+  'home.measure.eyebrow': 'Systematic, not discretionary',
+  'home.measure.cap':     'of successful Forex traders rely on automated systems. <strong>Not instinct: written rules.</strong>',
+  'home.measure.p1':      'And that is why it works: a systematic strategy can be measured. You test it over years of history, optimise it, verify it on a period it has never seen, and export it. A discretionary one cannot: the only way to test it is to risk money. SpaceQuant is built for exactly that step — turning an idea into rules you can measure, and taking them to MetaTrader\u00A05.',
+  'home.measure.src':     'Figure reported by <a href="https://www.brokernotes.co/forex-trading-industry-statistics" rel="nofollow noopener" target="_blank">BrokerNotes</a>. Our own export, verified: 4,986 bars compared one by one against MetaTrader\u00A05, zero divergences.',
+  'home.measure.note':    'A backtest remains a measurement over historical data, not a forecast of future results.',
 
 
   'home.how.title':   'From strategy to market, in five steps',
