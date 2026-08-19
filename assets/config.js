@@ -12,8 +12,8 @@
 const CONFIG = {
 
   /* --- Versione pubblicata ------------------------------------------------ */
-  version: '3.0.0',
-  commit: '0e28f9e',
+  version: '3.1.0',
+  commit: 'b420dc6',
   releaseDate: '2026-08-13',
 
   /* --- Dove stanno gli installer -----------------------------------------
@@ -98,25 +98,25 @@ const CONFIG = {
     macArm: {
       file: 'SpaceQuant-Algo-arm64.dmg',
       size: 446,
-      sha256: '32cd77babc3420d28045b2ae03b75efc96e570c8b8030fb2b96afd8463bf7a63',
+      sha256: '309c9fdd8f3a8c3e2278d8c3a2e5c84466a54e901ffded39f339142c77a7c5a2',
       os: 'mac', arch: 'arm64',
     },
     macIntel: {
       file: 'SpaceQuant-Algo-x64.dmg',
-      size: 489,
-      sha256: 'cfde76e5f6c8cfcf709f0c97340ce6a978d064ab53ea8059bcfb108af98526a6',
+      size: 490,
+      sha256: '9807591ebbda6ab2ec6971ea41368142aaebeeb41462bf1f527752e096389b5d',
       os: 'mac', arch: 'x64',
     },
     winSetup: {
       file: 'SpaceQuant-Algo-Setup-x64.exe',
       size: 308,
-      sha256: '80c47a209349d3c42111bb0b363a20925a379a7d678c764f65a9709db7a9d863',
+      sha256: 'a0712258b6f3eadd7723a60556760da97c2e6a56d803d0e4c3b887a26b229920',
       os: 'win', arch: 'x64',
     },
     winPortable: {
       file: 'SpaceQuant-Algo-portable-x64.zip',
       size: 452,
-      sha256: '8f7eaba6f97477953f186f76fbc8eee57f5037ba0833514066d42789dab1dc4c',
+      sha256: '78e3446e3002885bf99dbc9e3eeb51d988bdc54cd71406ebed3061bb2744c03a',
       os: 'win', arch: 'x64',
     },
   },
