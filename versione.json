@@ -1,5 +1,5 @@
 {
-  "versione": "3.1.0",
+  "versione": "3.1.1",
   "pagina_download": "https://spacequantalgo.com/download",
-  "note": "Profili grafici salvabili, registro dei difetti visibile sulle Strategie, percorso di export dichiarato, avviso di aggiornamento."
+  "note": "Apertura molto piu' rapida: il grafico e gli elenchi si caricano in circa un secondo invece di quindici."
 }
