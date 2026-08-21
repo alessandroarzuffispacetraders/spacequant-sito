@@ -1,5 +1,5 @@
 {
-  "versione": "3.1.1",
+  "versione": "3.2.0",
   "pagina_download": "https://spacequantalgo.com/download",
-  "note": "Apertura molto piu' rapida: il grafico e gli elenchi si caricano in circa un secondo invece di quindici."
+  "note": "Curva di equity in R o in valuta (anche sovrapposte), con i rendimenti per periodo che seguono lo switch. Swap per simbolo impostabile dall'interfaccia. Pannello indicatori spostabile e ordinato. Avvisi del registro difetti compattati dietro un pulsante."
 }
