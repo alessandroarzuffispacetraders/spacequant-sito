@@ -155,6 +155,29 @@ const I18N_EN = {
 
 
 
+/* --- la riserva, l'evidenza, il registro dei difetti --------------------
+     ⚠️ Verificate NEL CODICE dell'app, non in RELEASE.md — che è fermo alla
+     3.0.0 e non copre queste funzioni. I riscontri sono in STATO.md. */
+  'home.vault.eyebrow': 'The vault',
+  'home.vault.title':   'A quarter of the history you are not allowed to look at',
+  'home.vault.lead':    'From the start, the platform sets aside the last <strong>25%</strong> of every market\u2019s history. Studies, Strategies, Optimisation and Portfolio cannot see it: this is not an out-of-sample, it is a gate.',
+  'home.vault.body':    'That is the whole difference. An out-of-sample can be looked at again and again — and it is, until it agrees with you. This slice cannot. When you think you are done you <strong>spend a verification</strong>, and you get <strong>five</strong> per Strategy. It is spent on a configuration already decided and frozen — never to look for a better one.',
+  'home.vault.note':    'The boundary is recomputed each time from the history available, and never stored: download more recent data and the window moves forward by itself.',
+
+  'home.edge.eyebrow': 'Evidence',
+  'home.edge.title':   'Is it an edge, or is it noise?',
+  'home.edge.lead':    'Given enough attempts, anyone finds a rising curve. So the platform keeps count of <strong>how many configurations you have already tried on that market</strong> — and raises the bar as you go.',
+  'home.edge.body':    'The count is per market, not per session: two timeframes over the same history are not two independent tests, and are counted once. Above the bar, the reading is \u201Cnot explained by the number of attempts alone\u201D — which does not mean \u201Ctrue\u201D. Below it, it is \u201Cindistinguishable from the best of those attempts\u201D, and that is what it says.',
+  'home.edge.note':    'When there are not enough samples the verdict is not softened: it is not shown.',
+
+  'home.defects.eyebrow': 'Register of known defects',
+  'home.defects.title':   'It also tells you when it does not know',
+  'home.defects.lead':    'Inside the platform there is a register of known defects. Every result is checked against it, and if a defect touches that result <strong>the result says so</strong> — with the consequence, and with the limits of that entry.',
+  'home.defects.body':    'There are <strong>three</strong> states, not two: affected, not affected, and <strong>not determinable</strong> — for when the platform has nothing to decide on. Treating \u201CI do not know\u201D as \u201Cno\u201D would be an acquittal without evidence, and that is exactly the defect everything else here exists to avoid.',
+  'home.defects.note':    'An entry joins the register only if its predicate can be evaluated by a machine: a scope described in prose would go back to being a list nobody reads.',
+
+  'home.end.local': 'It runs on your computer, macOS and Windows. No mandatory cloud, no data leaving.',
+
   'home.end.title': 'Try it on your own data',
   'home.end.sub':   'One subscription, two devices, macOS and Windows.',
   'home.end.note':  'SpaceQuant is not a broker: it places no orders and never accesses your account.',

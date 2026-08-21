@@ -401,6 +401,89 @@
   </div>
 </section>
 
+<!-- ===================== LA FETTA CONGELATA =====================
+     ⚠️ Ogni numero di questa sezione e delle due successive è verificato NEL
+     CODICE dell'app, non in RELEASE.md — che è fermo alla 3.0.0 e non copre
+     queste funzioni. I riscontri sono elencati in STATO.md, sezione 3.
+     ============================================================= -->
+<section id="riserva">
+  <div class="wrap-narrow">
+    <div class="sec-head">
+      <p class="eyebrow" data-i18n="home.vault.eyebrow">La riserva</p>
+      <h2 data-i18n="home.vault.title">Un quarto dello storico che non hai il permesso di guardare</h2>
+    </div>
+    <p class="lead" data-i18n-html="home.vault.lead">
+      All'inizio la piattaforma mette da parte l'ultimo <strong>25%</strong> dello
+      storico di ogni mercato. Studio, Strategie, Ottimizzazione e Portafoglio
+      non lo vedono: non è un out-of-sample, è un cancello.
+    </p>
+    <p data-i18n-html="home.vault.body">
+      La differenza è tutta lì. Un out-of-sample si può riguardare all'infinito,
+      e infatti si riguarda finché non dà ragione. Questa fetta no. Quando pensi
+      di aver finito <strong>spendi una verifica</strong>, e ne hai
+      <strong>cinque</strong> per Strategia. Si spende su una configurazione già
+      decisa e congelata — mai per cercarne una migliore.
+    </p>
+    <p class="text-small t3" data-i18n="home.vault.note">
+      Il confine si ricalcola ogni volta sullo storico disponibile, e non viene
+      mai salvato: scaricando dati più recenti la finestra scorre in avanti da
+      sé.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== EDGE O RUMORE ===================== -->
+<section class="bg-soft" id="evidenza">
+  <div class="wrap-narrow">
+    <div class="sec-head">
+      <p class="eyebrow" data-i18n="home.edge.eyebrow">Evidenza</p>
+      <h2 data-i18n="home.edge.title">È un vantaggio, o è rumore?</h2>
+    </div>
+    <p class="lead" data-i18n-html="home.edge.lead">
+      Con abbastanza tentativi una curva che sale la trova chiunque. Per questo
+      la piattaforma tiene il conto di <strong>quante configurazioni hai già
+      provato su quel mercato</strong> — e alza la soglia man mano.
+    </p>
+    <p data-i18n-html="home.edge.body">
+      Il conto è per mercato, non per sessione: due timeframe sullo stesso
+      storico non sono due prove indipendenti, e vengono contati una volta sola.
+      Sopra la soglia la lettura è «non spiegabile solo dal numero di prove» —
+      che non vuol dire «vero». Sotto, è «indistinguibile dal migliore di quelle
+      prove», e viene scritto così.
+    </p>
+    <p class="text-small t3" data-i18n="home.edge.note">
+      Se i campioni non bastano il verdetto non viene ammorbidito: non viene
+      mostrato.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== IL REGISTRO DEI DIFETTI ===================== -->
+<section id="difetti">
+  <div class="wrap-narrow">
+    <div class="sec-head">
+      <p class="eyebrow" data-i18n="home.defects.eyebrow">Registro dei difetti</p>
+      <h2 data-i18n="home.defects.title">Ti dice anche quando non lo sa</h2>
+    </div>
+    <p class="lead" data-i18n-html="home.defects.lead">
+      Dentro la piattaforma c'è un registro dei difetti noti. Ogni risultato ci
+      viene confrontato, e se un difetto lo tocca <strong>il risultato te lo
+      dice</strong>, con la conseguenza e con il limite di quella voce.
+    </p>
+    <p data-i18n-html="home.defects.body">
+      Gli stati sono <strong>tre</strong>, non due: colpito, non colpito, e
+      <strong>non determinabile</strong> — per quando la piattaforma non ha di
+      che decidere. Trattare «non lo so» come «no» sarebbe un'assoluzione senza
+      prova, ed è esattamente il difetto da cui nasce tutto il resto.
+    </p>
+    <p class="text-small t3" data-i18n="home.defects.note">
+      Una voce entra nel registro solo se il suo predicato è eseguibile da una
+      macchina: un ambito descritto a parole tornerebbe a essere un elenco che
+      nessuno legge.
+    </p>
+  </div>
+</section>
+
 <!-- ===================== CHIUSURA ===================== -->
 <section class="bg-soft">
   <div class="wrap-narrow center">
@@ -411,7 +494,11 @@
     <div class="btn-row" style="justify-content:center">
       <a class="btn btn-primary btn-lg" href="pricing.html" data-i18n="home.hero.cta1">Richiedi l'accesso</a>
     </div>
-    <p class="text-small t3 mt-3" data-i18n="home.end.note">
+    <p class="text-small t3 mt-3" data-i18n="home.end.local">
+      Gira sul tuo computer, macOS e Windows. Nessun cloud obbligatorio,
+      nessun dato che parte.
+    </p>
+    <p class="text-small t3" data-i18n="home.end.note">
       SpaceQuant non è un broker: non esegue ordini e non accede al tuo conto.
     </p>
   </div>
