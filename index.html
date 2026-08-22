@@ -424,6 +424,19 @@
       <strong>cinque</strong> per Strategia. Si spende su una configurazione già
       decisa e congelata — mai per cercarne una migliore.
     </p>
+    <!-- La scena. Le parole che finiscono DENTRO il canvas stanno qui in nodi
+         nascosti: così restano traducibili come tutte le altre e check-i18n.js
+         le vede. Il disegno le legge da qui a ogni fotogramma. -->
+    <figure class="sc" id="sc-riserva">
+      <canvas class="sc-canvas" aria-hidden="true"></canvas>
+      <figcaption class="sr-only" data-i18n="home.vault.alt">Una barra con tutto lo storico di un mercato: l'ultimo quarto è chiuso e non viene usato dalla ricerca. Alla fine si spende una delle cinque verifiche disponibili.</figcaption>
+      <span class="sc-words" hidden>
+        <i data-i18n="home.vault.w1">ricerca</i>
+        <i data-i18n="home.vault.w2">riserva</i>
+        <i data-i18n="home.vault.w3">verifiche</i>
+      </span>
+    </figure>
+
     <p class="text-small t3" data-i18n="home.vault.note">
       Il confine si ricalcola ogni volta sullo storico disponibile, e non viene
       mai salvato: scaricando dati più recenti la finestra scorre in avanti da
@@ -451,6 +464,18 @@
       che non vuol dire «vero». Sotto, è «indistinguibile dal migliore di quelle
       prove», e viene scritto così.
     </p>
+    <figure class="sc" id="sc-evidenza">
+      <canvas class="sc-canvas" aria-hidden="true"></canvas>
+      <figcaption class="sr-only" data-i18n="home.edge.alt">La soglia da battere cresce col numero di tentativi già fatti su quel mercato: lo stesso risultato, che all'inizio la superava, a un certo punto non la supera più.</figcaption>
+      <span class="sc-words" hidden>
+        <i data-i18n="home.edge.w1">tentativi su questo mercato</i>
+        <i data-i18n="home.edge.w2">soglia da battere</i>
+        <i data-i18n="home.edge.w3">il tuo risultato</i>
+        <i data-i18n="home.edge.w4">sopra la soglia</i>
+        <i data-i18n="home.edge.w5">indistinguibile dal caso</i>
+      </span>
+    </figure>
+
     <p class="text-small t3" data-i18n="home.edge.note">
       Se i campioni non bastano il verdetto non viene ammorbidito: non viene
       mostrato.
@@ -476,6 +501,23 @@
       che decidere. Trattare «non lo so» come «no» sarebbe un'assoluzione senza
       prova, ed è esattamente il difetto da cui nasce tutto il resto.
     </p>
+    <!-- Tre voci del registro valutate su uno stesso risultato. La terza NON
+         diventa verde: è il punto della sezione, e si vede solo se resta lì. -->
+    <div class="pastiglie" id="sc-difetti">
+      <div class="pas" data-stato="non_colpito">
+        <span class="pas-voce" data-i18n="home.defects.r1">Dati non riparati nel periodo usato</span>
+        <span class="pas-esito" data-i18n="home.defects.s1">non colpito</span>
+      </div>
+      <div class="pas" data-stato="colpito">
+        <span class="pas-voce" data-i18n="home.defects.r2">Finestra a cavallo del cambio di orario</span>
+        <span class="pas-esito" data-i18n="home.defects.s2">colpito</span>
+      </div>
+      <div class="pas" data-stato="non_determinabile">
+        <span class="pas-voce" data-i18n="home.defects.r3">Provenienza delle specifiche di contratto</span>
+        <span class="pas-esito" data-i18n="home.defects.s3">non determinabile</span>
+      </div>
+    </div>
+
     <p class="text-small t3" data-i18n="home.defects.note">
       Una voce entra nel registro solo se il suo predicato è eseguibile da una
       macchina: un ambito descritto a parole tornerebbe a essere un elenco che
@@ -553,5 +595,6 @@
 <script src="assets/cinema.js"></script>
 <script src="assets/space3d.js"></script>
 <script src="assets/flow.js"></script>
+<script src="assets/scene.js"></script>
 </body>
 </html>

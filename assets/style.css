@@ -1574,3 +1574,58 @@ td strong { color: var(--text); }
 .rq-alt { margin: 0 0 1.6rem; }
 .rq-indietro { margin: 0; }
 .rq-indietro a { color: var(--t3); font-size: .9rem; }
+
+/* =============================================================================
+   18. LE SCENE DELLE SEZIONI FINALI
+   Riserva ed evidenza sono canvas: il disegno sta in assets/scene.js. Le
+   pastiglie del registro sono markup, perché sono parole.
+   ============================================================================= */
+
+.sc {
+  margin: clamp(2rem, 5vw, 3rem) 0 clamp(1.6rem, 4vw, 2.4rem);
+}
+.sc-canvas {
+  display: block;
+  width: 100%;
+  /* ⚠️ L'altezza va DICHIARATA, non lasciata al contenuto: un canvas senza
+     altezza collassa a zero, il disegno non ha dove stare e la sezione appare
+     vuota senza che nulla lo segnali. */
+  height: clamp(190px, 30vw, 260px);
+}
+
+/* --- le tre pastiglie ------------------------------------------------------ */
+.pastiglie {
+  display: grid;
+  gap: 10px;
+  margin: clamp(2rem, 5vw, 2.6rem) 0 clamp(1.4rem, 3vw, 2rem);
+}
+.pas {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  padding: 15px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  /* `--on` lo scrive scene.js da 0 a 1. Il ripiego è 1: senza JavaScript, o con
+     animazioni ridotte, le tre righe sono semplicemente lì. */
+  opacity: calc(.15 + var(--on, 1) * .85);
+  transform: translateY(calc((1 - var(--on, 1)) * 10px));
+}
+.pas-voce { color: var(--t2); font-size: .95rem; }
+.pas-esito {
+  flex: 0 0 auto;
+  font-family: var(--mono); font-size: .78rem; font-weight: 600;
+  letter-spacing: .04em;
+  padding: 5px 11px; border-radius: 999px;
+  white-space: nowrap;
+}
+.pas[data-stato="non_colpito"]      .pas-esito { background: rgba(52,199,89,.13);  color: #1f8a3b; }
+.pas[data-stato="colpito"]          .pas-esito { background: rgba(199,119,0,.13);  color: var(--amber); }
+/* ⚠️ Il terzo NON è una versione sbiadita del verde: è un colore suo. Reso come
+   «verde spento» tornerebbe a leggersi come «va bene», ed è esattamente la
+   confusione che il terzo stato esiste per impedire. */
+.pas[data-stato="non_determinabile"] .pas-esito { background: rgba(0,0,0,.07);     color: var(--t2); }
+
+@media (max-width: 560px) {
+  .pas { flex-direction: column; align-items: flex-start; gap: 9px; }
+}

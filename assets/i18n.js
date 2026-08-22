@@ -176,6 +176,26 @@ const I18N_EN = {
   'home.defects.body':    'There are <strong>three</strong> states, not two: affected, not affected, and <strong>not determinable</strong> — for when the platform has nothing to decide on. Treating \u201CI do not know\u201D as \u201Cno\u201D would be an acquittal without evidence, and that is exactly the defect everything else here exists to avoid.',
   'home.defects.note':    'An entry joins the register only if its predicate can be evaluated by a machine: a scope described in prose would go back to being a list nobody reads.',
 
+/* le parole dentro i canvas delle due scene, lette da assets/scene.js */
+  'home.vault.alt': 'A bar showing a market\u2019s whole history: the last quarter is closed and never used by the research. At the end, one of the five available verifications is spent.',
+  'home.vault.w1':  'research',
+  'home.vault.w2':  'vault',
+  'home.vault.w3':  'verifications',
+
+  'home.edge.alt': 'The bar to clear grows with the number of attempts already made on that market: the same result, which cleared it at first, stops clearing it.',
+  'home.edge.w1':  'attempts on this market',
+  'home.edge.w2':  'bar to clear',
+  'home.edge.w3':  'your result',
+  'home.edge.w4':  'above the bar',
+  'home.edge.w5':  'indistinguishable from chance',
+
+  'home.defects.r1': 'Unrepaired data in the period used',
+  'home.defects.s1': 'not affected',
+  'home.defects.r2': 'Window straddling the clock change',
+  'home.defects.s2': 'affected',
+  'home.defects.r3': 'Provenance of the contract specifications',
+  'home.defects.s3': 'not determinable',
+
   'home.end.local': 'It runs on your computer, macOS and Windows. No mandatory cloud, no data leaving.',
 
   'home.end.title': 'Try it on your own data',
