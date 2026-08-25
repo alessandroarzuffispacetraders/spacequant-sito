@@ -1,5 +1,5 @@
 {
-  "versione": "3.2.0",
+  "versione": "3.2.1",
   "pagina_download": "https://spacequantalgo.com/download",
-  "note": "Curva di equity in R o in valuta (anche sovrapposte), con i rendimenti per periodo che seguono lo switch. Swap per simbolo impostabile dall'interfaccia. Pannello indicatori spostabile e ordinato. Avvisi del registro difetti compattati dietro un pulsante."
+  "note": "Le analisi di Backtest e Portafoglio stanno dietro un menu, così la pagina resta leggibile. Monte Carlo con i percorsi simulati, gli estremi evidenziati e la tabella per livello di confidenza. La stessa Strategia si può usare su più asset nello stesso Portafoglio. Curva di equity in R o in valuta. Corretti due pulsanti che non rispondevano."
 }

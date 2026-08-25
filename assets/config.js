@@ -12,8 +12,8 @@
 const CONFIG = {
 
   /* --- Versione pubblicata ------------------------------------------------ */
-  version: '3.2.0',
-  commit: 'e1d7bc4',
+  version: '3.2.1',
+  commit: '728d5f9',
   releaseDate: '2026-08-13',
 
   /* --- Dove stanno gli installer -----------------------------------------
@@ -31,7 +31,7 @@ const CONFIG = {
 
      Cambiare distributore è questa riga sola: la forma «base + nome del file»
      è la stessa su GitHub, su un bucket R2 o su qualunque altro appoggio.     */
-  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.2.0',
+  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.2.1',
 
   /* --- Checkout Whop ------------------------------------------------------
      Whop ospita già la pagina di pagamento: il sito non incassa nulla,
@@ -98,25 +98,25 @@ const CONFIG = {
     macArm: {
       file: 'SpaceQuant-Algo-arm64.dmg',
       size: 447,
-      sha256: '5c81ec415c8ff11928df903cfa94b0f2c4ab8239a4eec557092a74650f6b3ce4',
+      sha256: 'faadc99b81bd89d114423c15f9a680b0a0587608248774217382586351ee776c',
       os: 'mac', arch: 'arm64',
     },
     macIntel: {
       file: 'SpaceQuant-Algo-x64.dmg',
       size: 490,
-      sha256: '6384caa0669b66b8bb44fd83bff67cc98291e6a843acd87b1bde7dc75882c29d',
+      sha256: '8c7bd2b61e44b2a3c2de6384b41c47b006cd7453eb2e6543a88754adf80ce1ac',
       os: 'mac', arch: 'x64',
     },
     winSetup: {
       file: 'SpaceQuant-Algo-Setup-x64.exe',
       size: 308,
-      sha256: 'c535933e718a1471924c084b5cf605c54f1726e581e91b8436743a0d188372ac',
+      sha256: 'bb8cbae5e6b6678dd5c883f9f4f12288c20f18406c0603b9d6aa88904b51f112',
       os: 'win', arch: 'x64',
     },
     winPortable: {
       file: 'SpaceQuant-Algo-portable-x64.zip',
       size: 453,
-      sha256: 'c8056ab5a30e6824a1ff68b7b03ad40bc9ddde64198d7218c0af4cb8c1616f12',
+      sha256: 'aa8c93fa09b541b9cd9b9f7cf263e3766af82d2e7b6e1b2578a3be22a87563ce',
       os: 'win', arch: 'x64',
     },
   },
