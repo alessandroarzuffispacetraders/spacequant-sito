@@ -1,5 +1,5 @@
 {
-  "versione": "3.3.0",
+  "versione": "3.4.0",
   "pagina_download": "https://spacequantalgo.com/download",
-  "note": "Progetti: il tuo lavoro in una cartella tua, che puoi aprire, salvare e passare. E i Concetti ora si cercano."
+  "note": "Ora si possono eliminare Strategie, ricerche e backtest — con un cestino che li tiene, e l'avviso se qualcosa li sta usando. Il Portafoglio decide il rischio per trade, uguale per tutte le Strategie. E la pagina non esce più dalla finestra: niente più scorrere a destra per premere un pulsante."
 }
