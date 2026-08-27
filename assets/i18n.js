@@ -79,6 +79,7 @@ const I18N_EN = {
   'ft.product': 'Product',
   'ft.support': 'Support',
   'ft.d1':      'SpaceQuant is a research and development tool. It is not a broker, it does not place orders, it does not access your trading account, and it does not provide financial advice.',
+  'ft.copy':    '© 2026 Orion Trade Dynamics LLC — SpaceQuant is one of its products.',
   'ft.d2':      'A backtest is a measurement over historical data, not a forecast of future results. Trading carries the risk of losing the capital you invest.',
 
   /* =========================================================================

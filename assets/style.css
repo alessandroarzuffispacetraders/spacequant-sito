@@ -1629,3 +1629,11 @@ td strong { color: var(--text); }
 @media (max-width: 560px) {
   .pas { flex-direction: column; align-items: flex-start; gap: 9px; }
 }
+
+/* L'identità dell'azienda nel piè di pagina. Sta dentro `.disclaimer`, che è
+   già il blocco delle cose che si dichiarano; qui serve solo staccarla dalle
+   avvertenze e rendere leggibili l'indirizzo e il codice. */
+.disclaimer .azienda { margin-bottom: 1em; line-height: 1.8; }
+.disclaimer .azienda strong { color: var(--t2); font-weight: 620; }
+.disclaimer .azienda a { color: var(--t2); }
+.disclaimer .azienda a:hover { color: var(--text); }
