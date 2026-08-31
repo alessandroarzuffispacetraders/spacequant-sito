@@ -81,17 +81,25 @@
 
   const TESTI = {
     it: {
+      /* ⚠️ La call sta nella STESSA frase d'apertura, non su una riga a parte:
+         il messaggio resta di cinque righe — sotto la soglia oltre la quale in
+         chat si scorre invece di leggere — e le due richieste sono una cosa
+         sola, non un elenco di cose volute.
+         Vale anche per chi arriva dall'abbonamento: la call è in corso, e
+         chiederla solo a metà delle persone vorrebbe dire perderne metà. */
       apertura: (piano) => 'Ciao, vorrei richiedere l\'accesso a SpaceQuant' +
-                           (piano ? ' (piano ' + piano + ')' : '') + '.',
+                           (piano ? ' (piano ' + piano + ')' : '') + 
+                           ' e partecipare alla call di lancio.',
       r1: 'Oggi', r2: 'Provo le strategie', r3: 'Vorrei',
-      oggetto: (piano) => 'Richiesta di accesso a SpaceQuant' + (piano ? ' — piano ' + piano : ''),
+      oggetto: (piano) => 'Accesso a SpaceQuant e call di lancio' + (piano ? ' — piano ' + piano : ''),
       copiato: 'Copiato',
     },
     en: {
       apertura: (piano) => 'Hi, I would like to request access to SpaceQuant' +
-                           (piano ? ' (' + piano + ' plan)' : '') + '.',
+                           (piano ? ' (' + piano + ' plan)' : '') + 
+                           ' and join the launch call.',
       r1: 'Today', r2: 'I test strategies with', r3: 'I would like to',
-      oggetto: (piano) => 'SpaceQuant access request' + (piano ? ' — ' + piano + ' plan' : ''),
+      oggetto: (piano) => 'SpaceQuant access and launch call' + (piano ? ' — ' + piano + ' plan' : ''),
       copiato: 'Copied',
     },
   };

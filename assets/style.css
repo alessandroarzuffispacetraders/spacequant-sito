@@ -1637,3 +1637,17 @@ td strong { color: var(--text); }
 .disclaimer .azienda strong { color: var(--t2); font-weight: 620; }
 .disclaimer .azienda a { color: var(--t2); }
 .disclaimer .azienda a:hover { color: var(--text); }
+
+/* ⚠️ Il pulsante secondario della prima schermata sta su FONDO NERO: la variante
+   normale usa il colore del testo della pagina, che lì sarebbe invisibile. È il
+   genere di difetto che non dà errore — un pulsante che c'è, funziona, e non si
+   vede. */
+.cine-title .btn-ghost {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .38);
+  background: rgba(255, 255, 255, .04);
+}
+.cine-title .btn-ghost:hover {
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(255, 255, 255, .6);
+}

@@ -87,6 +87,7 @@ const I18N_EN = {
      ========================================================================= */
   'home.hero.h1':      'Your whole backtest,<br>in one click.',
   'home.hero.cta1':    'Request access',
+  'home.hero.cta2':    'Launch call',
   'home.cine.hint':    'Scroll',
 
   /* La barra strumenti dell'applicazione ricostruita nella scena */
