@@ -12,8 +12,8 @@
 const CONFIG = {
 
   /* --- Versione pubblicata ------------------------------------------------ */
-  version: '3.5.0',
-  commit: '8ae8ab3',
+  version: '3.6.0',
+  commit: '8e71f93',
   releaseDate: '2026-08-13',
 
   /* --- Dove stanno gli installer -----------------------------------------
@@ -31,7 +31,7 @@ const CONFIG = {
 
      Cambiare distributore è questa riga sola: la forma «base + nome del file»
      è la stessa su GitHub, su un bucket R2 o su qualunque altro appoggio.     */
-  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.5.0',
+  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.6.0',
 
   /* --- Checkout Whop ------------------------------------------------------
      Whop ospita già la pagina di pagamento: il sito non incassa nulla,
@@ -97,26 +97,26 @@ const CONFIG = {
   builds: {
     macArm: {
       file: 'SpaceQuant-Algo-arm64.dmg',
-      size: 446,
-      sha256: '056d738305ad302217a1faf1fddcf9cf6079fd6c7fae75fa811907e8de74d1aa',
+      size: 447,
+      sha256: 'ad8a3a837e538b53f6706631fb67352765b6121a404039a6ebbbf3d2658ecb10',
       os: 'mac', arch: 'arm64',
     },
     macIntel: {
       file: 'SpaceQuant-Algo-x64.dmg',
       size: 490,
-      sha256: '81238956d3d36b42e1750f7b1961764eb32caa21e7042355ffca2982af8f2c9a',
+      sha256: 'c189ec687b58f0b57dbd05cc6f9a8ea3838074bc4edff14ad2f947a1604010a7',
       os: 'mac', arch: 'x64',
     },
     winSetup: {
       file: 'SpaceQuant-Algo-Setup-x64.exe',
       size: 308,
-      sha256: 'e2cdc176eed52e1757da9318b06de5d68114217b8b8fbd2616dbb5a22bf01dbf',
+      sha256: 'f967bf610e1de2ea28076eafd085306476136272181c2b0fb4c3fdfd57447d91',
       os: 'win', arch: 'x64',
     },
     winPortable: {
       file: 'SpaceQuant-Algo-portable-x64.zip',
       size: 453,
-      sha256: 'da836ca5d7cd5ac468ae8c8d0bccfdb7f8024e2d6d8cbde7e7c7b1f97b528396',
+      sha256: '77f484942bb3ec5160407cfd7dda0c81940a8bdf139f3a5068314524e856f00f',
       os: 'win', arch: 'x64',
     },
   },
