@@ -12,8 +12,8 @@
 const CONFIG = {
 
   /* --- Versione pubblicata ------------------------------------------------ */
-  version: '3.6.0',
-  commit: '8e71f93',
+  version: '3.7.0',
+  commit: 'e7651fd',
   releaseDate: '2026-08-13',
 
   /* --- Dove stanno gli installer -----------------------------------------
@@ -31,7 +31,7 @@ const CONFIG = {
 
      Cambiare distributore è questa riga sola: la forma «base + nome del file»
      è la stessa su GitHub, su un bucket R2 o su qualunque altro appoggio.     */
-  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.6.0',
+  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.7.0',
 
   /* --- Checkout Whop ------------------------------------------------------
      Whop ospita già la pagina di pagamento: il sito non incassa nulla,
