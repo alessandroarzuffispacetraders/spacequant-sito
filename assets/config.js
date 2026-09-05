@@ -97,26 +97,26 @@ const CONFIG = {
   builds: {
     macArm: {
       file: 'SpaceQuant-Algo-arm64.dmg',
-      size: 447,
-      sha256: 'ad8a3a837e538b53f6706631fb67352765b6121a404039a6ebbbf3d2658ecb10',
+      size: 448,
+      sha256: '67efe720f48571617f268cd70d7f1b69147fc4ab95790748a2421357b7069474',
       os: 'mac', arch: 'arm64',
     },
     macIntel: {
       file: 'SpaceQuant-Algo-x64.dmg',
       size: 490,
-      sha256: 'c189ec687b58f0b57dbd05cc6f9a8ea3838074bc4edff14ad2f947a1604010a7',
+      sha256: '7bbe897e1922a6e62978a0a687ac3d8d2ce4b43be8d449ed6bc269a0fcb6a68f',
       os: 'mac', arch: 'x64',
     },
     winSetup: {
       file: 'SpaceQuant-Algo-Setup-x64.exe',
       size: 308,
-      sha256: 'f967bf610e1de2ea28076eafd085306476136272181c2b0fb4c3fdfd57447d91',
+      sha256: '8ccd6d7daeea722ff5cb8c988b6a1e820fc0876b9e973be18ae1715885194b82',
       os: 'win', arch: 'x64',
     },
     winPortable: {
       file: 'SpaceQuant-Algo-portable-x64.zip',
       size: 453,
-      sha256: '77f484942bb3ec5160407cfd7dda0c81940a8bdf139f3a5068314524e856f00f',
+      sha256: 'a146b78eb279af3750b733dbde829fb40116e1be42981033d15cc38629feb2a9',
       os: 'win', arch: 'x64',
     },
   },
