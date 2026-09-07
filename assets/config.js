@@ -12,8 +12,8 @@
 const CONFIG = {
 
   /* --- Versione pubblicata ------------------------------------------------ */
-  version: '3.8.0',
-  commit: '5120b67',
+  version: '3.8.1',
+  commit: '4ac3d44',
   releaseDate: '2026-08-13',
 
   /* --- Dove stanno gli installer -----------------------------------------
@@ -31,7 +31,7 @@ const CONFIG = {
 
      Cambiare distributore è questa riga sola: la forma «base + nome del file»
      è la stessa su GitHub, su un bucket R2 o su qualunque altro appoggio.     */
-  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.0',
+  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.1',
 
   /* --- Checkout Whop ------------------------------------------------------
      Whop ospita già la pagina di pagamento: il sito non incassa nulla,
@@ -97,26 +97,26 @@ const CONFIG = {
   builds: {
     macArm: {
       file: 'SpaceQuant-Algo-arm64.dmg',
-      size: 449,
-      sha256: '981229c4447dd23c0576aeb9a7bdfecc4b3e58bf6fb14b671915dd3cdad75299',
+      size: 448,
+      sha256: 'e1f96857f2c687cae31d19970ffba0dd05d432fc34465b49607812d35b7e6590',
       os: 'mac', arch: 'arm64',
     },
     macIntel: {
       file: 'SpaceQuant-Algo-x64.dmg',
       size: 491,
-      sha256: '2fd5710fe1a77b3e850da88899a70aeb19c59980f8402ab280c2bc5bf5c0edc2',
+      sha256: 'a5d26b49e267b3b078652cade2bd2a11cf22551a1bb2b025a18c6e98523453bc',
       os: 'mac', arch: 'x64',
     },
     winSetup: {
       file: 'SpaceQuant-Algo-Setup-x64.exe',
       size: 308,
-      sha256: 'da0cceaa5bc663e3b08230cac3cf63b86740631221035b3eb37ae7d299d61cc1',
+      sha256: 'c5e6bd6a5612f85dd25c1f7a7ded6c385ecf335e9c2bbded1877dd34a2fc6390',
       os: 'win', arch: 'x64',
     },
     winPortable: {
       file: 'SpaceQuant-Algo-portable-x64.zip',
       size: 453,
-      sha256: '1512733c49728b185aff1f2dc52f0543d6a44bea905e5aede1b27640ebfc87fa',
+      sha256: '32f946e27e985a3e4e2a6cb181ed8596f3a7781206f9364149b182bfadac6078',
       os: 'win', arch: 'x64',
     },
   },
