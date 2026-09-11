@@ -1,5 +1,5 @@
 {
-  "versione": "3.8.1",
+  "versione": "3.8.2",
   "pagina_download": "https://spacequantalgo.com/download",
-  "note": "Gli aggiornamenti ora arrivano davvero: il controllo versione era muto in tutte le build dal 19 agosto."
+  "note": "Parte anche su macOS 12.3+ (prima serviva macOS 14). Validazione dei Concetti piu' affidabile su macchine lente, e walk-forward corretto su vault e verdetto."
 }
