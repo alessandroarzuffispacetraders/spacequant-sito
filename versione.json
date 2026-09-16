@@ -1,5 +1,35 @@
 {
-  "versione": "3.8.3",
+  "versione": "3.8.4",
   "pagina_download": "https://spacequantalgo.com/download",
-  "note": "Le pagine si aprono di nuovo, i Concetti non spariscono piu' e i download su Windows non si fermano a meta'."
+  "note": "Gli aggiornamenti si scaricano e si installano dall'app. La licenza si rinnova da sola. E un file di stato rotto non impedisce piu' di aprire il programma.",
+  "artefatti": {
+    "macArm": {
+      "file": "SpaceQuant-Algo-arm64.dmg",
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.4/SpaceQuant-Algo-arm64.dmg",
+      "sha256": "e1d09e6163949ea1c7346fe9da26921ebe47412c09deac45fa6703889c9ca12f",
+      "size_mb": 463,
+      "size_byte": 463262652
+    },
+    "macIntel": {
+      "file": "SpaceQuant-Algo-x64.dmg",
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.4/SpaceQuant-Algo-x64.dmg",
+      "sha256": "cb0e8f2850328fb405fda453d54c8de9aa3052328a8aea5fc413e049e0d727c4",
+      "size_mb": 510,
+      "size_byte": 510321219
+    },
+    "winSetup": {
+      "file": "SpaceQuant-Algo-Setup-x64.exe",
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.4/SpaceQuant-Algo-Setup-x64.exe",
+      "sha256": "2276b8394f294dafb9f5d916f184bf838d49d63ce23bc1ee8329d8739a37da22",
+      "size_mb": 309,
+      "size_byte": 308555560
+    },
+    "winPortable": {
+      "file": "SpaceQuant-Algo-portable-x64.zip",
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.4/SpaceQuant-Algo-portable-x64.zip",
+      "sha256": "193e01e73e37c80d2c674eed1f73ed88c160e400eef0bd1cda54f7a73c5848a3",
+      "size_mb": 453,
+      "size_byte": 453398355
+    }
+  }
 }
