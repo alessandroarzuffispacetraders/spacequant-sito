@@ -12,8 +12,8 @@
 const CONFIG = {
 
   /* --- Versione pubblicata ------------------------------------------------ */
-  version: '3.8.4',
-  commit: 'd925ba7',
+  version: '3.8.5',
+  commit: '1600736',
   releaseDate: '2026-08-13',
 
   /* --- Dove stanno gli installer -----------------------------------------
@@ -31,7 +31,7 @@ const CONFIG = {
 
      Cambiare distributore è questa riga sola: la forma «base + nome del file»
      è la stessa su GitHub, su un bucket R2 o su qualunque altro appoggio.     */
-  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.4',
+  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.5',
 
   /* --- Checkout Whop ------------------------------------------------------
      Whop ospita già la pagina di pagamento: il sito non incassa nulla,
@@ -97,26 +97,26 @@ const CONFIG = {
   builds: {
     macArm: {
       file: 'SpaceQuant-Algo-arm64.dmg',
-      size: 463,
-      sha256: 'e1d09e6163949ea1c7346fe9da26921ebe47412c09deac45fa6703889c9ca12f',
+      size: 464,
+      sha256: '02d08bafc425e2e2a10bc50782b98d84f6eccfd2737e2fd62b18b1906999aa87',
       os: 'mac', arch: 'arm64',
     },
     macIntel: {
       file: 'SpaceQuant-Algo-x64.dmg',
-      size: 510,
-      sha256: 'cb0e8f2850328fb405fda453d54c8de9aa3052328a8aea5fc413e049e0d727c4',
+      size: 511,
+      sha256: '8a0800ccf7b67078e70e9340e03a1a81f3c01208500f28018e99d738a0cc74b4',
       os: 'mac', arch: 'x64',
     },
     winSetup: {
       file: 'SpaceQuant-Algo-Setup-x64.exe',
       size: 309,
-      sha256: '2276b8394f294dafb9f5d916f184bf838d49d63ce23bc1ee8329d8739a37da22',
+      sha256: '6db271cb86793ea7edbb2a691ad45da60aee2f51c45515280043f8a4f6e26b3e',
       os: 'win', arch: 'x64',
     },
     winPortable: {
       file: 'SpaceQuant-Algo-portable-x64.zip',
-      size: 453,
-      sha256: '193e01e73e37c80d2c674eed1f73ed88c160e400eef0bd1cda54f7a73c5848a3',
+      size: 454,
+      sha256: '61c1e64f85bd763c7022f07c3e20989e72926889be2038c15b5ca9ec439e6588',
       os: 'win', arch: 'x64',
     },
   },
