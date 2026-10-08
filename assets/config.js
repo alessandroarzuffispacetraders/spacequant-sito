@@ -12,8 +12,8 @@
 const CONFIG = {
 
   /* --- Versione pubblicata ------------------------------------------------ */
-  version: '3.8.6',
-  commit: '22f18e9',
+  version: '3.8.7',
+  commit: '29e0e92',
   releaseDate: '2026-08-13',
 
   /* --- Dove stanno gli installer -----------------------------------------
@@ -31,7 +31,7 @@ const CONFIG = {
 
      Cambiare distributore è questa riga sola: la forma «base + nome del file»
      è la stessa su GitHub, su un bucket R2 o su qualunque altro appoggio.     */
-  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.6',
+  downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.7',
 
   /* --- Checkout Whop ------------------------------------------------------
      Whop ospita già la pagina di pagamento: il sito non incassa nulla,
@@ -98,25 +98,25 @@ const CONFIG = {
     macArm: {
       file: 'SpaceQuant-Algo-arm64.dmg',
       size: 464,
-      sha256: 'd59bb4fcfbbd7d32c8f03b87ee994217272897bce36efd3b28a61e377ab8d5a7',
+      sha256: '9fb3f795256ea0d71271c160f23b1148e43c49a2f5c1ac1a66fab349ba96d56f',
       os: 'mac', arch: 'arm64',
     },
     macIntel: {
       file: 'SpaceQuant-Algo-x64.dmg',
-      size: 511,
-      sha256: '18229263c2bc2f623bfdcc228ad20efc482358cacf5aaa82cf0cb6d1f770967e',
+      size: 512,
+      sha256: 'f540f1a7842ee94ffd9d0b2c42eebce2d6ec88e5cb417d3f02192692817dfe6e',
       os: 'mac', arch: 'x64',
     },
     winSetup: {
       file: 'SpaceQuant-Algo-Setup-x64.exe',
       size: 309,
-      sha256: 'b9a28b118e21c185300c34f1e4ec8527715d120d152bb130fc1c4fa26294f8c5',
+      sha256: '82c80f80b64dce7f6082dab2677a6b4f36f0c2cb3db02ab5ff66364adf92b16b',
       os: 'win', arch: 'x64',
     },
     winPortable: {
       file: 'SpaceQuant-Algo-portable-x64.zip',
       size: 454,
-      sha256: '4c94338cd82a0eeec9257d3b027a4b9ac84a3299a716d2c29e617eb81122170b',
+      sha256: 'd22047b54a07c07d0d47a27ad651f93c4f4a5405dd3c563c9b1fe41e16bffbb7',
       os: 'win', arch: 'x64',
     },
   },

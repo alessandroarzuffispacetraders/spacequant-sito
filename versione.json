@@ -1,35 +1,35 @@
 {
-  "versione": "3.8.6",
+  "versione": "3.8.7",
   "pagina_download": "https://spacequantalgo.com/download",
-  "note": "Nuovo: ordini pendenti (stop e limit) nel backtest, visibili sul grafico e nel replay. Un Concetto con lo stesso nome di un indicatore interno (es. ema, rsi) viene rinominato da solo (ema_utente) e le Strategie che lo usano continuano a funzionare. Su Windows non si blocca più l'importazione nel Portafoglio, e i nomi con apostrofi o barre non creano problemi. Il risultato dopo i costi si legge dentro ogni Strategia, e il pannello delle analisi non si chiude più da solo. L'export MQL5 con ordini pendenti è sospeso in questa versione.",
+  "note": "Portafoglio rinnovato: le Strategie si aggiungono, si tolgono e si pesano dallo spazio di lavoro, anche prendendole da un altro progetto, e una Strategia migliorata nel progetto d'origine si aggiorna con un clic. Il rischio per trade si imposta in un posto solo e si legge accanto a ogni Strategia; ogni Strategia si converte nella valuta del Portafoglio; dopo una modifica il risultato è segnato «superato» finché non rilanci; la curva cresce mentre il run gira; le verifiche fuori campione si guardano nella pagina, con le metriche dentro e fuori campione. I Concetti già validati restano validati quando importi una Strategia. Il Monte Carlo previsionale usa il rischio nella valuta del conto.",
   "artefatti": {
     "macArm": {
       "file": "SpaceQuant-Algo-arm64.dmg",
-      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.6/SpaceQuant-Algo-arm64.dmg",
-      "sha256": "d59bb4fcfbbd7d32c8f03b87ee994217272897bce36efd3b28a61e377ab8d5a7",
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.7/SpaceQuant-Algo-arm64.dmg",
+      "sha256": "9fb3f795256ea0d71271c160f23b1148e43c49a2f5c1ac1a66fab349ba96d56f",
       "size_mb": 464,
-      "size_byte": 463865155
+      "size_byte": 464058459
     },
     "macIntel": {
       "file": "SpaceQuant-Algo-x64.dmg",
-      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.6/SpaceQuant-Algo-x64.dmg",
-      "sha256": "18229263c2bc2f623bfdcc228ad20efc482358cacf5aaa82cf0cb6d1f770967e",
-      "size_mb": 511,
-      "size_byte": 511469362
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.7/SpaceQuant-Algo-x64.dmg",
+      "sha256": "f540f1a7842ee94ffd9d0b2c42eebce2d6ec88e5cb417d3f02192692817dfe6e",
+      "size_mb": 512,
+      "size_byte": 511728252
     },
     "winSetup": {
       "file": "SpaceQuant-Algo-Setup-x64.exe",
-      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.6/SpaceQuant-Algo-Setup-x64.exe",
-      "sha256": "b9a28b118e21c185300c34f1e4ec8527715d120d152bb130fc1c4fa26294f8c5",
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.7/SpaceQuant-Algo-Setup-x64.exe",
+      "sha256": "82c80f80b64dce7f6082dab2677a6b4f36f0c2cb3db02ab5ff66364adf92b16b",
       "size_mb": 309,
-      "size_byte": 309138550
+      "size_byte": 309272657
     },
     "winPortable": {
       "file": "SpaceQuant-Algo-portable-x64.zip",
-      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.6/SpaceQuant-Algo-portable-x64.zip",
-      "sha256": "4c94338cd82a0eeec9257d3b027a4b9ac84a3299a716d2c29e617eb81122170b",
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.7/SpaceQuant-Algo-portable-x64.zip",
+      "sha256": "d22047b54a07c07d0d47a27ad651f93c4f4a5405dd3c563c9b1fe41e16bffbb7",
       "size_mb": 454,
-      "size_byte": 454290322
+      "size_byte": 454453541
     }
   }
 }
