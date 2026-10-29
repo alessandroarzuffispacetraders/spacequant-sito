@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="head.ab.t">Attiva l'abbonamento — SpaceQuant</title>
+<meta name="description" data-i18n-attr="content:head.ab.d" content="Attiva SpaceQuant: abbonamento mensile, trimestrale o annuale. Il pagamento è elaborato da Whop: il sito non vede né conserva i dati della carta.">
+<link rel="icon" href="assets/img/logo-small.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Vedi la nota estesa in index.html: valori assoluti, riscritti tutti insieme
+     da tools/dominio.py. Niente canonical: questa pagina è `noindex` perché è
+     un passaggio, non un contenuto.
+     Chi la trova da una ricerca arriva a un modulo di pagamento senza aver
+     letto niente di ciò che sta comprando. La porta d'ingresso è pricing.html. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SpaceQuant">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="Attiva l'abbonamento — SpaceQuant">
+<meta property="og:description" content="Attiva SpaceQuant: abbonamento mensile, trimestrale o annuale. Il pagamento è elaborato da Whop.">
+<meta property="og:url" content="https://spacequantalgo.com/abbonati.html">
+<meta property="og:image" content="https://spacequantalgo.com/assets/img/social-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SpaceQuant Algo">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ===================== PROMOZIONE =====================
+     Il codice sconto di CONFIG.promo, uguale in ogni pagina. Lo riempie e lo
+     nasconde site.js: con `promo: null`, o chiuso dalla croce, non c'è.
+     «Abbonati» porta al pagamento del piano scontato, col codice già
+     inserito; nella pagina abbonamento apre la finestra invece di cambiare
+     pagina. -->
+<aside class="promo" id="promo" hidden>
+  <div class="promo-in">
+    <span class="promo-txt" data-i18n="promo.text">Sconto sul piano mensile con il codice</span>
+    <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+    <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  </div>
+  <button type="button" class="promo-x" id="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo-small.png" alt="">
+      <span>SpaceQuant</span>
+    </a>
+    <nav class="nav">
+      <a class="hide-sm" href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
+      <a class="hide-sm" href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
+      <a href="pricing.html" aria-current="page" data-i18n="nav.pricing">Abbonamento</a>
+      <a href="download.html" data-i18n="nav.dl">Download</a>
+      <div class="lang" role="group" aria-label="Lingua / Language">
+        <button type="button" data-lang="it" aria-pressed="true">IT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- =========================================================================
+     IL PAGAMENTO, DENTRO IL SITO
+     A sinistra tutto ciò che è nostro: il piano, il prezzo, cosa comprende, cosa
+     succede dopo. A destra il modulo di Whop, montato da assets/checkout.js in
+     un riquadro con i nostri colori. La stessa cosa si apre come finestra
+     sopra pricing.html: questa pagina è l'indirizzo dei link diretti e il
+     posto dove Whop riporta dopo 3-D Secure o PayPal. Whop resta SOLO l'ultimo passaggio — la
+     carta — ed è l'unica cosa che non può stare da noi: è lì che serve un
+     processore di pagamento, non un sito statico.
+
+     Lo script di Whop si carica SOLO a configurazione completa: è l'unica
+     richiesta a un servizio esterno di tutto il sito.
+     ========================================================================= -->
+<section class="ab">
+  <div class="wrap ab-grid">
+
+    <!-- --- Il riepilogo ---------------------------------------------------- -->
+    <aside class="ab-sum">
+      <p class="eyebrow" data-i18n="ab.eyebrow">Abbonamento</p>
+      <h1 data-i18n="ab.title">Attiva SpaceQuant</h1>
+
+      <!-- La scelta del piano. Sono pulsanti radio, non link: cambiare piano
+           rimonta il modulo di pagamento sul posto, senza ricaricare la
+           pagina. L'indirizzo segue la scelta (?piano=…). -->
+      <div class="ab-switch" role="radiogroup" data-i18n-attr="aria-label:ab.switch" aria-label="Scegli il piano">
+        <button type="button" role="radio" class="ab-opt" data-piano="mensile" aria-checked="false"><span data-i18n="pr.m.name">Mensile</span></button>
+        <button type="button" role="radio" class="ab-opt" data-piano="trimestrale" aria-checked="false"><span data-i18n="pr.q.name">Trimestrale</span></button>
+        <button type="button" role="radio" class="ab-opt" data-piano="annuale" aria-checked="true"><span data-i18n="pr.y.name">Annuale</span></button>
+        <span class="ab-switch-thumb" aria-hidden="true"></span>
+      </div>
+
+      <div class="ab-price">
+        <span class="plan-cur" data-cfg="pricing.currency">€</span><span
+              class="plan-amount" id="ab-amount">—</span>
+        <span class="plan-per" id="ab-per" data-i18n="pr.y.per">/ anno</span>
+      </div>
+      <p class="ab-calc" id="ab-calc"></p>
+      <!-- La promozione, solo quando è scelto il piano a cui vale
+           (abbonati.js). -->
+      <div class="plan-promo" id="ab-promo" hidden>
+        <span data-i18n="pr.promo">Sconto con il codice</span>
+        <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+        <span class="plan-promo-note" data-i18n="pr.promo.auto">già inserito nel pagamento</span>
+      </div>
+
+      <ul class="list list-check ab-inc">
+        <li data-i18n="ab.inc1">Tutte le funzioni, nessun livello: strategie, backtest, ottimizzazione, portafogli, export in MQL5</li>
+        <li data-i18n="ab.inc2">Due dispositivi, macOS e Windows</li>
+        <li data-i18n="ab.inc3">Aggiornamenti inclusi per tutta la durata</li>
+        <li data-i18n="ab.inc4">Si disdice quando vuoi, dal tuo account Whop</li>
+      </ul>
+
+      <!-- Cosa succede dopo: la domanda che si fa chi sta per pagare, e la
+           risposta che toglie il dubbio «e poi?». -->
+      <div class="ab-next">
+        <p class="mono-label" data-i18n="ab.next">Dopo il pagamento</p>
+        <ol class="ab-next-list">
+          <li><span class="ab-next-n">1</span><span data-i18n="ab.next1">Arrivi alla pagina di download, con il file giusto per il tuo computer</span></li>
+          <li><span class="ab-next-n">2</span><span data-i18n="ab.next2">Al primo avvio accedi con lo stesso account Whop</span></li>
+          <li><span class="ab-next-n">3</span><span data-i18n="ab.next3">La licenza arriva da sola, e funziona anche offline per 14 giorni</span></li>
+        </ol>
+      </div>
+    </aside>
+
+    <!-- --- Il pagamento ----------------------------------------------------- -->
+    <div class="ab-pay">
+
+      <!-- Esito di un pagamento che è passato da una pagina esterna (3-D Secure,
+           PayPal…) ed è tornato qui. Il successo NON si mostra qui: si va dritti
+           al download. Qui si vede solo ciò che non è andato. -->
+      <div class="note note-warn ab-fail" id="ab-fail" hidden>
+        <div class="note-title" data-i18n="ab.fail.t">Il pagamento non è andato a buon fine</div>
+        <p data-i18n="ab.fail.b">Il pagamento non è stato completato. Puoi riprovare qui sotto, anche con un altro metodo.</p>
+      </div>
+
+      <div class="ab-card" id="ab-card">
+        <div class="ab-card-head">
+          <span class="ab-lock" aria-hidden="true">
+            <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4.5 7V5.2a3.5 3.5 0 0 1 7 0V7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="2.8" y="7" width="10.4" height="7.2" rx="2" fill="currentColor"/></svg>
+          </span>
+          <span class="ab-card-title" data-i18n="ab.secure">Pagamento sicuro</span>
+          <span class="ab-card-by" data-i18n="ab.by">elaborato da Whop</span>
+        </div>
+
+        <!-- Qui Whop monta il suo riquadro. Lo scheletro sotto tiene il posto
+             finché il modulo non arriva: un rettangolo vuoto per due secondi
+             sembra una pagina rotta, uno scheletro sembra una pagina che carica. -->
+        <div class="ab-frame" id="ab-frame">
+          <div class="ab-skel" id="ab-skel" aria-hidden="true">
+            <span class="sk sk-l"></span><span class="sk sk-f"></span>
+            <span class="sk sk-l"></span><span class="sk sk-f"></span>
+            <span class="sk sk-row"><span class="sk sk-f"></span><span class="sk sk-f"></span></span>
+            <span class="sk sk-btn"></span>
+          </div>
+          <div id="ab-mount"></div>
+        </div>
+
+        <p class="ab-direct text-small t3" id="ab-direct-row">
+          <span data-i18n="ab.direct">Il modulo non si carica?</span>
+          <a id="ab-direct" href="#" rel="noopener" data-i18n="ab.direct.cta">Paga direttamente su whop.com</a>
+        </p>
+      </div>
+
+      <p class="ab-legal text-small t3" id="ab-legal" data-i18n="ab.legal">
+        I dati della carta li riceve ed elabora Whop: questo sito non li vede e
+        non li conserva. Il rinnovo è automatico alla fine di ogni periodo, finché
+        non disdici.
+      </p>
+
+      <!-- Avviso visibile solo finché la configurazione non è completa -->
+      <div class="note note-warn hidden" id="ab-todo">
+        <div class="note-title">⚠️ Configurazione incompleta</div>
+        <p id="ab-todo-body"></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:14px">
+          <img src="assets/img/logo-small.png" alt="">
+          <span>SpaceQuant</span>
+        </a>
+        <p class="text-small t3" data-i18n="ft.tag">
+          Ricerca su strategie algoritmiche, con export verificabile verso
+          MetaTrader 5.
+        </p>
+      </div>
+      <div>
+        <h4 data-i18n="ft.product">Prodotto</h4>
+        <a href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
+        <a href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
+        <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+        <a href="download.html" data-i18n="nav.dl">Download</a>
+        <a href="broker.html" data-i18n="nav.broker">Per i broker</a>
+      </div>
+      <div>
+        <h4 data-i18n="ft.support">Assistenza</h4>
+        <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">da definire</span></a>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p data-i18n="ft.d1">
+        SpaceQuant è uno strumento di ricerca e di sviluppo. Non è un broker, non
+        esegue ordini, non accede al tuo conto di trading e non fornisce
+        consulenza finanziaria.
+      </p>
+      <p data-i18n="ft.d2">
+        Un backtest è una misura su dati storici e non è una previsione dei
+        risultati futuri. Fare trading comporta il rischio di perdere il capitale
+        investito.
+      </p>
+      <!-- ⚠️ Identità dell'azienda: NON passa dal dizionario. Ragione sociale,
+           indirizzo e codice fiscale non si traducono — tradurli sarebbe un
+           errore, non una cortesia. L'email invece viene da assets/config.js,
+           come ovunque nel sito: una sola sorgente. -->
+      <p class="azienda">
+        <strong>Orion Trade Dynamics LLC</strong> · EIN 61-2254267<br>
+        30 N Gould St, STE R, Sheridan, Wyoming 82801, USA ·
+        <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">info@oriontradedynamics.com</span></a>
+      </p>
+      <p class="t3" data-i18n="ft.copy">© 2026 Orion Trade Dynamics LLC — SpaceQuant è un suo prodotto.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/i18n.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/checkout.js"></script>
+<script src="assets/abbonati.js"></script>
+</body>
+</html>

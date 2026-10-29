@@ -1,10 +1,9 @@
-# La pagina di download non è pubblicizzata: ci si arriva dal link consegnato
-# dopo l'attivazione dell'abbonamento. Tenerla fuori dagli indici evita che
-# compaia nei risultati di ricerca a chi non ha ancora un accesso.
-#
-# ⚠️ Non è una misura di sicurezza — chi ha l'indirizzo entra comunque. Va bene
-# così: l'installer senza una licenza valida non fa nulla.
+# Tutto il sito è aperto ai motori di ricerca, download compreso: dal lancio
+# (ottobre 2026) la pagina di download sta nel menu e nella sitemap. Restano
+# fuori dagli indici solo le pagine che lo chiedono da sé con `noindex` — il
+# pagamento, perché è un passaggio e non una destinazione, e il vecchio
+# indirizzo del questionario, che ora rimanda all'abbonamento.
 User-agent: *
-Disallow: /download.html
+Allow: /
 
 Sitemap: https://spacequantalgo.com/sitemap.xml

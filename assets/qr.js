@@ -4,12 +4,12 @@
    PERCHÉ NON UNA LIBRERIA. Il sito ha una regola sola da cui non si deroga:
    nessuna richiesta esce verso servizi di terzi, e non c'è alcun passo di build.
    Un servizio che genera codici QR da un URL manderebbe a un estraneo il numero
-   di WhatsApp e le risposte di chi compila il questionario — cioè esattamente il
-   contenuto che il questionario raccoglie. Una libreria via CDN sarebbe una
+   di WhatsApp e il messaggio di chi chiede un incontro in broker.html — cioè
+   esattamente ciò che quel modulo raccoglie. Una libreria via CDN sarebbe una
    richiesta esterna. Restava scriverlo, ed è quello che c'è qui.
 
    COSA COPRE. Modalità byte (UTF-8), versioni 1–20, correzione L e M. Basta e
-   avanza: l'URL di WhatsApp con le tre risposte sta in circa 400 byte, cioè
+   avanza: un URL di WhatsApp con un messaggio di qualche riga sta in circa 400 byte, cioè
    versione 13 in L. Chiedere di più solleva un errore esplicito invece di
    produrre un codice che non si legge.
 

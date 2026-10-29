@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-i18n="head.pr.t">Abbonamento — SpaceQuant</title>
-<meta name="description" data-i18n-attr="content:head.pr.d" content="Un solo abbonamento, tutte le funzioni, due dispositivi. Mensile o annuale.">
+<meta name="description" data-i18n-attr="content:head.pr.d" content="Un solo abbonamento, tutte le funzioni, due dispositivi. Mensile, trimestrale o annuale: si attiva da qui e si disdice quando vuoi.">
 <link rel="icon" href="assets/img/logo-small.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#ffffff">
@@ -17,7 +17,7 @@
 <meta property="og:locale" content="it_IT">
 <meta property="og:locale:alternate" content="en_GB">
 <meta property="og:title" content="Abbonamento — SpaceQuant">
-<meta property="og:description" content="Un solo abbonamento, tutte le funzioni, due dispositivi. Mensile o annuale.">
+<meta property="og:description" content="Un solo abbonamento, tutte le funzioni, due dispositivi. Mensile, trimestrale o annuale: si attiva da qui e si disdice quando vuoi.">
 <meta property="og:url" content="https://spacequantalgo.com/pricing.html">
 <meta property="og:image" content="https://spacequantalgo.com/assets/img/social-card.jpg">
 <meta property="og:image:width" content="1200">
@@ -28,6 +28,23 @@
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+
+<!-- ===================== PROMOZIONE =====================
+     Il codice sconto di CONFIG.promo, uguale in ogni pagina. Lo riempie e lo
+     nasconde site.js: con `promo: null`, o chiuso dalla croce, non c'è.
+     «Abbonati» porta al pagamento del piano scontato, col codice già
+     inserito; nella pagina abbonamento apre la finestra invece di cambiare
+     pagina. -->
+<aside class="promo" id="promo" hidden>
+  <div class="promo-in">
+    <span class="promo-txt" data-i18n="promo.text">Sconto sul piano mensile con il codice</span>
+    <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+    <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  </div>
+  <button type="button" class="promo-x" id="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
 
 <!-- ===================== HEADER ===================== -->
 <header class="site-header">
@@ -40,6 +57,7 @@
       <a class="hide-sm" href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
       <a class="hide-sm" href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
       <a href="pricing.html" aria-current="page" data-i18n="nav.pricing">Abbonamento</a>
+      <a href="download.html" data-i18n="nav.dl">Download</a>
       <div class="lang" role="group" aria-label="Lingua / Language">
         <button type="button" data-lang="it" aria-pressed="true">IT</button>
         <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -50,94 +68,106 @@
 
 <main>
 
-<!-- ===================== INTESTAZIONE E I DUE PIANI =====================
-     Una sezione sola, non due: i due riquadri devono stare per intero nella
-     prima schermata: sono la risposta alla domanda con cui si arriva qui, e
-     doverli cercare scorrendo li fa sembrare qualcosa da nascondere. -->
+<!-- ===================== INTESTAZIONE E I PIANI =====================
+     Una sezione sola: i riquadri dei piani devono stare nella prima
+     schermata. Sono la risposta alla domanda con cui si arriva qui, e doverli
+     cercare scorrendo li fa sembrare qualcosa da nascondere.
+
+     Tre piani — mensile, trimestrale, annuale — dalla configurazione. Su
+     schermo largo stanno affiancati; su telefono tre riquadri uno sotto
+     l'altro non entrano in una schermata, quindi si sceglie con
+     l'interruttore e se ne vede uno, partendo dal mensile — il più
+     acquistato, e quello della promozione (lo fa pricing.js: senza
+     JavaScript si vedono tutti e tre). «Abbonati» apre il pagamento in una finestra sopra
+     questa pagina — vedi #pay in fondo. -->
 <section class="pr-top">
   <div class="wrap">
     <div class="wrap-narrow center pr-intro">
       <h1 data-i18n="pr.title">Un abbonamento, tutte le funzioni</h1>
       <p class="lead" data-i18n="pr.sub">
         Non ci sono livelli, né funzioni tenute fuori per farti salire di piano:
-        una sola licenza, mensile oppure annuale a un prezzo inferiore.
-      </p>
-      <p class="text-small t3 pr-req-note" data-when="onRequest" data-i18n="pr.req.lead">
-        L'accesso si richiede: non si acquista da questa pagina.
+        una sola licenza, da pagare ogni mese, ogni tre mesi o una volta l'anno.
       </p>
     </div>
-    <div class="plans">
 
-      <!-- Mensile -->
-      <article class="plan">
+    <div class="ab-switch plan-pick" role="radiogroup" data-i18n-attr="aria-label:ab.switch" aria-label="Scegli il piano" hidden>
+      <button type="button" role="radio" class="ab-opt" data-piano="mensile" aria-checked="true"><span data-i18n="pr.m.name">Mensile</span></button>
+      <button type="button" role="radio" class="ab-opt" data-piano="trimestrale" aria-checked="false"><span data-i18n="pr.q.name">Trimestrale</span></button>
+      <button type="button" role="radio" class="ab-opt" data-piano="annuale" aria-checked="false"><span data-i18n="pr.y.name">Annuale</span></button>
+      <span class="ab-switch-thumb" aria-hidden="true"></span>
+    </div>
+
+    <div class="plans plans-three">
+
+      <article class="plan plan-featured" data-piano="mensile">
+        <div class="plan-badge" data-i18n="pr.m.badge">Il più acquistato</div>
         <h2 class="plan-name" data-i18n="pr.m.name">Mensile</h2>
         <p class="plan-desc" data-i18n="pr.m.desc">Nessun vincolo di durata: si disdice quando vuoi.</p>
 
-        <div class="plan-price" data-when="public">
+        <div class="plan-price">
           <span class="plan-cur" data-cfg="pricing.currency">€</span><span
-                class="plan-amount" data-cfg="pricing.monthly">—</span>
+                class="plan-amount" data-prezzo="mensile">—</span>
           <span class="plan-per" data-i18n="pr.m.per">/ mese</span>
         </div>
-        <div class="plan-price plan-price-req" data-when="onRequest">
-          <span class="plan-req" data-i18n="pr.onreq">Su richiesta</span>
+        <!-- «pari a … al mese» e il risparmio: calcolati da pricing.js
+             sui prezzi della configurazione, mai scritti qui a mano. -->
+        <p class="plan-calc" data-calcolo="mensile"></p>
+        <!-- La promozione di CONFIG.promo, se vale per questo piano: site.js
+             toglie il blocco altrimenti. Il codice si copia con un clic, ma
+             non serve: nel modulo di pagamento è già inserito. -->
+        <div class="plan-promo" data-promo="mensile">
+          <span data-i18n="pr.promo">Sconto con il codice</span>
+          <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+          <span class="plan-promo-note" data-i18n="pr.promo.auto">già inserito nel pagamento</span>
         </div>
 
-        <a class="btn btn-ghost btn-block btn-lg" data-when="public"
-           data-cfg-href="whop.monthly" href="#" data-i18n="pr.m.cta">Abbonati al mensile</a>
-        <a class="btn btn-ghost btn-block btn-lg" data-when="onRequest"
-           data-contact="mensile" href="#" data-i18n="pr.req.cta">Richiedi l'accesso</a>
-
-        <p class="plan-foot text-small t3" data-when="public" data-i18n="pr.foot">
-          Pagamento e fatturazione gestiti da Whop.
-        </p>
-        <p class="plan-foot text-small t3" data-when="onRequest" data-i18n="pr.req.foot">
-          Ti rispondiamo noi, con le condizioni e il link per iniziare.
-        </p>
+        <a class="btn btn-primary btn-block btn-lg" data-paga="mensile"
+           href="abbonati.html?piano=mensile" data-i18n="pr.cta">Abbonati</a>
       </article>
 
-      <!-- Annuale -->
-      <article class="plan plan-featured">
-        <div class="plan-badge" id="plan-badge" data-i18n="pr.y.badge">Conviene</div>
-        <h2 class="plan-name" data-i18n="pr.y.name">Annuale</h2>
-        <p class="plan-desc" data-i18n="pr.y.desc">Lo stesso prodotto, pagato una volta l'anno.</p>
+      <article class="plan" data-piano="trimestrale">
+        <h2 class="plan-name" data-i18n="pr.q.name">Trimestrale</h2>
+        <p class="plan-desc" data-i18n="pr.q.desc">Tre mesi alla volta, a un prezzo più basso.</p>
 
-        <div class="plan-price" data-when="public">
+        <div class="plan-price">
           <span class="plan-cur" data-cfg="pricing.currency">€</span><span
-                class="plan-amount" data-cfg="pricing.yearly">—</span>
+                class="plan-amount" data-prezzo="trimestrale">—</span>
+          <span class="plan-per" data-i18n="pr.q.per">/ 3 mesi</span>
+        </div>
+        <!-- «pari a … al mese» e il risparmio: calcolati da pricing.js
+             sui prezzi della configurazione, mai scritti qui a mano. -->
+        <p class="plan-calc" data-calcolo="trimestrale"></p>
+
+        <a class="btn btn-ghost btn-block btn-lg" data-paga="trimestrale"
+           href="abbonati.html?piano=trimestrale" data-i18n="pr.cta">Abbonati</a>
+      </article>
+
+      <article class="plan" data-piano="annuale">
+        <div class="plan-badge plan-badge-soft" id="plan-badge" hidden></div>
+        <h2 class="plan-name" data-i18n="pr.y.name">Annuale</h2>
+        <p class="plan-desc" data-i18n="pr.y.desc">Un anno intero, al prezzo più basso.</p>
+
+        <div class="plan-price">
+          <span class="plan-cur" data-cfg="pricing.currency">€</span><span
+                class="plan-amount" data-prezzo="annuale">—</span>
           <span class="plan-per" data-i18n="pr.y.per">/ anno</span>
         </div>
-        <div class="plan-price plan-price-req" data-when="onRequest">
-          <span class="plan-req" data-i18n="pr.onreq">Su richiesta</span>
-        </div>
+        <!-- «pari a … al mese» e il risparmio: calcolati da pricing.js
+             sui prezzi della configurazione, mai scritti qui a mano. -->
+        <p class="plan-calc" data-calcolo="annuale"></p>
 
-        <!-- Riempito da pricing.js solo se entrambi i prezzi sono configurati -->
-        <p class="plan-save hidden" id="plan-save"></p>
-
-        <a class="btn btn-primary btn-block btn-lg" data-when="public"
-           data-cfg-href="whop.yearly" href="#" data-i18n="pr.y.cta">Abbonati all'annuale</a>
-        <a class="btn btn-primary btn-block btn-lg" data-when="onRequest"
-           data-contact="annuale" href="#" data-i18n="pr.req.cta">Richiedi l'accesso</a>
-
-        <p class="plan-foot text-small t3" data-when="public" data-i18n="pr.foot">
-          Pagamento e fatturazione gestiti da Whop.
-        </p>
-        <p class="plan-foot text-small t3" data-when="onRequest" data-i18n="pr.req.foot">
-          Ti rispondiamo noi, con le condizioni e il link per iniziare.
-        </p>
+        <a class="btn btn-ghost btn-block btn-lg" data-paga="annuale"
+           href="abbonati.html?piano=annuale" data-i18n="pr.cta">Abbonati</a>
       </article>
 
     </div>
 
-    <!-- La stessa riga sta dentro a entrambi i riquadri: su schermo stretto,
-         dove i due si incolonnano, ripeterla costa l'altezza che serve a far
-         entrare il secondo riquadro nella prima schermata. Lì si mostra una
-         volta sola, sotto la coppia. -->
-    <p class="plan-foot-shared text-small t3 center" data-when="public" data-i18n="pr.foot">
-      Pagamento e fatturazione gestiti da Whop.
-    </p>
-    <p class="plan-foot-shared text-small t3 center" data-when="onRequest" data-i18n="pr.req.foot">
-      Ti rispondiamo noi, con le condizioni e il link per iniziare.
-    </p>
+    <ul class="plans-inc">
+      <li data-i18n="pr.all">Tutte le funzioni, nessun livello</li>
+      <li data-i18n="ab.inc2">Due dispositivi, macOS e Windows</li>
+      <li data-i18n="pr.upd">Aggiornamenti inclusi</li>
+      <li data-i18n="pr.foot">Pagamento e fatturazione gestiti da Whop.</li>
+    </ul>
 
     <!-- Avviso visibile solo finché la configurazione non è completa -->
     <div class="note note-warn hidden" id="price-todo">
@@ -191,13 +221,9 @@
     <p class="eyebrow" data-i18n="pr.start.eyebrow">Da qui all'app</p>
     <h2 data-i18n="pr.start.title">Quattro passaggi</h2>
     <ol class="steps mt-3">
-      <li data-when="onRequest">
-        <h3 data-i18n="pr.start.r1.t">Ci scrivi</h3>
-        <p data-i18n="pr.start.r1.b">Ti rispondiamo con le condizioni e con il link per attivare l'abbonamento.</p>
-      </li>
-      <li data-when="public">
-        <h3 data-i18n="pr.start.s1.t">Sottoscrivi su Whop</h3>
-        <p data-i18n="pr.start.s1.b">Il pagamento avviene sulla pagina di Whop: questo sito non tratta né conserva dati di pagamento.</p>
+      <li>
+        <h3 data-i18n="pr.start.s1.t">Ti abboni da qui</h3>
+        <p data-i18n="pr.start.s1.b">Il pagamento si apre su questa pagina, dentro un modulo di Whop: i dati della carta li elabora Whop, e il sito non li vede né li conserva.</p>
       </li>
       <li>
         <h3 data-i18n="pr.start.s2.t">Ricevi il link per scaricare</h3>
@@ -221,10 +247,6 @@
     <h2 data-i18n="pr.faq.title">Domande</h2>
 
     <div class="faq">
-      <details data-when="onRequest">
-        <summary data-i18n="pr.faq.q0">Come si ottiene l'accesso?</summary>
-        <p data-i18n="pr.faq.a0">Si richiede: ci scrivi e ti mandiamo le condizioni e il link di attivazione. Non c'è una pagina di acquisto aperta, ed è una scelta: preferiamo seguire da vicino i primi utilizzi, finché c'è da imparare da ogni segnalazione.</p>
-      </details>
       <details>
         <summary data-i18n="pr.faq.q1">Su quanti computer posso usarlo?</summary>
         <p data-i18n="pr.faq.a1">Due per abbonamento. Non esiste ancora una pagina per vedere quali dispositivi hai collegato o per liberarne uno: se cambi computer scrivici e liberiamo noi lo slot.</p>
@@ -255,6 +277,75 @@
 
 </main>
 
+<!-- ===================== IL PAGAMENTO, SOPRA LA PAGINA =====================
+     «Abbonati» non cambia pagina: apre qui sopra il modulo di Whop, già sul
+     piano del pulsante, e chiudendo si ritrova la pagina dove la si era
+     lasciata. La finestra la
+     apre assets/pricing.js, e solo a configurazione completa; in ogni altro
+     caso — o senza JavaScript — i pulsanti restano link ad abbonati.html,
+     che fa la stessa cosa come pagina intera.
+
+     ⚠️ È un <dialog> aperto NON modale (show, non showModal), e sta sotto a
+     tutto ciò che è di Whop. Il modulo di Whop (Elements) aggiunge al <body>
+     finestre sue — i dettagli e il codice promozionale, gli avvisi, le
+     verifiche anti-bot — alcune preparate in anticipo, con lo z-index
+     massimo. Una finestra modale nostra, aperta dopo, salirebbe nello strato
+     superiore del browser e le coprirebbe, rendendole pure inerti: il
+     pagamento si fermerebbe davanti a una verifica che non si vede. Il blocco
+     della pagina sotto (inert), Esc e il fuoco li gestisce pricing.js. -->
+<dialog class="pay" id="pay" aria-modal="true" aria-labelledby="pay-title">
+  <div class="pay-sheet">
+    <div class="pay-head">
+      <div>
+        <h2 class="pay-title" id="pay-title" data-i18n="ab.title">Attiva SpaceQuant</h2>
+        <p class="pay-after" data-i18n="pay.after">Dopo il pagamento arrivi subito al download.</p>
+      </div>
+      <button type="button" class="pay-close" id="pay-close" data-i18n-attr="aria-label:pay.close" aria-label="Chiudi">
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Il piano si può cambiare senza chiudere. Il prezzo qui non si
+         ripete: lo mostra il modulo di Whop, subito sotto, ed è quello che fa
+         fede. Due volte lo stesso numero a pochi centimetri sembra una
+         svista. -->
+    <div class="ab-switch pay-switch" role="radiogroup" data-i18n-attr="aria-label:ab.switch" aria-label="Scegli il piano">
+      <button type="button" role="radio" class="ab-opt" data-piano="mensile" aria-checked="false"><span data-i18n="pr.m.name">Mensile</span></button>
+      <button type="button" role="radio" class="ab-opt" data-piano="trimestrale" aria-checked="false"><span data-i18n="pr.q.name">Trimestrale</span></button>
+      <button type="button" role="radio" class="ab-opt" data-piano="annuale" aria-checked="true"><span data-i18n="pr.y.name">Annuale</span></button>
+      <span class="ab-switch-thumb" aria-hidden="true"></span>
+    </div>
+    <div class="ab-card pay-card" id="pay-card">
+      <div class="ab-card-head">
+        <span class="ab-lock" aria-hidden="true">
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4.5 7V5.2a3.5 3.5 0 0 1 7 0V7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="2.8" y="7" width="10.4" height="7.2" rx="2" fill="currentColor"/></svg>
+        </span>
+        <span class="ab-card-title" data-i18n="ab.secure">Pagamento sicuro</span>
+        <span class="ab-card-by" data-i18n="ab.by">elaborato da Whop</span>
+      </div>
+      <div class="ab-frame">
+        <div class="ab-skel" aria-hidden="true">
+          <span class="sk sk-l"></span><span class="sk sk-f"></span>
+          <span class="sk sk-l"></span><span class="sk sk-f"></span>
+          <span class="sk sk-row"><span class="sk sk-f"></span><span class="sk sk-f"></span></span>
+          <span class="sk sk-btn"></span>
+        </div>
+        <div class="pay-mount" id="pay-mount"></div>
+      </div>
+      <p class="ab-direct text-small t3">
+        <span data-i18n="ab.direct">Il modulo non si carica?</span>
+        <a id="pay-direct" href="#" rel="noopener" data-i18n="ab.direct.cta">Paga direttamente su whop.com</a>
+      </p>
+    </div>
+
+    <p class="ab-legal text-small t3" data-i18n="ab.legal">
+      I dati della carta li riceve ed elabora Whop: questo sito non li vede e
+      non li conserva. Il rinnovo è automatico alla fine di ogni periodo, finché
+      non disdici.
+    </p>
+  </div>
+</dialog>
+
 <!-- ===================== FOOTER ===================== -->
 <footer class="site-footer">
   <div class="wrap">
@@ -274,7 +365,9 @@
         <a href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
         <a href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
         <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
-        </div>
+        <a href="download.html" data-i18n="nav.dl">Download</a>
+        <a href="broker.html" data-i18n="nav.broker">Per i broker</a>
+      </div>
       <div>
         <h4 data-i18n="ft.support">Assistenza</h4>
         <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">da definire</span></a>
@@ -305,9 +398,25 @@
   </div>
 </footer>
 
+<!-- ===================== BARRA DELLA PROMOZIONE =====================
+     Lo stesso codice del banner, in fondo allo schermo: compare quando il
+     banner in cima non si vede più (lo decide site.js), così il codice resta
+     a portata mentre si legge. Una croce chiude banner e barra insieme.
+     Non c'è in abbonati.html: lì il codice sta nel riepilogo, già inserito
+     nel modulo, e una barra fissa coprirebbe il pagamento. -->
+<aside class="promo-bar" id="promo-bar" hidden>
+  <span class="promo-txt" data-i18n="promo.bar">Sconto sul mensile</span>
+  <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+  <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  <button type="button" class="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
+
 <script src="assets/config.js"></script>
 <script src="assets/i18n.js"></script>
 <script src="assets/site.js"></script>
+<script src="assets/checkout.js"></script>
 <script src="assets/pricing.js"></script>
 </body>
 </html>

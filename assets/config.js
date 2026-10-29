@@ -34,39 +34,82 @@ const CONFIG = {
   downloadBase: 'https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.8',
 
   /* --- Checkout Whop ------------------------------------------------------
-     Whop ospita già la pagina di pagamento: il sito non incassa nulla,
-     manda soltanto qui. Servono solo quando pricing.mode passa a 'public'. */
+     Il pagamento NON lascia il sito: il modulo di Whop si apre in una finestra
+     sopra pricing.html (o in abbonati.html, la stessa cosa come pagina). Whop
+     elabora la carta in un riquadro suo — il sito non vede e non conserva
+     nulla — ma intorno ci sono il nostro menu, il nostro riepilogo e i nostri
+     colori.
+
+     accent: il colore dei pulsanti DENTRO il modulo. Whop accetta solo nomi
+             della sua tavolozza (violet, iris, indigo, blue, purple…), non
+             codici: il più vicino al viola del marchio è `violet`. */
   whop: {
-    monthly: 'DA_DEFINIRE_URL_WHOP_MENSILE',
-    yearly:  'DA_DEFINIRE_URL_WHOP_ANNUALE',
+    accent: 'violet',
   },
 
-  /* --- Prezzi -------------------------------------------------------------
-     mode: 'onRequest' → i due piani mostrano «su richiesta» e il pulsante
-                         scrive all'indirizzo di contatto. È lo stato di oggi:
-                         l'accesso si richiede, quindi non c'è un checkout
-                         aperto a tutti.
-     mode: 'public'    → compaiono i prezzi qui sotto e i pulsanti portano al
-                         checkout Whop. Passando a 'public' vanno compilati
-                         monthly, yearly E i due URL di whop.
+  /* --- I piani ------------------------------------------------------------
+     Tre, nell'ordine in cui si mostrano. Il nome del piano (mensile,
+     trimestrale, annuale) è quello che viaggia negli indirizzi:
+     abbonati.html?piano=annuale.
 
-     I prezzi, quando ci saranno, devono coincidere ESATTAMENTE con quanto
-     configurato su Whop: un prezzo diverso fra sito e checkout è il modo più
-     veloce di perdere fiducia.                                               */
+     whop:   l'ID DEL PIANO, non l'indirizzo: ha la forma `plan_…` ed è
+             l'ultima parte del link di checkout di Whop
+             (whop.com/checkout/plan_…). Dallo stesso ID si ricava il link
+             diretto a whop.com, che il sito offre come ripiego.
+     price:  ⚠️ deve coincidere ESATTAMENTE con quello del piano su Whop: un
+             prezzo diverso fra sito e checkout è il modo più veloce di
+             perdere fiducia. Letti sul checkout di Whop il 27 ottobre 2026,
+             nessuno con periodo di prova. Cambiando un prezzo su Whop va
+             cambiato qui.
+     months: quanti mesi copre un pagamento. Serve a dire «pari a … al mese»
+             e quanto si risparmia rispetto al mensile — calcolati qui, mai
+             scritti a mano. */
   pricing: {
-    mode: 'onRequest',
     currency: '€',
-    monthly: null,          // es. 49
-    yearly: null,           // es. 490
     devices: 2,             // limite dispositivi per abbonamento
+    plans: {
+      mensile:     { whop: 'plan_nEHt7m11K0Bjw', price: 69.99,  months: 1 },
+      trimestrale: { whop: 'plan_0eQugEAEbBuZR', price: 189.99, months: 3 },
+      annuale:     { whop: 'plan_4yIEFjd38dDEo', price: 699.99, months: 12 },
+    },
+  },
+
+  /* --- La promozione -----------------------------------------------------
+     Il codice sconto annunciato nel banner in cima a ogni pagina e nel
+     riquadro del piano a cui vale. Nel modulo di pagamento di quel piano il
+     codice è GIÀ INSERITO: chi paga non deve ricopiarlo.
+
+     ⚠️ Il codice deve esistere su Whop (Codici promozionali) e valere per
+     il piano scritto qui. Se non esiste, Whop apre il modulo a prezzo pieno
+     senza errori in vista (verificato il 27 ottobre 2026) — cioè il banner
+     prometterebbe uno sconto che non arriva.
+
+     Finita la promozione: `promo: null`. Spariscono banner, riga nel
+     riquadro e codice nel modulo, insieme. Il bollino «Il più acquistato»
+     resta: non dipende dalla promozione. */
+  promo: {
+    code: 'SPACEQ50',
+    plan: 'mensile',
+  },
+
+  /* --- L'evento ----------------------------------------------------------
+     SiGMA World, padiglione FX World, Fiera Roma (2–5 novembre). Qui vanno i
+     giorni in cui CI SIAMO NOI per gli incontri — il 3, il 4 e il 5, non il 2
+     — e diventano i pulsanti «quando ci vediamo» del modulo in broker.html,
+     col nome del giorno nella lingua della pagina, più «qualunque giorno».
+     ⚠️ La frase sopra al modulo li ripete a parole («il 3, il 4 e il 5
+     novembre»): sta nell'HTML perché deve leggersi anche senza JavaScript.
+     Cambiando i giorni qui si cambia anche quella. */
+  event: {
+    days: ['2026-11-03', '2026-11-04', '2026-11-05'],
   },
 
   /* --- Contatti ----------------------------------------------------------- */
   supportEmail: 'info@oriontradedynamics.com',
 
   /* Numero WhatsApp in formato internazionale, SENZA «+», spazi o trattini:
-     è la forma che vuole wa.me. Ci arriva chi compila il questionario in
-     richiedi.html, con le tre risposte già scritte nel messaggio.
+     è la forma che vuole wa.me. Ci arriva chi chiede un incontro al SiGMA
+     World da broker.html, col messaggio già scritto.
 
      ⚠️ QUI VA IL NUMERO, NON IL LINK BREVE. WhatsApp Business genera anche un
      indirizzo della forma `wa.me/message/CODICE`: è comodo da mandare a mano,
@@ -74,8 +117,8 @@ const CONFIG = {
      2026: aprendo `wa.me/message/PNSX5TR4UH4LP1?text=PROVA` si finisce allo
      stesso identico indirizzo che si raggiunge senza `?text=` — il parametro
      viene scartato dal reindirizzamento, in silenzio. Con quel link il
-     questionario resterebbe in piedi e le risposte non arriverebbero mai:
-     il guasto peggiore, perché non somiglia a un guasto.
+     modulo resterebbe in piedi e le richieste arriverebbero vuote: il guasto
+     peggiore, perché non somiglia a un guasto.
      Il numero qui sotto è quello dietro a quel link breve. */
   whatsapp: '393513750293',
 
@@ -135,4 +178,15 @@ CONFIG.urlFor = function (buildKey) {
 /* true quando un valore di configurazione non è ancora stato deciso. */
 CONFIG.isPlaceholder = function (value) {
   return typeof value === 'string' && value.indexOf('DA_DEFINIRE') === 0;
+};
+
+/* L'ID del piano Whop per 'mensile', 'trimestrale' o 'annuale', oppure null.
+   Non basta che il valore non sia un segnaposto: dev'essere un ID. Un
+   indirizzo intero incollato qui al posto dell'ID darebbe un modulo che non si
+   apre, senza alcun errore visibile — quindi si rifiuta qui, e la pagina lo
+   dice. */
+CONFIG.whopPlan = function (piano) {
+  const p = CONFIG.pricing.plans[piano];
+  const v = p && p.whop;
+  return (typeof v === 'string' && /^plan_[A-Za-z0-9]+$/.test(v)) ? v : null;
 };

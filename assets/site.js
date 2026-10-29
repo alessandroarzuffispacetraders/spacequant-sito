@@ -177,7 +177,74 @@ const SQConfig = (function () {
     el.addEventListener('click', function (e) { e.preventDefault(); });
   }
 
+  /* La promozione (CONFIG.promo): il banner in cima a ogni pagina, la barra
+     in basso che lo sostituisce quando si scorre, la riga nel riquadro del
+     piano scontato, il codice da copiare. Senza promozione si tolgono, prima
+     che fillText scriva «da definire» al posto del codice.
+     Una croce chiude banner e barra insieme per il resto della visita
+     (sessionStorage: chiusa la scheda, tornano). Non per sempre: una
+     promozione chiusa una volta per sbaglio — anche da chi gestisce il sito —
+     non si vedrebbe più. Un codice nuovo li riapre comunque. */
+  const PROMO_CHIUSO = 'sq-promo-chiuso';
+
+  function fillPromo() {
+    const p = CONFIG.promo;
+    if (!p || !p.code) {
+      document.querySelectorAll('#promo, #promo-bar, [data-promo], #ab-promo').forEach(function (el) { el.remove(); });
+      return;
+    }
+    document.querySelectorAll('[data-promo]').forEach(function (el) {
+      if (el.dataset.promo !== p.plan) el.remove();
+    });
+    document.querySelectorAll('.promo-code').forEach(function (b) { b.dataset.copy = p.code; });
+
+    const banner = document.getElementById('promo');
+    const barra = document.getElementById('promo-bar');
+    const tutti = [banner, barra].filter(Boolean);
+    if (!tutti.length) return;
+
+    let chiuso = null;
+    try { chiuso = sessionStorage.getItem(PROMO_CHIUSO); } catch (e) { /* niente memoria: si mostra */ }
+
+    tutti.forEach(function (el) {
+      const cta = el.querySelector('.promo-cta');
+      cta.dataset.paga = p.plan;
+      cta.href = 'abbonati.html?piano=' + encodeURIComponent(p.plan);
+      el.hidden = (chiuso === p.code);
+      el.querySelector('.promo-x').addEventListener('click', function () {
+        tutti.forEach(function (x) { x.hidden = true; });
+        document.body.classList.remove('con-barra');
+        try { sessionStorage.setItem(PROMO_CHIUSO, p.code); } catch (e) { /* si richiude alla prossima pagina */ }
+      });
+    });
+
+    if (barra && !barra.hidden) seguiBarra(barra, banner);
+  }
+
+  /* La barra in basso compare quando il banner in cima non si vede più — mai
+     tutti e due insieme — e in home neanche durante la scena d'apertura, che
+     è a tutto schermo e tiene fuori perfino il menu. `con-barra` sul body
+     lascia spazio in fondo, così la barra non copre la fine del piè di
+     pagina. */
+  function seguiBarra(barra, banner) {
+    document.body.classList.add('con-barra');
+    const coperta = [banner, document.getElementById('cine')].filter(Boolean);
+    if (!coperta.length || !('IntersectionObserver' in window)) {
+      barra.classList.add('promo-bar-on');
+      return;
+    }
+    const inVista = new Set();
+    const io = new IntersectionObserver(function (voci) {
+      voci.forEach(function (v) {
+        if (v.isIntersecting) inVista.add(v.target); else inVista.delete(v.target);
+      });
+      barra.classList.toggle('promo-bar-on', inVista.size === 0);
+    });
+    coperta.forEach(function (el) { io.observe(el); });
+  }
+
   function init() {
+    fillPromo();
     fillText();
     fillLinks();
     fillDownloads();

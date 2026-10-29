@@ -113,6 +113,9 @@ section.tight { padding: clamp(2.5rem, 6vw, 4rem) 0; }
 .lead { font-size: clamp(1.1rem, 1.9vw, 1.35rem); color: var(--t2); line-height: 1.45; }
 
 .grid { display: grid; gap: 20px; }
+/* Una colonna non si allarga oltre lo schermo per una riga che non va a capo
+   (i comandi di verifica in download.html): la riga scorre nel suo riquadro. */
+.grid > * { min-width: 0; }
 @media (min-width: 720px) {
   .grid-2 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(3, 1fr); }
@@ -1231,21 +1234,35 @@ td strong { color: var(--text); }
   margin-bottom: .3em;
 }
 .pr-top .lead { font-size: clamp(1rem, .5vw + .85rem, 1.2rem); margin-bottom: .6em; }
-.pr-req-note { margin: 0; }
 
 .plans {
   display: grid; gap: 20px;
-  max-width: 860px; margin: 0 auto;
+  max-width: 1040px; margin: 0 auto;
 }
-@media (min-width: 760px) { .plans { grid-template-columns: 1fr 1fr; align-items: start; } }
+/* Tre piani affiancati da 860 px in su. Sotto, l'interruttore ne mostra uno
+   (pricing.js mette `plans-scelta`; senza JavaScript restano tutti e tre, in
+   colonna). ⚠️ La soglia è la stessa di `.plan-pick` qui sotto. */
+@media (min-width: 860px) {
+  .plans-three { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+  .ab-switch.plan-pick { display: none; }   /* vince su .ab-switch, che sta più avanti */
+}
+@media (max-width: 859px) {
+  .plans-three { max-width: 460px; }
+  .plans-scelta .plan:not(.plan-on) { display: none; }
+  .plan-pick { margin: 0 auto 16px; max-width: 460px; }
+}
 
 .plan {
   position: relative;
+  display: flex; flex-direction: column;
   background: var(--bg-soft);
   border: 0;
   border-radius: 20px;
-  padding: clamp(24px, 3.2vh, 34px) 30px clamp(22px, 2.6vh, 28px);
+  padding: clamp(24px, 3.2vh, 34px) 28px clamp(22px, 2.6vh, 28px);
 }
+/* Il pulsante sta in fondo in tutti e tre, anche se le righe sopra sono di
+   lunghezza diversa: tre pulsanti a tre altezze sembrano un errore. */
+.plan .btn { margin-top: auto; }
 .plan-featured {
   border-color: transparent;
   background:
@@ -1255,53 +1272,55 @@ td strong { color: var(--text); }
   box-shadow: 0 20px 50px -34px rgba(123, 63, 228, .6);
 }
 .plan-badge {
-  position: absolute; top: -12px; left: 28px;
+  position: absolute; top: -12px; left: 26px;
   background: var(--grad); color: #fff;
   font-size: .74rem; font-weight: 700;
-  letter-spacing: .04em;
+  letter-spacing: .02em;
   padding: 4px 12px; border-radius: 999px;
 }
+/* Due bollini in due riquadri: quello del piano in evidenza col colore del
+   marchio, l'altro più quieto, o si contendono lo sguardo. */
+.plan-badge-soft {
+  background: #fff; color: #1a7f37;
+  border: 1px solid rgba(52, 199, 89, .45);
+  padding: 3px 11px;
+}
 .plan-name { font-size: 1.25rem; margin-bottom: .25em; }
-/* L'altezza minima allinea le due descrizioni, di lunghezza diversa, così i
-   due prezzi restano sulla stessa riga. */
-.plan-desc { font-size: .93rem; margin-bottom: 1.2em; min-height: 2.6em; }
+.plan-desc { font-size: .93rem; margin-bottom: 1.2em; }
 
-.plan-price { display: flex; align-items: baseline; gap: 3px; margin-bottom: 1.3rem; flex-wrap: wrap; }
+.plan-price { display: flex; align-items: baseline; gap: 3px; margin-bottom: .5rem; flex-wrap: wrap; }
 .plan-cur    { font-size: 1.5rem; font-weight: 600; color: var(--t2); }
 .plan-amount { font-size: clamp(2.4rem, 6vw, 3.1rem); font-weight: 700; letter-spacing: -.04em; line-height: 1; }
 .plan-per    { font-size: .95rem; color: var(--t3); margin-left: 5px; }
 
-.plan-price-req { margin-bottom: clamp(1rem, 2vh, 1.6rem); }
-.plan-req {
-  font-size: clamp(1.5rem, 3.4vw, 1.9rem);
-  font-weight: 650;
-  letter-spacing: -.025em;
-  line-height: 1.15;
-  background: var(--grad);
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent;
-}
+/* «pari a … al mese» e il risparmio. Il mensile non ne ha: la riga sparisce,
+   e i pulsanti restano allineati lo stesso perché stanno in fondo. */
+.plan-calc { margin: 0 0 1.2rem; font-size: .9rem; line-height: 1.45; }
+.plan-calc:empty { display: none; }
+.plan-calc span { display: block; }
+.plan-month { color: var(--t2); }
+.plan-save  { color: var(--green); }
 
-.plan-save {
-  font-size: .9rem; color: var(--green);
-  margin: -.6rem 0 1.2rem;
+/* Ciò che vale per tutti e tre, detto una volta sola sotto i riquadri. */
+.plans-inc {
+  list-style: none; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px;
+  max-width: 1040px; margin: 1.3rem auto 0;
+  font-size: .9rem; color: var(--t2);
 }
-.plan-foot { margin: 1rem 0 0; text-align: center; }
-.plan-foot-shared { display: none; }
+.plans-inc li::before { content: "✓"; color: var(--green); font-weight: 700; margin-right: 7px; }
+.plans-inc li:last-child { color: var(--t3); }
+.plans-inc li:last-child::before { content: none; }
 
-/* Schermo stretto: i due riquadri si incolonnano e devono comunque entrare
-   interi nella prima schermata. Si stringe tutto ciò che non è informazione —
-   e la riga in fondo, identica nei due, si dice una volta sola. */
+/* Schermo stretto: il riquadro deve comunque entrare intero nella prima
+   schermata. Si stringe tutto ciò che non è informazione. */
 @media (max-width: 620px) {
   .pr-top h1 { font-size: 2rem; }
   .pr-top .lead { font-size: .97rem; }
-  .pr-intro { margin-bottom: 1.3rem; }
-  .plan { padding: 20px 22px 18px; }
-  .plan-desc { margin-bottom: 1em; min-height: 0; }
-  .plan-price-req { margin-bottom: 1rem; }
-  .plans { gap: 14px; }
-  .plan .plan-foot { display: none; }
-  .plan-foot-shared { display: block; margin: 1.1rem 0 0; }
+  .pr-intro { margin-bottom: 1.1rem; }
+  .plan { padding: 22px 22px 18px; }
+  .plan-desc { margin-bottom: 1em; }
+  .plans-inc { justify-content: flex-start; max-width: 460px; }
 }
 
 /* --- Domande frequenti ---------------------------------------------------- */
@@ -1369,7 +1388,9 @@ td strong { color: var(--text); }
 .pick-warn { margin: 14px 2px 0; font-size: .9rem; color: var(--t2); line-height: 1.6; }
 
 /* --- Elenco completo dei file -------------------------------------------- */
-.dl-list { display: grid; gap: 14px; margin-top: 2rem; }
+/* minmax(0, 1fr): una colonna di griglia «auto» si allarga quanto il testo
+   più lungo che contiene — qui l'impronta SHA256 — anche oltre lo schermo. */
+.dl-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 2rem; }
 .dl-item {
   background: var(--bg-soft);
   border: 0;
@@ -1399,9 +1420,12 @@ td strong { color: var(--text); }
   font-family: var(--mono); font-size: .7rem; font-weight: 600;
   letter-spacing: .08em; color: var(--t3); flex: 0 0 auto;
 }
+/* min-width: 0, o l'elemento flex non si stringe sotto la larghezza del suo
+   testo: l'impronta allargava la pagina su telefono (672 px su 390) invece
+   di scorrere dentro la sua riga. */
 .hash {
   font-family: var(--mono); font-size: .74rem; color: var(--t2);
-  overflow-x: auto; white-space: nowrap; flex: 1 1 auto;
+  overflow-x: auto; white-space: nowrap; flex: 1 1 auto; min-width: 0;
   scrollbar-width: thin;
 }
 .hash-copy {
@@ -1482,75 +1506,12 @@ td strong { color: var(--text); }
 .steps p  { margin-bottom: 0; font-size: .96rem; }
 
 /* =============================================================================
-   17. RICHIESTA DI ACCESSO — il questionario
+   17. CODICE QR — il riquadro che lo contiene
+   Lo usa il modulo «incontriamoci» di broker.html: il messaggio WhatsApp
+   pronto si apre anche inquadrando il codice col telefono. (Prima lo usava
+   il questionario d'accesso, tolto a ottobre 2026.)
    ============================================================================= */
-
-.rq-head { text-align: center; margin-bottom: clamp(2rem, 5vw, 3rem); }
-.rq-head .lead { max-width: 34em; margin: 0 auto; }
-
-/* ⚠️ L'intestazione è `sticky`: portando qui lo scorrimento con
-   `scrollIntoView`, l'elemento va a filo di viewport e finisce SOTTO di lei —
-   il titolo del risultato spariva dietro al menu. `scroll-margin-top` è la
-   riga che dice al browser di fermarsi un'intestazione più in basso. */
-.rq-form, .rq-esito, .rq-q { scroll-margin-top: calc(var(--header-h) + 24px); }
-
-.rq-form { display: grid; gap: clamp(1.4rem, 3vw, 2rem); }
-
-/* Ogni domanda è un gruppo, non un blocco di testo con dei cerchietti: il
-   `fieldset` con la sua `legend` è ciò che permette a un lettore di schermo di
-   annunciare «domanda 2 di 3» insieme all'opzione su cui si trova. */
-.rq-q {
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-.rq-q legend {
-  display: flex; align-items: center; gap: 12px;
-  font-size: 1.15rem; font-weight: 620; letter-spacing: -.02em;
-  color: var(--text);
-  margin-bottom: .9rem;
-  padding: 0;
-}
-.rq-n {
-  flex: 0 0 auto;
-  width: 28px; height: 28px;
-  display: inline-flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  background: var(--grad);
-  color: #fff;
-  font-family: var(--mono); font-size: .82rem; font-weight: 700;
-}
-
-.rq-opt {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  background: var(--surface);
-  cursor: pointer;
-  margin-bottom: 8px;
-  transition: border-color .15s var(--ease), background .15s var(--ease);
-}
-.rq-opt:hover { border-color: var(--border-2); background: var(--bg-soft); }
-.rq-opt input { margin: 2px 0 0; accent-color: var(--violet); flex: 0 0 auto; }
-.rq-opt:has(input:checked) {
-  border-color: var(--violet);
-  background: rgba(123, 63, 228, .04);
-}
-/* Il contorno di messa a fuoco va sull'etichetta, non sul solo cerchietto:
-   navigando da tastiera si deve vedere QUALE riga è selezionata. */
-.rq-opt:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }
-
-.rq-manca { color: var(--amber); font-weight: 600; margin: 0; }
-.rq-nota { text-align: center; margin: .8rem 0 0; }
-
-/* --- il risultato --------------------------------------------------------- */
-.rq-esito { text-align: center; }
-.rq-esito h2 { margin-bottom: 1.6rem; }
-
-.rq-qr-wrap { margin: 2.4rem 0 1.6rem; }
-.rq-qr-lead { max-width: 30em; margin: 0 auto 1rem; }
-.rq-qr {
+.qr-box {
   width: clamp(180px, 46vw, 240px);
   margin: 0 auto;
   padding: 14px;
@@ -1558,22 +1519,7 @@ td strong { color: var(--text); }
   border: 1px solid var(--border);
   border-radius: var(--r);
 }
-.rq-qr svg { display: block; width: 100%; height: auto; }
-
-/* Su telefono il codice QR non serve — WhatsApp è sulla stessa macchina, e
-   inquadrare lo schermo che si sta usando non si può fare. */
-@media (max-width: 620px) { .rq-qr-wrap { display: none; } }
-
-.rq-copia { margin: 2rem 0 1.4rem; text-align: left; }
-.rq-copia-head {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; margin-bottom: .5rem;
-}
-.rq-copia .pre { white-space: pre-wrap; word-break: break-word; }
-
-.rq-alt { margin: 0 0 1.6rem; }
-.rq-indietro { margin: 0; }
-.rq-indietro a { color: var(--t3); font-size: .9rem; }
+.qr-box svg { display: block; width: 100%; height: auto; }
 
 /* =============================================================================
    18. LE SCENE DELLE SEZIONI FINALI
@@ -1651,3 +1597,1076 @@ td strong { color: var(--text); }
   background: rgba(255, 255, 255, .12);
   border-color: rgba(255, 255, 255, .6);
 }
+
+/* Su telefono il menu ha due voci visibili (Abbonamento e Download) più il
+   selettore di lingua: il nome accanto al marchio non ci sta più, e senza
+   questa riga spingeva il selettore fuori dallo schermo. Il marchio resta. */
+@media (max-width: 430px) {
+  .site-header .brand span { display: none; }
+}
+
+/* =============================================================================
+   19. PAGAMENTO — abbonati.html
+   A sinistra il riepilogo, nostro. A destra il modulo di Whop, dentro un
+   riquadro nostro: è l'unica parte che viene da fuori, e deve sembrare un
+   pezzo della pagina, non una finestra aperta su un altro sito.
+   ============================================================================= */
+
+.ab { padding: clamp(2rem, 5vh, 4rem) 0 clamp(3.5rem, 8vw, 6rem); }
+
+.ab-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); }
+@media (min-width: 920px) {
+  .ab-grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: start; }
+  .ab-sum { position: sticky; top: calc(var(--header-h) + 32px); }
+}
+
+.ab-sum h1 { font-size: clamp(2.2rem, 4vw, 3.2rem); letter-spacing: -.035em; margin-bottom: .55em; }
+
+/* --- la scelta del piano: un interruttore con il cursore che scivola ------
+   Tre posizioni. Lo usano abbonati.html, la finestra di pagamento e, su
+   telefono, la pagina abbonamento. */
+.ab-switch {
+  position: relative;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  max-width: 440px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+}
+.ab-switch[hidden] { display: none; }
+.ab-switch-thumb {
+  position: absolute; top: 4px; bottom: 4px; left: 4px;
+  width: calc((100% - 8px) / 3);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 6px 16px -8px rgba(0,0,0,.25);
+  transition: transform .38s var(--ease);
+}
+.ab-switch[data-sel="trimestrale"] .ab-switch-thumb { transform: translateX(100%); }
+.ab-switch[data-sel="annuale"]     .ab-switch-thumb { transform: translateX(200%); }
+.ab-opt {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font: inherit; font-size: .93rem; font-weight: 620;
+  padding: 10px 8px;
+  background: none; border: 0; border-radius: 999px;
+  color: var(--t2); cursor: pointer;
+  transition: color .2s;
+}
+.ab-opt[aria-checked="true"] { color: var(--text); }
+@media (prefers-reduced-motion: reduce) { .ab-switch-thumb { transition: none; } }
+
+.ab-sum .ab-switch { margin-top: 1.6rem; }
+
+.ab-price { display: flex; align-items: baseline; gap: 3px; margin: 1.6rem 0 .3rem; flex-wrap: wrap; }
+.ab-calc { margin: 0; font-size: .93rem; min-height: 2.9em; }
+.ab-calc span { display: block; }
+.ab-price .plan-amount { font-size: clamp(2.8rem, 6vw, 3.6rem); }
+
+.ab-inc { margin: 1.8rem 0 0; }
+.ab-inc li { margin-bottom: .55em; font-size: .97rem; }
+
+.ab-next { margin-top: 2rem; padding-top: 1.6rem; border-top: 1px solid var(--border); }
+.ab-next-list { list-style: none; margin: .8rem 0 0; padding: 0; display: grid; gap: 12px; }
+.ab-next-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--t2); font-size: .95rem; }
+.ab-next-n {
+  flex: 0 0 auto;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border-2);
+  font-family: var(--mono); font-size: .74rem; color: var(--text);
+}
+
+/* --- il riquadro del pagamento -------------------------------------------- */
+.ab-pay { position: relative; isolation: isolate; }
+/* Un alone del marchio dietro al riquadro: la pagina è bianca e il modulo di
+   Whop pure, e senza un fondo il riquadro galleggerebbe nel vuoto. */
+.ab-pay::before {
+  content: ""; position: absolute; z-index: -1;
+  inset: -50px -30px auto -30px; height: 520px;
+  background:
+    radial-gradient(40% 50% at 30% 40%, rgba(59,110,245,.16), transparent 70%),
+    radial-gradient(40% 50% at 75% 55%, rgba(224,72,159,.13), transparent 70%);
+  filter: blur(18px);
+  pointer-events: none;
+}
+
+.ab-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 20px 20px 14px;
+  box-shadow: 0 40px 90px -50px rgba(59,110,245,.45), 0 2px 6px rgba(0,0,0,.04);
+  overflow: hidden;
+}
+.ab-card::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: var(--grad);
+}
+.ab-card-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 4px 14px; margin-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+  font-size: .9rem;
+}
+.ab-lock { color: var(--green); display: inline-flex; }
+.ab-card-title { font-weight: 640; color: var(--text); }
+.ab-card-by { margin-left: auto; color: var(--t3); font-size: .82rem; }
+
+/* Lo scheletro sta SOPRA al riquadro di Whop finché questo non ha caricato,
+   poi sfuma. Il riquadro c'è già sotto, e ha già la sua altezza: quando lo
+   scheletro sparisce non salta niente. */
+.ab-frame { position: relative; min-height: 480px; }
+.ab-card.ab-ready .ab-frame { min-height: 0; }
+.ab-skel {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 14px 4px;
+  background: #fff;
+  transition: opacity .35s var(--ease);
+}
+.ab-card.ab-ready .ab-skel { opacity: 0; pointer-events: none; }
+.sk {
+  display: block; border-radius: 9px;
+  background: linear-gradient(90deg, #f1f1f4 0%, #f8f8fa 50%, #f1f1f4 100%);
+  background-size: 200% 100%;
+  animation: sk 1.3s ease-in-out infinite;
+}
+.sk-l   { height: 11px; width: 32%; margin-top: 8px; }
+.sk-f   { height: 44px; width: 100%; }
+.sk-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: none; animation: none; }
+.sk-btn { height: 50px; width: 100%; margin-top: 14px; border-radius: 999px; }
+@keyframes sk { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+#ab-mount iframe { display: block; width: 100%; border: 0; }
+
+.ab-direct { margin: 10px 4px 2px; text-align: center; }
+/* Se il modulo non arriva, il link diretto smette di essere una nota a piè
+   di riquadro e diventa la strada. */
+.ab-card.ab-slow .ab-direct {
+  background: var(--bg-soft); border-radius: 12px; padding: 12px 14px;
+  color: var(--text); font-size: .95rem;
+}
+.ab-card.ab-slow .ab-skel .sk { animation: none; opacity: .5; }
+
+.ab-legal { margin: 1.2rem 6px 0; text-align: center; }
+.ab-fail { margin-top: 0; }
+
+/* --- la finestra di pagamento sopra pricing.html ----------------------------
+   Lo stesso riquadro di abbonati.html, dentro un pannello che sale sopra ai
+   piani. Il <dialog> è il fondo — copre lo schermo e scorre — e il pannello è
+   suo figlio: così un pannello più alto dello schermo si scorre per intero, e
+   uno più basso resta al centro (i margini automatici di una colonna flex
+   centrano quando c'è posto e si azzerano quando non c'è, senza tagliare la
+   cima). Su telefono il pannello parte dal basso e prende tutto lo schermo.
+
+   ⚠️ Il <dialog> è aperto NON modale (vedi pricing.html): niente ::backdrop
+   e niente strato superiore. Il fondo scuro è il <dialog> stesso, e lo
+   z-index lo tiene sopra al sito (la testata è a 50) ma sotto alle finestre
+   di Whop, che usano il massimo. */
+html.pay-open { overflow: hidden; }
+
+.pay {
+  position: fixed; inset: 0; z-index: 1000;
+  width: 100%; height: 100%;
+  max-width: none; max-height: none;
+  margin: 0; padding: 32px 16px;
+  border: 0;
+  background: rgba(14, 16, 30, .52);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  overflow-y: auto; overscroll-behavior: contain;
+}
+.pay[open] { display: flex; flex-direction: column; align-items: center; }
+
+.pay-sheet {
+  position: relative;
+  width: min(100%, 540px);
+  margin: auto 0;
+  background: #fff;
+  border-radius: 26px;
+  padding: 0 24px 20px;
+  box-shadow: 0 60px 120px -40px rgba(20, 24, 70, .55), 0 2px 8px rgba(0, 0, 0, .06);
+}
+
+/* La testata resta in vista mentre si scorre il modulo: la croce per uscire
+   non deve sparire sotto al numero di carta. Porta lei la riga del marchio,
+   che così resta in cima anche lei. */
+.pay-head {
+  position: sticky; top: 0; z-index: 3;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  margin: 0 -24px 18px;
+  padding: 24px 24px 14px;
+  background: #fff;
+  border-radius: 26px 26px 0 0;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.pay-head::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: var(--grad);
+}
+.pay-title { font-size: clamp(1.45rem, 3vw, 1.8rem); letter-spacing: -.03em; margin: 0 0 .25em; }
+.pay-after { margin: 0; color: var(--t3); font-size: .9rem; }
+.pay-close {
+  flex: none;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); background: #fff; color: var(--t2);
+  cursor: pointer;
+  transition: background .2s, color .2s, transform .3s var(--ease);
+}
+.pay-close:hover { background: var(--bg-soft); color: var(--text); transform: rotate(90deg); }
+
+/* Dentro al pannello il riquadro è un pezzo del pannello, non un secondo
+   foglio: niente ombra e niente riga del marchio, che sta già in testata. */
+.pay-switch { margin: 0 0 16px; max-width: none; }
+.pay-card {
+  margin-top: 4px;
+  padding: 14px 14px 10px;
+  border-radius: 18px;
+  box-shadow: none;
+}
+.pay-card::before { display: none; }
+.pay-card .ab-frame { min-height: 440px; }
+.pay-card.ab-ready .ab-frame { min-height: 0; }
+.pay-mount iframe { display: block; width: 100%; border: 0; }
+.pay .ab-legal { margin: 14px 4px 0; }
+
+@keyframes payIn   { from { opacity: 0; transform: translateY(22px) scale(.985); } }
+@keyframes payFade { from { opacity: 0; } }
+.pay[open] .pay-sheet { animation: payIn .45s var(--ease) both; }
+.pay[open]            { animation: payFade .3s ease both; }
+
+@media (max-width: 600px) {
+  .pay { padding: 10px 0 0; }
+  .pay-sheet {
+    flex: 1 0 auto;
+    width: 100%; margin: 0;
+    border-radius: 22px 22px 0 0;
+    padding: 0 16px calc(18px + env(safe-area-inset-bottom));
+  }
+  .pay-head { margin: 0 -16px 16px; padding: 20px 16px 12px; border-radius: 22px 22px 0 0; }
+  /* Su telefono ogni pixel di larghezza va al modulo: il riquadro perde
+     bordo e margini interni, resta la riga «Pagamento sicuro». */
+  .pay-card { padding: 0; border: 0; border-radius: 0; }
+  .pay-card .ab-card-head { padding: 0 2px 12px; }
+  @keyframes payIn { from { transform: translateY(60px); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pay[open] .pay-sheet, .pay[open] { animation: none; }
+  .pay-close:hover { transform: none; }
+}
+
+/* =============================================================================
+   20. DOWNLOAD — conferma dopo il pagamento e rimando all'abbonamento
+   ============================================================================= */
+.dl-welcome { margin: 0 0 1.6rem; }
+.dl-nosub { margin: -.4rem 0 0; color: var(--t3); }
+
+/* =============================================================================
+   21. HOME — il pulsante dell'evento nella prima schermata
+   Il puntino che pulsa dice «adesso»: è la sola cosa della prima schermata
+   che ha una data. Su fondo nero, come il pulsante che sostituisce.
+   ============================================================================= */
+.btn-event .btn-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #e0489f;
+  animation: bkLive 2s ease-out infinite;
+}
+@keyframes bkLive {
+  0%   { box-shadow: 0 0 0 0 rgba(224,72,159,.6); }
+  70%  { box-shadow: 0 0 0 9px rgba(224,72,159,0); }
+  100% { box-shadow: 0 0 0 0 rgba(224,72,159,0); }
+}
+
+/* =============================================================================
+   22. PER I BROKER — broker.html
+   Una pagina sola, un racconto: apertura scura, due corsie, il percorso in
+   orizzontale, il triangolo, la quota, le garanzie, i numeri, l'incontro.
+   Le regole che bloccano le sezioni e fanno scorrere di lato stanno TUTTE
+   sotto `.bk-anim`, che broker.js mette solo se le animazioni sono gradite:
+   senza, la pagina si legge dall'alto in basso come un testo.
+   ============================================================================= */
+
+.bk-head { text-align: left; margin: 0 0 clamp(2rem, 5vw, 3.4rem); max-width: 820px; }
+.bk-head.center { text-align: center; margin-inline: auto; }
+
+/* Il gradiente del marchio è tarato sul bianco: su fondo scuro il blu e il
+   viola spariscono. Questa è la stessa sequenza, schiarita. */
+.bk-grad {
+  background: linear-gradient(90deg, #7aa0ff 0%, #ae86ff 50%, #ff7cc6 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+
+/* --- 1. apertura ---------------------------------------------------------- */
+.bk-hero {
+  position: relative; overflow: hidden;
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
+  display: flex; align-items: center;
+  padding: clamp(4rem, 10vh, 7rem) 0 clamp(6rem, 14vh, 8rem);
+  background: radial-gradient(110% 90% at 74% 52%, #16122c 0%, #08080e 55%, #000 100%);
+  color: #fff;
+}
+.bk-net { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; display: block; }
+/* Il velo fra la scena e il testo: la scena è piena di luci e di grafici, e
+   senza questo il testo dell'apertura ci si leggerebbe sopra a fatica. */
+.bk-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(5,5,10,.94) 0%, rgba(5,5,10,.72) 34%, rgba(5,5,10,0) 58%);
+}
+@media (max-width: 759px) {
+  .bk-hero::after {
+    background: linear-gradient(180deg, rgba(5,5,10,.9) 0%, rgba(5,5,10,.7) 52%, rgba(5,5,10,0) 66%);
+  }
+}
+.bk-hero-in {
+  position: relative; z-index: 1; width: 100%;
+  opacity: calc(1 - var(--sp, 0) * 1.25);
+  transform: translateY(calc(var(--sp, 0) * -70px));
+}
+.bk-hero-in > * { max-width: 620px; }
+/* Su telefono la rete sta SOTTO ai pulsanti, nello spazio che lascia questo
+   margine: sovrapposta al testo lo rendeva più difficile da leggere. */
+@media (max-width: 759px) {
+  .bk-hero { align-items: flex-start; padding-top: 2.6rem; padding-bottom: 410px; }
+}
+
+.bk-event {
+  display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 10px;
+  padding: 7px 15px 7px 13px;
+  margin-bottom: 1.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(8px);
+  color: #fff; font-size: .84rem;
+}
+.bk-event:hover { text-decoration: none; background: rgba(255,255,255,.1); }
+.bk-event-name { font-weight: 650; }
+.bk-event-when { color: rgba(255,255,255,.6); }
+.bk-live {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #e0489f;
+  animation: bkLive 2s ease-out infinite;
+}
+
+.bk-h1 {
+  color: #fff;
+  font-size: clamp(2.7rem, 7vw, 5.4rem);
+  letter-spacing: -.045em;
+  line-height: 1.02;
+  margin-bottom: .45em;
+}
+.bk-hero-lead {
+  color: rgba(255,255,255,.72);
+  font-size: clamp(1.06rem, 1.7vw, 1.3rem);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+/* ⚠️ Fondo nero: la variante normale del pulsante secondario sarebbe
+   invisibile. Stessa correzione della prima schermata della home. */
+.bk-hero .btn-ghost {
+  color: #fff;
+  border-color: rgba(255,255,255,.38);
+  background: rgba(255,255,255,.04);
+}
+.bk-hero .btn-ghost:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.6); }
+
+.bk-hint {
+  position: absolute; left: 0; right: 0; bottom: 22px; z-index: 1;
+  margin: 0;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: .8rem; color: rgba(255,255,255,.5);
+  opacity: calc(1 - var(--sp, 0) * 4);
+}
+
+/* --- 2. perché: le due corsie --------------------------------------------- */
+.bk-why { padding: clamp(3.5rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3rem); }
+.bk-why-head h2 { font-size: clamp(1.8rem, 3.6vw, 2.8rem); }
+.bk-anim .bk-why { padding: 0; }
+.bk-anim .bk-why-head { margin-bottom: clamp(1.2rem, 4vh, 3rem); }
+.bk-story-grid { display: grid; gap: clamp(28px, 5vw, 72px); align-items: center; }
+@media (min-width: 860px) {
+  .bk-story-grid { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); }
+}
+.bk-beat { margin-bottom: 2rem; }
+.bk-beat-n {
+  display: block; margin-bottom: .6rem;
+  font-size: .95rem; font-weight: 700; letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+.bk-beat h3 { font-size: clamp(1.5rem, 2.6vw, 2.15rem); letter-spacing: -.032em; line-height: 1.12; }
+.bk-beat p { font-size: 1.07rem; margin: 0; }
+
+.bk-lanes { margin: 0; }
+.bk-lanes canvas { display: block; width: 100%; height: clamp(250px, 32vw, 380px); }
+.bk-anim .bk-lanes canvas { height: clamp(240px, 40vh, 400px); }
+.bk-illus { margin: .5rem 0 0; text-align: right; font-size: .78rem; color: var(--t3); }
+
+.bk-anim .bk-story { height: 340vh; }
+.bk-anim .bk-story-stage {
+  position: sticky; top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  height: calc(100svh - var(--header-h));
+  display: flex; flex-direction: column; justify-content: center;
+}
+.bk-anim .bk-story-stage > .wrap { width: 100%; }
+.bk-anim .bk-beats { position: relative; min-height: 16rem; }
+.bk-anim .bk-beat {
+  position: absolute; top: 0; left: 0; right: 0; margin: 0;
+  opacity: var(--on, 1);
+  /* entra dal basso scendendo, esce verso l'alto salendo — e al contrario
+     risalendo la pagina: `--dir` lo scrive broker.js */
+  transform: translateY(calc((1 - var(--on, 1)) * var(--dir, 1) * 26px));
+}
+@media (max-width: 859px) {
+  .bk-lanes { order: -1; }
+  .bk-anim .bk-story-grid { gap: 22px; }
+  .bk-anim .bk-beats { min-height: 13.5rem; }
+  .bk-anim .bk-lanes canvas { height: clamp(190px, 28vh, 240px); }
+  .bk-anim .bk-why-head h2 { font-size: 1.55rem; }
+  .bk-beat h3 { font-size: 1.45rem; }
+  .bk-beat p { font-size: 1rem; }
+}
+
+/* --- 3. il percorso ------------------------------------------------------- */
+.bk-path { padding: 0; background: var(--bg-soft); border-block: 1px solid var(--border); }
+.bk-path-stage { padding: clamp(3.5rem, 9vw, 6rem) 0; }
+/* ⚠️ `width: 100%` non è ridondante: dentro la scena bloccata (una colonna
+   flex) i margini automatici della colonna la restringevano al contenuto, e
+   il titolo finiva fuori allineamento rispetto al resto della pagina. */
+.bk-path-head {
+  width: 100%;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px 48px;
+  margin-bottom: clamp(1.6rem, 4vh, 2.8rem);
+}
+.bk-path-head h2 { max-width: 14em; margin: 0; }
+
+.bk-meter {
+  flex: 0 1 360px; min-width: 240px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: .82rem; font-weight: 600; color: var(--t3);
+}
+.bk-meter-bar { position: relative; flex: 1; height: 6px; border-radius: 99px; background: rgba(0,0,0,.08); }
+.bk-meter-fill {
+  position: absolute; inset: 0 auto 0 0;
+  width: calc(var(--p, 1) * 100%);
+  border-radius: inherit; background: var(--grad);
+}
+.bk-meter-dot {
+  position: absolute; top: 50%; left: calc(var(--p, 1) * 100%);
+  width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  border-radius: 50%; background: #fff;
+  box-shadow: 0 0 0 3px #7b3fe4, 0 4px 12px rgba(123,63,228,.4);
+}
+
+.bk-path-track {
+  list-style: none; margin: 0 auto; padding: 0 24px;
+  max-width: var(--wrap);
+  display: grid; gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+.bk-anim .bk-path-stage {
+  position: sticky; top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  height: calc(100svh - var(--header-h));
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 0; overflow: hidden;
+}
+.bk-anim .bk-path-view { overflow: visible; }
+/* Il bordo sinistro del primo passaggio è allineato alla colonna della pagina,
+   così all'inizio la traccia sembra un contenuto come gli altri; poi parte. */
+.bk-anim .bk-path-track {
+  display: flex; gap: 22px;
+  width: max-content; max-width: none; margin: 0;
+  padding: 0 max(24px, calc((100vw - var(--wrap)) / 2 + 24px));
+  will-change: transform;
+}
+.bk-anim .bk-step { width: min(370px, 80vw); flex: 0 0 auto; }
+
+.bk-step {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 18px 18px 24px;
+  box-shadow: 0 22px 44px -34px rgba(0,0,0,.3);
+  opacity: calc(.4 + var(--on, 1) * .6);
+  transform: scale(calc(.95 + var(--on, 1) * .05));
+}
+.bk-step h3 { font-size: 1.25rem; margin-bottom: .35em; }
+.bk-step p { font-size: .95rem; margin: 0; }
+/* Il nome dell'estensione dentro la frase: stesso carattere del testo, solo
+   più marcato. Nessun monospaziato in questa pagina (vedi broker.js). */
+.bk-step code { font: inherit; font-weight: 650; color: var(--text); }
+.bk-step-n {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  margin-bottom: .8rem;
+  background: var(--grad); color: #fff;
+  font-size: .85rem; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+
+/* Le illustrazioni dei cinque passaggi: markup, non immagini, così le
+   parole dentro si traducono come il resto. */
+.bk-art {
+  position: relative; overflow: hidden;
+  height: 172px; margin-bottom: 18px; padding: 16px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #f6f3ff 0%, #eef3ff 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+}
+
+.mini-browser {
+  width: 100%;
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  background: #fff; border-radius: 10px;
+  box-shadow: 0 6px 18px -10px rgba(0,0,0,.3);
+  font-size: .74rem; color: var(--t2);
+  white-space: nowrap; overflow: hidden;
+}
+.mb-dots { display: inline-flex; gap: 4px; flex: 0 0 auto; }
+.mb-dots i { width: 7px; height: 7px; border-radius: 50%; background: #e2e2e7; }
+.mb-url { overflow: hidden; text-overflow: ellipsis; }
+.mb-url b { color: var(--violet); font-weight: 700; }
+.art-badge {
+  font-size: .76rem; font-weight: 640;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(52,199,89,.14); color: #1f8a3b;
+}
+
+.bk-art-lessons { align-items: stretch; gap: 7px; }
+.lesson {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px;
+  background: #fff; border-radius: 9px;
+  font-size: .78rem; color: var(--t2);
+  border: 1px solid transparent;
+}
+.lesson i {
+  width: 14px; height: 14px; border-radius: 50%; flex: 0 0 auto;
+  border: 1.5px solid var(--border-2);
+}
+.lesson i.ok { background: var(--green); border-color: var(--green); }
+.lesson-now { border-color: rgba(123,63,228,.45); color: var(--text); }
+.lesson-now i { border-color: var(--violet); box-shadow: inset 0 0 0 3px #fff; background: var(--violet); }
+.lesson-next { opacity: .55; }
+
+.vault-bar {
+  position: relative; width: 100%; height: 34px;
+  display: flex; border-radius: 9px; overflow: hidden;
+  box-shadow: 0 6px 18px -10px rgba(0,0,0,.3);
+}
+.vault-free { flex: 3; background: linear-gradient(90deg, #dfe7ff, #e9ddff); }
+.vault-lock {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  background: #1d1d1f; color: #fff;
+  font-size: .82rem; font-weight: 700;
+}
+.vault-checks { display: flex; gap: 7px; }
+.vault-checks i { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--violet); background: #fff; }
+.vault-checks i.used { background: var(--violet); }
+.vault-cap { font-size: .8rem; font-weight: 600; color: var(--t2); }
+
+.bk-art-file { flex-direction: row; gap: 16px; flex-wrap: wrap; }
+.file-icon {
+  position: relative;
+  width: 62px; height: 78px; flex: 0 0 auto;
+  border-radius: 8px 18px 8px 8px;
+  background: #fff;
+  box-shadow: 0 8px 20px -10px rgba(0,0,0,.35);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 10px;
+}
+.file-ext {
+  font-size: .78rem; font-weight: 700;
+  background: var(--grad); color: #fff;
+  padding: 2px 6px; border-radius: 5px;
+}
+.file-lines { flex: 1; min-width: 110px; display: grid; gap: 7px; }
+.file-lines i { height: 7px; border-radius: 4px; background: rgba(123,63,228,.22); }
+.file-lines .w90 { width: 90%; } .file-lines .w70 { width: 70%; }
+.file-lines .w80 { width: 80%; } .file-lines .w55 { width: 55%; }
+.file-ok { width: 100%; text-align: center; font-size: .8rem; font-weight: 600; color: #1f8a3b; }
+
+.bk-art-term { background: linear-gradient(160deg, #1b1830 0%, #0c0c14 100%); padding: 14px; }
+.term {
+  width: 100%; height: 100%;
+  background: #0a0a10;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 9px;
+  overflow: hidden;
+  /* Il terminale di MetaTrader usa un carattere normale, non monospaziato:
+     così è anche questo. Le cifre restano in colonna. */
+  font-size: .74rem; font-variant-numeric: tabular-nums;
+}
+.term-bar {
+  display: flex; justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(255,255,255,.05);
+  color: rgba(255,255,255,.55);
+}
+.term-ea { color: #4ade80; }
+.term-rows { padding: 4px 0; }
+.tr {
+  display: grid; grid-template-columns: 3.6em 1fr 3em 3em; gap: 6px;
+  padding: 3px 10px;
+  color: rgba(255,255,255,.62);
+}
+.tr-d.buy  { color: #7aa0ff; }
+.tr-d.sell { color: #ff7cc6; }
+.tr-v { text-align: right; }
+.tr-new { animation: trIn .5s var(--ease); background: rgba(123,63,228,.16); }
+@keyframes trIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* --- 4. il triangolo ------------------------------------------------------ */
+.bk-tri {
+  position: relative; overflow: hidden;
+  background: #07070c; color: #fff;
+}
+.bk-tri::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(50% 60% at 30% 60%, rgba(59,110,245,.16), transparent 70%),
+    radial-gradient(40% 50% at 80% 30%, rgba(224,72,159,.12), transparent 70%);
+  pointer-events: none;
+}
+.bk-tri .wrap { position: relative; }
+.bk-tri h2 { color: #fff; }
+.bk-tri .eyebrow { color: rgba(255,255,255,.5); }
+.bk-tri .lead { color: rgba(255,255,255,.66); }
+
+.bk-tri-grid { display: grid; gap: clamp(2rem, 5vw, 3.5rem); align-items: center; }
+@media (min-width: 920px) { .bk-tri-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); } }
+
+.bk-tri-fig {
+  position: relative;
+  width: 100%; max-width: 640px; margin: 0 auto;
+  aspect-ratio: 600 / 500;
+}
+.bk-tri-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.tri-edge {
+  fill: none;
+  stroke: rgba(255,255,255,.16); stroke-width: 1.5;
+  stroke-dasharray: 2 7;
+  transition: stroke .35s var(--ease), stroke-width .35s var(--ease);
+}
+.tri-edge.on { stroke: url(#bk-g); stroke-width: 2.5; stroke-dasharray: none; }
+.tri-dots circle { fill: #d4c6ff; }
+
+/* Il pulsante È il cerchio: il nome sta sotto, fuori dal riquadro del
+   pulsante, così il centro del cerchio cade esattamente sul vertice. */
+.bk-node {
+  position: absolute; left: var(--x); top: var(--y);
+  transform: translate(-50%, -50%);
+  width: 68px; height: 68px; padding: 0;
+  background: none; border: 0; border-radius: 50%;
+  color: #fff; font: inherit; cursor: pointer;
+}
+.bk-node-ring {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #2c2650, #120f22);
+  border: 1.5px solid rgba(255,255,255,.22);
+  transition: box-shadow .35s var(--ease), border-color .35s var(--ease), transform .35s var(--ease);
+}
+.bk-node-ring svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.bk-node-ring img { width: 34px; height: 34px; border-radius: 8px; }
+.bk-node > span:last-child {
+  position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  white-space: nowrap;
+  font-size: .95rem; font-weight: 640;
+}
+.bk-node:hover .bk-node-ring { border-color: rgba(255,255,255,.5); }
+.bk-node[aria-pressed="true"] .bk-node-ring {
+  border-color: #ae86ff;
+  transform: scale(1.08);
+  box-shadow: 0 0 0 7px rgba(123,63,228,.22), 0 0 46px rgba(123,63,228,.7);
+}
+.bk-node:focus-visible { outline: 2px solid #7aa0ff; outline-offset: 6px; }
+
+.tri-label {
+  position: absolute; left: var(--x); top: var(--y);
+  transform: translate(-50%, -50%);
+  max-width: 13em;
+  padding: 4px 10px; border-radius: 999px;
+  background: rgba(7,7,12,.78);
+  border: 1px solid rgba(255,255,255,.08);
+  font-size: .76rem; font-weight: 550; line-height: 1.3;
+  text-align: center;
+  color: rgba(255,255,255,.42);
+  transition: color .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+}
+.tri-label.on { color: #fff; background: rgba(60,36,120,.85); border-color: rgba(174,134,255,.55); }
+
+.bk-tri-card {
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 22px;
+  padding: clamp(24px, 3vw, 34px);
+  animation: bkCard .45s var(--ease);
+}
+.bk-tri-card h3 { color: #fff; font-size: clamp(1.35rem, 2.2vw, 1.7rem); letter-spacing: -.028em; line-height: 1.15; }
+.bk-tri-card p { color: rgba(255,255,255,.7); margin: 0; }
+@keyframes bkCard { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 560px) {
+  .bk-node { width: 54px; height: 54px; }
+  .bk-node-ring svg { width: 22px; height: 22px; }
+  .bk-node-ring img { width: 26px; height: 26px; }
+  .bk-node > span:last-child { font-size: .82rem; margin-top: 7px; }
+  .tri-label { font-size: .6rem; max-width: 9.5em; padding: 3px 7px; }
+}
+
+/* --- 5. la quota ---------------------------------------------------------- */
+/* Le tre schede entrano scivolando da destra: prima di arrivare sporgevano
+   oltre il bordo e su telefono allargavano la pagina di qualche pixel — uno
+   scorrimento laterale che nessuno ha voluto. La sezione le ritaglia. */
+.bk-share { overflow-x: hidden; overflow-x: clip; }
+.bk-share-grid { display: grid; gap: clamp(2.4rem, 6vw, 4rem); align-items: center; }
+@media (min-width: 880px) { .bk-share-grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); } }
+
+.bk-ring { position: relative; width: min(340px, 78vw); margin: 0 auto; }
+.bk-ring svg { display: block; width: 100%; height: auto; transform: rotate(-90deg); }
+.ring-bg  { fill: none; stroke: rgba(0,0,0,.06); stroke-width: 22; }
+.ring-sq  { fill: none; stroke: #7b3fe4; stroke-width: 22; }
+.ring-you { fill: none; stroke: url(#bk-hatch); stroke-width: 22; }
+/* Il centro è il centro del CERCHIO, non del riquadro: sotto c'è la legenda,
+   e con `inset: 0` la cifra scenderebbe verso di lei. */
+.bk-ring-c {
+  position: absolute; top: 0; left: 0; right: 0;
+  aspect-ratio: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+}
+.bk-ring-pct {
+  font-size: clamp(3.4rem, 9vw, 4.6rem); font-weight: 700; letter-spacing: -.04em; line-height: 1;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.bk-ring-cap { max-width: 9em; margin-top: .4rem; font-size: .84rem; color: var(--t2); line-height: 1.3; }
+.bk-ring-leg {
+  display: flex; justify-content: center; gap: 18px; flex-wrap: wrap;
+  margin: 1.2rem 0 0; font-size: .82rem; color: var(--t2);
+}
+.bk-ring-leg > span { display: inline-flex; align-items: center; gap: 7px; }
+.bk-ring-leg i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.leg-sq { background: #7b3fe4; }
+.leg-you { background: repeating-linear-gradient(45deg, #7b3fe4 0 2px, #f1ecfd 2px 5px); }
+
+.bk-facts { display: grid; gap: 12px; margin-top: 2rem; }
+.bk-fact {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  opacity: calc(.15 + var(--on, 1) * .85);
+  transform: translateX(calc((1 - var(--on, 1)) * 28px));
+}
+.bk-fact p { margin: 0; font-size: .95rem; }
+.bk-fact-i {
+  flex: 0 0 auto;
+  width: 36px; height: 36px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--grad); color: #fff; font-size: 1.05rem; font-weight: 700;
+}
+
+/* --- 6. nessun conflitto -------------------------------------------------- */
+.bk-safe-grid { display: grid; gap: 18px; }
+@media (min-width: 820px) { .bk-safe-grid { grid-template-columns: repeat(3, 1fr); } }
+.bk-no {
+  background: var(--bg-soft);
+  border-radius: 22px;
+  padding: 28px 26px;
+  opacity: calc(.15 + var(--on, 1) * .85);
+  transform: translateY(calc((1 - var(--on, 1)) * 20px));
+}
+.bk-no h3 { font-size: 1.25rem; margin-top: 1rem; }
+.bk-no p { margin: 0; font-size: .97rem; }
+/* La croce si disegna con lo scorrimento: prima il cerchio, poi i due tratti. */
+.bk-no-x svg { width: 44px; height: 44px; fill: none; stroke-linecap: round; }
+.bk-no-x circle {
+  stroke: rgba(123,63,228,.35); stroke-width: 2;
+  stroke-dasharray: 114px;
+  stroke-dashoffset: calc((1 - var(--on, 1)) * 114px);
+}
+.bk-no-x path {
+  stroke: var(--violet); stroke-width: 2.6;
+  stroke-dasharray: 40px;
+  stroke-dashoffset: calc(max(0, 1 - var(--on, 1) * 1.6) * 40px);
+}
+
+/* --- 7. i numeri ---------------------------------------------------------- */
+.bk-num-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.bk-num {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 26px 24px;
+  opacity: calc(.2 + var(--on, 1) * .8);
+  transform: translateY(calc((1 - var(--on, 1)) * 16px));
+}
+.bk-num-v {
+  display: block; margin-bottom: .55rem;
+  font-size: clamp(2.6rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -.04em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.bk-num p { margin: 0; font-size: .93rem; }
+.bk-nums-note { margin: 1.6rem 0 0; }
+
+/* --- 8. l'incontro -------------------------------------------------------- */
+.bk-meet-card {
+  position: relative; overflow: hidden;
+  display: grid; gap: clamp(1.8rem, 4vw, 3rem);
+  padding: clamp(26px, 5vw, 56px);
+  border-radius: 28px;
+  background: radial-gradient(120% 140% at 0% 0%, #1d1744 0%, #0b0b13 62%);
+  color: #fff;
+}
+@media (min-width: 920px) { .bk-meet-card { grid-template-columns: 1fr 1fr; align-items: center; } }
+.bk-meet-event { position: relative; }
+.bk-meet-event .eyebrow { color: rgba(255,255,255,.5); }
+.bk-meet-title { color: #fff; font-size: clamp(2.3rem, 5vw, 3.6rem); letter-spacing: -.04em; margin-bottom: .3em; }
+.bk-meet-where { font-size: 1rem; font-weight: 550; color: rgba(255,255,255,.6); margin-bottom: 1.4rem; }
+.bk-meet-lead { color: rgba(255,255,255,.74); font-size: 1.05rem; margin: 0; }
+
+.bk-form, .bk-done {
+  background: #fff; color: var(--text);
+  border-radius: 20px;
+  padding: clamp(20px, 3vw, 28px);
+}
+.bk-form { display: grid; gap: 16px; }
+.bk-field > span { display: block; margin-bottom: 6px; font-size: .86rem; font-weight: 620; color: var(--text); }
+.bk-field input {
+  width: 100%;
+  font: inherit; font-size: 1rem;
+  padding: 12px 14px;
+  border: 1px solid var(--border-2); border-radius: 12px;
+  background: #fff; color: var(--text);
+}
+.bk-field input:focus { outline: 2px solid var(--violet); outline-offset: 0; border-color: transparent; }
+.bk-days { border: 0; margin: 0; padding: 0; }
+.bk-days legend { padding: 0; margin-bottom: 8px; font-size: .86rem; font-weight: 620; color: var(--text); }
+.bk-days-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.bk-day { position: relative; }
+.bk-day input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.bk-day span {
+  display: inline-block;
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--border-2);
+  font-size: .9rem; color: var(--t2);
+  text-transform: capitalize;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.bk-day-any span { text-transform: none; }
+.bk-day input:checked + span { background: var(--text); border-color: var(--text); color: #fff; }
+.bk-day input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
+.bk-manca { margin: 0; color: var(--amber); font-weight: 600; font-size: .92rem; }
+.bk-form-note { margin: 0; text-align: center; font-size: .82rem; color: var(--t3); }
+
+.bk-done { text-align: center; }
+.bk-done h3 { font-size: 1.5rem; margin-bottom: 1.2rem; }
+.bk-qr-wrap { margin: 1.6rem 0 1rem; }
+.bk-qr-wrap p { max-width: 26em; margin: 0 auto 1rem; }
+/* Il messaggio si mostra com'è destinato a comparire: una bolla di chat,
+   non un blocco di codice. */
+.bk-msg {
+  position: relative;
+  max-width: 30em; margin: 1.4rem auto;
+  padding: 12px 14px 12px 16px;
+  text-align: left; white-space: pre-wrap; word-break: break-word;
+  font: inherit; font-size: .95rem; line-height: 1.45; color: #111b21;
+  background: #d9fdd3;
+  border: 0; border-radius: 14px 14px 4px 14px;
+  box-shadow: 0 1px 1.5px rgba(0,0,0,.13);
+}
+@media (max-width: 620px) { .bk-qr-wrap { display: none; } }
+
+/* --- quando il movimento non è gradito ------------------------------------
+   Le scene a tempo non girano (broker.js) e i puntini non pulsano. Quelle a
+   scorrimento sono già nel loro stato finale, e `.bk-anim` non c'è. */
+@media (prefers-reduced-motion: reduce) {
+  .bk-live, .btn-event .btn-dot { animation: none; }
+  .bk-hero-in, .bk-hint { opacity: 1; transform: none; }
+}
+
+/* --- su telefono: schede da scorrere, non un elenco ------------------------
+   Sotto i 700 px le griglie di schede (garanzie, numeri, punti della quota)
+   diventano una fila che si scorre di lato con il pollice, una scheda alla
+   volta, con la successiva che si affaccia dal bordo: si capisce che ce n'è
+   un'altra senza doverlo dire. I puntini sotto li costruisce broker.js e
+   dicono dove si è. Sopra i 700 px non esistono. */
+.bk-dots { display: none; }
+@media (max-width: 700px) {
+  .bk-swipe {
+    display: flex !important; gap: 12px;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: -24px; padding: 4px 24px 8px;
+    scroll-padding-inline: 24px;
+  }
+  .bk-swipe::-webkit-scrollbar { display: none; }
+  .bk-swipe > * { flex: 0 0 82%; scroll-snap-align: start; }
+  .bk-facts.bk-swipe > * { flex-basis: 86%; }
+  /* Dentro una fila che scorre, lo scivolamento di lato all'ingresso farebbe
+     scorrere la fila stessa: qui le schede salgono, come le altre. */
+  .bk-swipe .bk-fact { transform: translateY(calc((1 - var(--on, 1)) * 16px)); }
+  .bk-num { display: flex; flex-direction: column; justify-content: flex-start; }
+
+  .bk-dots { display: flex; justify-content: center; gap: 7px; margin: 14px 0 0; }
+  .bk-dots button {
+    width: 7px; height: 7px; padding: 0; border: 0; border-radius: 99px;
+    background: rgba(0,0,0,.18); cursor: pointer;
+    transition: width .3s var(--ease), background .3s var(--ease);
+  }
+  .bk-dots button[aria-current="true"] { width: 22px; background: var(--violet); }
+
+  /* Il triangolo su telefono: le etichette spente non si leggono a quella
+     misura e si sovrappongono. Restano solo quelle del vertice scelto. */
+  .tri-label:not(.on) { opacity: 0; }
+}
+
+/* =============================================================================
+   23. PROMOZIONE — il banner del codice sconto, e la sua riga nei riquadri
+   Il codice è testo da leggere e da copiare: nessun carattere monospaziato,
+   solo spaziatura larga e il bordo tratteggiato di un tagliando.
+   ============================================================================= */
+.promo {
+  position: relative; z-index: 60;
+  background: var(--grad);
+  color: #fff;
+  font-size: .9rem;
+}
+.promo[hidden] { display: none; }
+.promo-in {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 6px 12px;
+  min-height: 42px;
+  padding: 7px 46px;
+  text-align: center;
+}
+.promo-txt { font-weight: 560; }
+.promo-code {
+  font: inherit; font-weight: 750; letter-spacing: .09em;
+  color: #fff;
+  background: rgba(255, 255, 255, .16);
+  border: 1px dashed rgba(255, 255, 255, .75);
+  border-radius: 8px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.promo-code:hover { background: rgba(255, 255, 255, .28); }
+.promo-code.copied { background: #fff; color: var(--violet); border-style: solid; }
+.promo-cta {
+  color: #fff; font-weight: 650;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.promo-cta:hover { color: #fff; text-decoration-thickness: 2px; }
+.promo-x {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  width: 30px; height: 30px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; background: transparent; color: #fff; opacity: .8;
+  cursor: pointer;
+}
+.promo-x:hover { opacity: 1; background: rgba(255, 255, 255, .16); }
+
+/* In home il banner sta SOPRA alla scena d'apertura, non prima: la scena
+   parte dal bordo dello schermo e un banner nel flusso la spingerebbe giù,
+   tagliandone il fondo. Dove la scena non è a tutto schermo (movimento
+   ridotto, versione statica) torna nel flusso, o coprirebbe il menu. */
+.promo-sopra { position: absolute; top: 0; left: 0; right: 0; }
+body:has(.cine-static) .promo-sopra { position: relative; }
+@media (prefers-reduced-motion: reduce) { .promo-sopra { position: relative; } }
+
+@media (max-width: 620px) {
+  .promo { font-size: .84rem; }
+  .promo-in { gap: 4px 10px; padding: 7px 40px 7px 14px; }
+  .promo-x { right: 4px; }
+}
+
+/* La barra in basso: lo stesso codice, quando il banner in cima non si vede
+   più (site.js). Su schermo largo una pillola che galleggia al centro; su
+   telefono una striscia attaccata al fondo, sopra la barra di sistema.
+   Nascosta resta fuori dallo schermo e `visibility: hidden` — niente Tab,
+   niente lettore di schermo su una cosa che non si vede — e scivola su
+   quando serve. */
+.promo-bar {
+  position: fixed; z-index: 70;
+  left: 0; right: 0; bottom: 18px;
+  width: fit-content; max-width: calc(100% - 32px);
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 6px 12px;
+  padding: 8px 50px 8px 22px;
+  border-radius: 999px;
+  background: var(--grad);
+  color: #fff;
+  font-size: .9rem;
+  box-shadow: 0 14px 34px -12px rgba(59, 31, 120, .6);
+  transform: translateY(calc(100% + 30px));
+  visibility: hidden;
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .35s;
+}
+.promo-bar[hidden] { display: none; }
+.promo-bar.promo-bar-on {
+  transform: none; visibility: visible;
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+}
+.promo-bar .promo-x { right: 8px; }
+/* Sotto la finestra di pagamento non serve, e non deve spuntarne. */
+html.pay-open .promo-bar { visibility: hidden; }
+/* Spazio in fondo alla pagina: la barra non copre la fine del piè di pagina. */
+body.con-barra .site-footer { padding-bottom: 104px; }
+
+@media (max-width: 620px) {
+  .promo-bar {
+    bottom: 0; width: auto; max-width: none;
+    gap: 4px 8px;
+    padding: 9px 38px calc(9px + env(safe-area-inset-bottom)) 12px;
+    border-radius: 16px 16px 0 0;
+    font-size: .84rem;
+  }
+  .promo-bar .promo-code { letter-spacing: .05em; padding: 2px 8px; }
+  .promo-bar .promo-x { right: 3px; }
+}
+/* Su una riga anche a 360 px, con margine per i caratteri del telefono. */
+@media (max-width: 380px) { .promo-bar { font-size: .8rem; } }
+@media (prefers-reduced-motion: reduce) {
+  .promo-bar, .promo-bar.promo-bar-on { transition: none; }
+}
+
+/* La riga del codice dentro al riquadro del piano (e in abbonati.html). */
+.plan-promo {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px;
+  margin: 0 0 1.2rem;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(123, 63, 228, .07);
+  font-size: .88rem; color: var(--text);
+}
+.plan-promo[hidden] { display: none; }
+.plan-promo .promo-code {
+  color: var(--violet);
+  background: #fff;
+  border-color: rgba(123, 63, 228, .5);
+}
+.plan-promo .promo-code:hover { background: rgba(123, 63, 228, .08); }
+.plan-promo .promo-code.copied { background: var(--violet); color: #fff; }
+.plan-promo-note { flex-basis: 100%; color: var(--t3); font-size: .82rem; }
+.ab-sum .plan-promo { margin: 1rem 0 0; max-width: 440px; }

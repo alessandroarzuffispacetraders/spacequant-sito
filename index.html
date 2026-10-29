@@ -43,6 +43,26 @@
 </head>
 <body>
 
+<!-- ===================== PROMOZIONE =====================
+     Il codice sconto di CONFIG.promo, uguale in ogni pagina. Lo riempie e lo
+     nasconde site.js: con `promo: null`, o chiuso dalla croce, non c'è.
+     «Abbonati» porta al pagamento del piano scontato, col codice già
+     inserito; nella pagina abbonamento apre la finestra invece di cambiare
+     pagina.
+     ⚠️ In home sta SOPRA alla scena d'apertura (promo-sopra), non prima: la
+     scena deve partire dal bordo dello schermo, e un banner nel flusso la
+     spingerebbe giù tagliandone il fondo — col «Scorri». -->
+<aside class="promo promo-sopra" id="promo" hidden>
+  <div class="promo-in">
+    <span class="promo-txt" data-i18n="promo.text">Sconto sul piano mensile con il codice</span>
+    <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+    <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  </div>
+  <button type="button" class="promo-x" id="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
+
 <!-- ===================== HEADER ===================== -->
 <header class="site-header">
   <div class="wrap">
@@ -54,6 +74,7 @@
       <a class="hide-sm" href="#come-funziona" data-i18n="nav.how">Come funziona</a>
       <a class="hide-sm" href="#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
       <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+      <a href="download.html" data-i18n="nav.dl">Download</a>
       <div class="lang" role="group" aria-label="Lingua / Language">
         <button type="button" data-lang="it" aria-pressed="true">IT</button>
         <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -97,10 +118,12 @@
         <div class="wrap">
           <h1 data-i18n-html="home.hero.h1">Tutto il tuo backtest,<br>in un solo click.</h1>
           <div class="btn-row hero-cta">
-            <a class="btn btn-primary btn-lg" href="pricing.html" data-i18n="home.hero.cta1">Richiedi l'accesso</a>
-            <!-- Porta allo stesso questionario: la call è dentro il messaggio che
-                 quel modulo compone, non un percorso separato da mantenere. -->
-            <a class="btn btn-ghost btn-lg" href="richiedi.html" data-i18n="home.hero.cta2">Call di lancio</a>
+            <a class="btn btn-primary btn-lg" href="pricing.html" data-i18n="home.hero.cta1">Abbonati</a>
+            <!-- L'evento: porta alla pagina per i broker, che è scritta per chi
+                 ci incontra al SiGMA World. Il puntino dice che è adesso.
+                 ⚠️ Passato l'evento (5 novembre 2026) questo pulsante va
+                 cambiato: un invito a una fiera già chiusa è peggio di niente. -->
+            <a class="btn btn-ghost btn-lg btn-event" href="broker.html"><span class="btn-dot" aria-hidden="true"></span><span data-i18n="home.hero.cta2">SiGMA World · Roma</span></a>
           </div>
           <p class="cine-hint" id="cine-hint">
             <span data-i18n="home.cine.hint">Scorri</span>
@@ -537,7 +560,7 @@
       Un abbonamento, due dispositivi, macOS e Windows.
     </p>
     <div class="btn-row" style="justify-content:center">
-      <a class="btn btn-primary btn-lg" href="pricing.html" data-i18n="home.hero.cta1">Richiedi l'accesso</a>
+      <a class="btn btn-primary btn-lg" href="pricing.html" data-i18n="home.hero.cta1">Abbonati</a>
     </div>
     <p class="text-small t3 mt-3" data-i18n="home.end.local">
       Gira sul tuo computer, macOS e Windows. Nessun cloud obbligatorio,
@@ -570,7 +593,9 @@
         <a href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
         <a href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
         <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
-        </div>
+        <a href="download.html" data-i18n="nav.dl">Download</a>
+        <a href="broker.html" data-i18n="nav.broker">Per i broker</a>
+      </div>
       <div>
         <h4 data-i18n="ft.support">Assistenza</h4>
         <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">da definire</span></a>
@@ -600,6 +625,21 @@
     </div>
   </div>
 </footer>
+
+<!-- ===================== BARRA DELLA PROMOZIONE =====================
+     Lo stesso codice del banner, in fondo allo schermo: compare quando il
+     banner in cima non si vede più (lo decide site.js), così il codice resta
+     a portata mentre si legge. Una croce chiude banner e barra insieme.
+     Non c'è in abbonati.html: lì il codice sta nel riepilogo, già inserito
+     nel modulo, e una barra fissa coprirebbe il pagamento. -->
+<aside class="promo-bar" id="promo-bar" hidden>
+  <span class="promo-txt" data-i18n="promo.bar">Sconto sul mensile</span>
+  <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+  <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  <button type="button" class="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
 
 <script src="assets/config.js"></script>
 <script src="assets/i18n.js"></script>

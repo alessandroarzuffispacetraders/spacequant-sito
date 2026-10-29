@@ -1,105 +1,98 @@
 /* =============================================================================
    SpaceQuant — pagina abbonamento
    -----------------------------------------------------------------------------
-   Tre compiti:
+   Tre piani: mensile, trimestrale, annuale (CONFIG.pricing.plans). Qui:
 
-     1. mostrare lo stato giusto fra i due previsti da CONFIG.pricing.mode
-        ('onRequest' oggi, 'public' quando il checkout sarà aperto a tutti);
-     2. calcolare il risparmio dell'annuale, ma solo se ENTRAMBI i prezzi sono
-        configurati — un risparmio calcolato su un prezzo mancante sarebbe
-        esattamente il genere di numero plausibile e privo di significato che
-        questo prodotto rifiuta di produrre;
-     3. segnalare una configurazione incompleta, così una pubblicazione a metà
-        si vede subito invece di arrivare all'utente.
+     1. prezzi, «pari a … al mese» e risparmio, scritti come si scrivono nella
+        lingua della pagina e calcolati dalla configurazione;
+     2. su telefono si sceglie il piano con l'interruttore e se ne vede uno;
+     3. una configurazione incompleta si segnala, così una pubblicazione a metà
+        si vede subito invece di arrivare all'utente;
+     4. «Abbonati» apre il modulo di Whop in una finestra sopra la pagina,
+        senza cambiarla, già sul piano del pulsante.
    ============================================================================= */
 
 (function () {
 
-  const mode = () => (CONFIG.pricing.mode === 'public' ? 'public' : 'onRequest');
+  const $ = id => document.getElementById(id);
+  const C = SQCheckout;
+  const en = () => C.lingua() === 'en';
 
-  /* --- 1. Quale dei due stati mostrare ------------------------------------ */
-  function applyMode() {
-    const m = mode();
-    document.querySelectorAll('[data-when]').forEach(function (el) {
-      el.hidden = (el.dataset.when !== m);
+  /* --- 1. Prezzi e calcoli ------------------------------------------------ */
+  function scriviPrezzi() {
+    document.querySelectorAll('[data-prezzo]').forEach(function (el) {
+      el.textContent = C.prezzo(el.dataset.prezzo);
     });
-  }
 
-  /* --- Pulsanti «Richiedi l'accesso» --------------------------------------
-     Portano al questionario, portandosi dietro il piano scelto. Prima aprivano
-     direttamente una mail vuota con l'oggetto intestato: chi scriveva doveva
-     inventarsi cosa dire, e chi rispondeva non sapeva nulla di lui. Le tre
-     domande di richiedi.html costano venti secondi a chi le compila e fanno
-     arrivare una richiesta a cui si può rispondere nel merito.
-
-     L'indirizzo resta un link vero — non un pulsante che apre qualcosa con
-     JavaScript: si può aprire in una scheda nuova, copiare, mandare a qualcuno.
-     Il piano viaggia in chiaro nell'indirizzo, e la pagina di destinazione
-     accetta solo i due valori previsti (vedi assets/richiedi.js).            */
-  function wireContactLinks() {
-    document.querySelectorAll('[data-contact]').forEach(function (el) {
-      el.href = 'richiedi.html?piano=' + encodeURIComponent(el.dataset.contact);
+    document.querySelectorAll('[data-calcolo]').forEach(function (el) {
+      C.descrivi(el, el.dataset.calcolo);
     });
-  }
 
-  /* --- 2. Risparmio dell'annuale ------------------------------------------ */
-  function fmt(n) {
-    const locale = document.documentElement.lang === 'en' ? 'en-US' : 'it-IT';
-    return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(n);
-  }
-
-  function updateSaving() {
-    const el = document.getElementById('plan-save');
-    const badge = document.getElementById('plan-badge');
-    if (!el) return;
-
-    const m = CONFIG.pricing.monthly;
-    const y = CONFIG.pricing.yearly;
-    const cur = CONFIG.pricing.currency;
-
-    const usable = mode() === 'public' &&
-      typeof m === 'number' && typeof y === 'number' && m > 0 && y > 0 &&
-      (m * 12) > y;   // se l'annuale non conviene, non lo si annuncia lo stesso
-
-    if (!usable) {
-      el.classList.add('hidden');
-      if (badge) badge.classList.add('hidden');
-      return;
-    }
-
-    const fullYear = m * 12;
-    const saved = fullYear - y;
-    const pct = Math.round((saved / fullYear) * 100);
-    const en = document.documentElement.lang === 'en';
-
-    el.textContent = en
-      ? `You save ${cur}${fmt(saved)} a year — ${pct}% less than paying monthly.`
-      : `Risparmi ${cur}${fmt(saved)} l'anno, il ${pct}% rispetto al mensile.`;
-    el.classList.remove('hidden');
-
+    // Il bollino dell'annuale dice di quanto conviene, solo se conviene.
+    const badge = $('plan-badge');
     if (badge) {
-      badge.textContent = en ? `Save ${pct}%` : `Risparmi il ${pct}%`;
-      badge.classList.remove('hidden');
+      const r = C.risparmio('annuale');
+      badge.hidden = !r;
+      if (r) badge.textContent = en() ? `Save ${r.pct}%` : `Risparmi il ${r.pct}%`;
     }
+  }
+
+  /* --- 2. Su telefono, un piano alla volta --------------------------------
+     Tre riquadri incolonnati non entrano in una schermata: l'interruttore ne
+     mostra uno. Parte dal mensile: il più acquistato, e quello della
+     promozione. La classe
+     `plans-scelta` la mette solo questo script: senza JavaScript si vedono
+     tutti e tre. Su schermo largo l'interruttore non c'è e i riquadri stanno
+     affiancati, qualunque cosa sia scelta. */
+  let scelto = 'mensile';
+
+  function mostra(n) {
+    if (!C.esiste(n)) return;
+    scelto = n;
+    document.querySelectorAll('.plan[data-piano]').forEach(function (el) {
+      el.classList.toggle('plan-on', el.dataset.piano === n);
+    });
+    segna(document.querySelector('.plan-pick'), n);
+  }
+
+  /* Un interruttore a tre: aria-checked, tabindex e posizione del cursore. */
+  function segna(sw, n) {
+    if (!sw) return;
+    sw.dataset.sel = n;
+    sw.querySelectorAll('.ab-opt').forEach(function (b) {
+      b.setAttribute('aria-checked', String(b.dataset.piano === n));
+      b.tabIndex = (b.dataset.piano === n) ? 0 : -1;
+    });
+  }
+
+  /* Clic e frecce, come i pulsanti radio veri. */
+  function cablaInterruttore(sw, scegli) {
+    if (!sw) return;
+    sw.querySelectorAll('.ab-opt').forEach(function (b) {
+      b.addEventListener('click', function () { scegli(b.dataset.piano); });
+      b.addEventListener('keydown', function (e) {
+        const passo = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (!passo) return;
+        e.preventDefault();
+        const i = C.PIANI.indexOf(sw.dataset.sel);
+        const altro = C.PIANI[(i + passo + C.PIANI.length) % C.PIANI.length];
+        scegli(altro);
+        sw.querySelector('.ab-opt[data-piano="' + altro + '"]').focus();
+      });
+    });
   }
 
   /* --- 3. Configurazione incompleta ---------------------------------------
-     Cosa manca dipende dallo stato: con l'accesso su richiesta i prezzi non
-     servono, serve un indirizzo a cui scrivere.                              */
+     La lista è quella di checkout.js — la stessa regola con cui si decide se
+     montare il modulo — più l'indirizzo a cui scrivere.                     */
   function checkConfigured() {
-    const box = document.getElementById('price-todo');
-    const body = document.getElementById('price-todo-body');
+    const box = $('price-todo');
+    const body = $('price-todo-body');
     if (!box) return;
 
     const missing = [];
     if (CONFIG.isPlaceholder(CONFIG.supportEmail)) missing.push('supportEmail');
-
-    if (mode() === 'public') {
-      if (typeof CONFIG.pricing.monthly !== 'number') missing.push('pricing.monthly');
-      if (typeof CONFIG.pricing.yearly  !== 'number') missing.push('pricing.yearly');
-      if (CONFIG.isPlaceholder(CONFIG.whop.monthly))  missing.push('whop.monthly');
-      if (CONFIG.isPlaceholder(CONFIG.whop.yearly))   missing.push('whop.yearly');
-    }
+    missing.push.apply(missing, C.mancanti());
 
     box.classList.toggle('hidden', missing.length === 0);
     if (missing.length && body) {
@@ -110,20 +103,149 @@
     }
   }
 
-  function refresh() {
-    applyMode();
-    wireContactLinks();
-    updateSaving();
-    checkConfigured();
+  /* --- 4. Il pagamento, sopra la pagina -----------------------------------
+     I pulsanti «Abbonati» restano link veri ad abbonati.html?piano=…: si
+     aprono in una scheda nuova, si copiano, funzionano senza JavaScript. Un
+     clic normale, a configurazione completa, non cambia pagina: apre il
+     modulo nella finestra #pay, già sul piano del pulsante. Chi ha appena
+     deciso non deve ritrovarsi su un'altra pagina.
+
+     IL TASTO «INDIETRO» CHIUDE LA FINESTRA. Su telefono la finestra occupa lo
+     schermo e sembra una pagina: indietro è il gesto che si fa per uscirne, e
+     senza questa voce nella cronologia porterebbe via dal sito.
+
+     CHIUDERE NON SMONTA. Il modulo resta dov'è: chi chiude per sbaglio, o per
+     rileggere qualcosa, riapre sullo stesso piano e ritrova ciò che aveva
+     scritto. Si rimonta solo cambiando piano o lingua.
+
+     ⚠️ LA FINESTRA NON È MODALE (show, non showModal) — vedi la nota su #pay
+     in pricing.html. Quello che un <dialog> modale darebbe da solo lo fa
+     questo codice: la pagina sotto diventa `inert` (niente clic, niente Tab,
+     niente lettore di schermo), Esc chiude, il fuoco entra nella finestra e
+     torna al pulsante all'uscita.                                           */
+  const dlg = $('pay');
+  /* Per nome, non «tutto il body tranne #pay»: Whop aggiunge al body le sue
+     finestre, e rese inerti fermerebbero il pagamento. */
+  const sotto = () => document.querySelectorAll('body > header, body > main, body > footer, #promo, #promo-bar');
+  let daDove = null;   // il pulsante che ha aperto, per restituirgli il fuoco
+  let pianoPay = 'annuale';
+
+  const finestraPossibile = () =>
+    !!dlg && typeof dlg.showModal === 'function' && C.pronto();
+
+  /* Il modulo montato è quello giusto per piano e lingua di adesso? */
+  function montaSeServe() {
+    const m = $('pay-mount');
+    if (m.dataset.piano === pianoPay && m.dataset.lingua === C.lingua()) return;
+    C.monta($('pay-card'), m, $('pay-direct'), pianoPay);
   }
 
-  document.addEventListener('DOMContentLoaded', refresh);
+  function scegliPay(n) {
+    if (!C.esiste(n)) return;
+    pianoPay = n;
+    segna(dlg.querySelector('.pay-switch'), n);
+    montaSeServe();
+  }
 
-  // Oggetto della mail e testo del risparmio sono generati, non presi dal
-  // dizionario: vanno rifatti quando cambia la lingua.
+  function apri(n, da) {
+    daDove = da || null;
+    scegliPay(n);
+    dlg.show();
+    sotto().forEach(function (el) { el.inert = true; });
+    document.documentElement.classList.add('pay-open');
+    $('pay-close').focus({ preventScroll: true });
+    history.pushState({ sqPay: true }, '');
+  }
+
+  function wirePay() {
+    if (!dlg) return;
+
+    /* I link di riserva portano il codice di chi ha presentato il cliente, se
+       c'è: senza, aprendoli in una scheda nuova si perdeva. */
+    const ref = C.riferimento();
+    document.querySelectorAll('[data-paga]').forEach(function (a) {
+      a.href = 'abbonati.html?piano=' + a.dataset.paga + (ref ? '&ref=' + ref : '');
+
+      a.addEventListener('click', function (e) {
+        // Cmd/Ctrl/Maiusc/rotella: chi vuole una scheda nuova la ottiene.
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (!finestraPossibile()) return;   // si va ad abbonati.html
+        e.preventDefault();
+        apri(a.dataset.paga, a);
+      });
+
+      /* Lo script di Whop parte quando la mano si avvicina a un pulsante, non
+         all'apertura della pagina: è l'unica richiesta a un servizio esterno
+         del sito, e chi legge solo i prezzi non la paga. Il mezzo secondo
+         guadagnato così è quello in cui altrimenti si vedrebbe lo scheletro. */
+      ['pointerenter', 'focus', 'touchstart'].forEach(function (ev) {
+        a.addEventListener(ev, function () { if (finestraPossibile()) C.carica(); },
+          { passive: true });
+      });
+    });
+
+    cablaInterruttore(dlg.querySelector('.pay-switch'), scegliPay);
+
+    $('pay-close').addEventListener('click', function () { dlg.close(); });
+
+    /* Un clic sul fondo scuro chiude. Il fondo è il <dialog> stesso, che
+       copre lo schermo: il pannello è un suo figlio, quindi un clic dentro al
+       pannello non ha il <dialog> come bersaglio. */
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+
+    /* Esc: un <dialog> non modale non lo ascolta da solo. Dentro al modulo
+       di Whop i tasti restano a Whop — è un altro documento — e Esc chiude
+       le sue finestre, non la nostra. */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && dlg.open) dlg.close();
+    });
+
+    /* Qualunque sia la via d'uscita — croce, Esc, fondo, indietro — si passa
+       da qui. Se la voce aggiunta all'apertura è ancora in cima alla
+       cronologia, la si toglie: altrimenti il primo «indietro» dopo la
+       chiusura non farebbe niente di visibile. */
+    dlg.addEventListener('close', function () {
+      sotto().forEach(function (el) { el.inert = false; });
+      document.documentElement.classList.remove('pay-open');
+      if (daDove) daDove.focus({ preventScroll: true });
+      if (history.state && history.state.sqPay) history.back();
+    });
+    window.addEventListener('popstate', function () {
+      if (dlg.open) dlg.close();
+    });
+
+    /* Tornando qui col tasto indietro dopo aver pagato, il browser può
+       restituire la pagina com'era — finestra aperta compresa. Si chiude
+       senza toccare la cronologia, che è già al punto giusto. */
+    window.addEventListener('pageshow', function (e) {
+      if (!e.persisted || !dlg.open) return;
+      history.replaceState(null, '');
+      dlg.close();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    scriviPrezzi();
+    checkConfigured();
+
+    const pick = document.querySelector('.plan-pick');
+    if (pick) {
+      pick.hidden = false;
+      document.querySelector('.plans').classList.add('plans-scelta');
+      cablaInterruttore(pick, mostra);
+      mostra(scelto);
+    }
+
+    wirePay();
+  });
+
+  // Gli importi si scrivono diversi nelle due lingue (69,99 / 69.99) e le
+  // frasi calcolate non passano dal dizionario. Il modulo di Whop ha la sua
+  // lingua: se la finestra è aperta si rimonta subito, altrimenti alla
+  // prossima apertura.
   document.addEventListener('sq:langchange', function () {
-    wireContactLinks();
-    updateSaving();
+    scriviPrezzi();
+    if (dlg && dlg.open) montaSeServe();
   });
 
 })();

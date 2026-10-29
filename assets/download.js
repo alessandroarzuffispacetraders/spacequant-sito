@@ -134,7 +134,19 @@
     if (typeof SQLang !== 'undefined') SQLang.refresh();
   }
 
+  /* Chi arriva dal pagamento vede la conferma al posto del «non hai ancora un
+     abbonamento?»: le due righe insieme si contraddirebbero. È solo un
+     messaggio — l'abbonamento lo verifica l'app, non questa pagina. */
+  function welcome() {
+    if (new URLSearchParams(location.search).get('attivato') !== '1') return;
+    const w = document.getElementById('dl-welcome');
+    const n = document.getElementById('dl-nosub');
+    if (w) w.hidden = false;
+    if (n) n.hidden = true;
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    welcome();
     SQDetect.detect().then(render).catch(function () {
       render({ os: 'other', arch: null, confidence: 'unknown' });
     });

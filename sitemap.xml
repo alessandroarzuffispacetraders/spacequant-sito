@@ -5,11 +5,19 @@
      vuol dire dare ai motori due istruzioni opposte. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://spacequantalgo.com/broker.html</loc>
+    <lastmod>2026-10-27</lastmod>
+  </url>
+  <url>
+    <loc>https://spacequantalgo.com/download.html</loc>
+    <lastmod>2026-10-27</lastmod>
+  </url>
+  <url>
     <loc>https://spacequantalgo.com/</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-10-27</lastmod>
   </url>
   <url>
     <loc>https://spacequantalgo.com/pricing.html</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-10-27</lastmod>
   </url>
 </urlset>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="head.bk.t">SpaceQuant per i broker — SiGMA World, Roma</title>
+<meta name="description" data-i18n-attr="content:head.bk.d" content="I clienti che costruiscono strategie automatiche le fanno girare sul conto MetaTrader 5 aperto presso di te. Li formiamo noi, e sulla formazione una quota dei ricavi è tua.">
+<link rel="icon" href="assets/img/logo-small.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Vedi la nota estesa in index.html: valori assoluti, in italiano, riscritti
+     tutti insieme da tools/dominio.py. -->
+<link rel="canonical" href="https://spacequantalgo.com/broker.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SpaceQuant">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="SpaceQuant per i broker — SiGMA World, Roma">
+<meta property="og:description" content="I clienti che costruiscono strategie automatiche le fanno girare sul conto MetaTrader 5 aperto presso di te. Li formiamo noi, e sulla formazione una quota dei ricavi è tua.">
+<meta property="og:url" content="https://spacequantalgo.com/broker.html">
+<meta property="og:image" content="https://spacequantalgo.com/assets/img/social-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SpaceQuant Algo">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bk-page">
+
+<!-- ===================== PROMOZIONE =====================
+     Il codice sconto di CONFIG.promo, uguale in ogni pagina. Lo riempie e lo
+     nasconde site.js: con `promo: null`, o chiuso dalla croce, non c'è.
+     «Abbonati» porta al pagamento del piano scontato, col codice già
+     inserito; nella pagina abbonamento apre la finestra invece di cambiare
+     pagina. -->
+<aside class="promo" id="promo" hidden>
+  <div class="promo-in">
+    <span class="promo-txt" data-i18n="promo.text">Sconto sul piano mensile con il codice</span>
+    <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+    <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  </div>
+  <button type="button" class="promo-x" id="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo-small.png" alt="">
+      <span>SpaceQuant</span>
+    </a>
+    <nav class="nav">
+      <a class="hide-sm" href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
+      <a class="hide-sm" href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+      <a href="download.html" data-i18n="nav.dl">Download</a>
+      <div class="lang" role="group" aria-label="Lingua / Language">
+        <button type="button" data-lang="it" aria-pressed="true">IT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- =========================================================================
+     LA PAGINA PER I BROKER
+     Scritta per chi la apre al SiGMA World — un broker, un introducing broker,
+     un responsabile commerciale — e non per un trader: dice perché conviene
+     consigliarci, come funziona la collaborazione e come ci si incontra.
+
+     Le scene seguono la stessa regola del resto del sito: ciò che dipende dallo
+     scorrimento è FUNZIONE PURA della posizione, quindi risalendo torna
+     indietro. Quelle che si muovono da sole (la rete in apertura, i flussi del
+     triangolo, il terminale) sono funzioni del tempo, senza stato che si
+     accumula, e si fermano quando escono di vista. Tutto in assets/broker.js.
+
+     Senza JavaScript, o con animazioni ridotte, la pagina è un testo che si
+     legge dall'alto in basso: niente sezioni bloccate, niente scorrimento in
+     orizzontale, ogni elemento già al suo posto.
+
+     ⚠️ Nessun numero di questa pagina è un risultato di trading. Le due scene
+     con operazioni disegnate sono ILLUSTRAZIONI, e lo dicono.
+     ========================================================================= -->
+<main class="bk">
+
+<!-- ===================== 1. APERTURA ===================== -->
+<section class="bk-hero" id="bk-hero">
+  <canvas class="bk-net" id="bk-net" aria-hidden="true"></canvas>
+  <span class="bk-net-words" hidden>
+    <i data-i18n="bk.net.you">Il tuo MetaTrader 5</i>
+    <i data-i18n="bk.net.feed">ordini in arrivo</i>
+    <i data-i18n="bk.net.manual">a mano</i>
+  </span>
+
+  <div class="wrap bk-hero-in">
+    <a class="bk-event" href="#incontro">
+      <span class="bk-live" aria-hidden="true"></span>
+      <span class="bk-event-name">SiGMA World · FX World</span>
+      <span class="bk-event-when" data-i18n="bk.event.when">Fiera Roma · 2–5 novembre 2026</span>
+    </a>
+
+    <h1 class="bk-h1" data-i18n-html="bk.hero.h1">Il cliente che automatizza<br><span class="bk-grad">resta.</span></h1>
+
+    <p class="bk-hero-lead" data-i18n="bk.hero.lead">
+      SpaceQuant porta i trader dall'idea a un Expert Advisor che opera sul conto
+      MetaTrader&nbsp;5 aperto presso di te. Noi li formiamo finché non sono
+      autonomi — e sulla formazione, una parte dei ricavi è tua.
+    </p>
+
+    <div class="btn-row bk-hero-cta">
+      <a class="btn btn-primary btn-lg" href="#incontro" data-i18n="bk.hero.cta1">Incontriamoci a Roma</a>
+      <a class="btn btn-ghost btn-lg" href="#perche" data-i18n="bk.hero.cta2">Scopri il modello</a>
+    </div>
+  </div>
+
+  <p class="bk-hint" aria-hidden="true"><span data-i18n="home.cine.hint">Scorri</span><span class="cine-hint-arrow"></span></p>
+</section>
+
+<!-- ===================== 2. PERCHÉ: LE DUE CORSIE =====================
+     Racconto a tappe con la figura ferma accanto. La figura è una sola e
+     cambia con lo scorrimento; i tre testi si alternano davanti a lei. -->
+<section class="bk-why" id="perche">
+  <div class="bk-story" id="bk-story">
+    <div class="bk-story-stage">
+      <!-- Il titolo sta DENTRO la scena bloccata: fuori, la scena restava sola
+           al centro di uno schermo vuoto per metà, e il titolo scorreva via
+           prima che la figura avesse detto qualcosa. -->
+      <div class="wrap">
+        <header class="sec-head bk-head bk-why-head">
+          <p class="eyebrow" data-i18n="bk.why.eyebrow">Perché conviene a un broker</p>
+          <h2 data-i18n="bk.why.title">Il trading a mano va e viene. Una strategia automatica resta.</h2>
+        </header>
+      </div>
+      <div class="wrap bk-story-grid">
+
+        <div class="bk-beats">
+          <article class="bk-beat" data-beat="0">
+            <span class="bk-beat-n">01</span>
+            <h3 data-i18n="bk.why.b1.t">A mano, si opera quando si può</h3>
+            <p data-i18n="bk.why.b1.b">Chi fa trading a mano opera quando ha tempo, voglia e fiducia. Fra un'operazione e l'altra il conto resta fermo — e dopo qualche delusione, a volte, non riparte più.</p>
+          </article>
+          <article class="bk-beat" data-beat="1">
+            <span class="bk-beat-n">02</span>
+            <h3 data-i18n="bk.why.b2.t">Un Expert Advisor non aspetta l'ispirazione</h3>
+            <p data-i18n="bk.why.b2.b">Segue le regole che il cliente ha scritto, misurato e verificato. E le segue sul conto MetaTrader&nbsp;5 aperto presso di te, ogni volta che le condizioni si presentano.</p>
+          </article>
+          <article class="bk-beat" data-beat="2">
+            <span class="bk-beat-n">03</span>
+            <h3 data-i18n="bk.why.b3.t">La strategia è costruita sul tuo conto</h3>
+            <p data-i18n="bk.why.b3.b">Costi, specifiche di contratto, orari: la misura si fa sulle condizioni del conto su cui l'EA girerà. È lì che la strategia ha senso, ed è lì che resta.</p>
+          </article>
+        </div>
+
+        <figure class="bk-lanes">
+          <canvas id="bk-lanes" aria-hidden="true"></canvas>
+          <figcaption class="sr-only" data-i18n="bk.lanes.alt">Due corsie lungo un anno. In quella del trading a mano le operazioni arrivano a gruppi, con lunghe pause, e a un certo punto si fermano. In quella dell'Expert Advisor, dopo un tratto di formazione, arrivano con regolarità fino alla fine.</figcaption>
+          <span class="bk-lanes-words" hidden>
+            <i data-i18n="bk.lanes.w1">Trading a mano</i>
+            <i data-i18n="bk.lanes.w2">Expert Advisor</i>
+            <i data-i18n="bk.lanes.w3">formazione</i>
+            <i data-i18n="bk.lanes.w4">conto fermo</i>
+            <i data-i18n="bk.lanes.w5">sul tuo MetaTrader 5</i>
+            <i data-i18n="bk.lanes.w6">un anno</i>
+          </span>
+          <p class="bk-illus" data-i18n="bk.illus">Illustrazione — non sono dati di clienti reali.</p>
+        </figure>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. IL PERCORSO, IN ORIZZONTALE =====================
+     La sezione si blocca e il percorso scorre di lato: il cliente va da
+     sinistra a destra, dal tuo link fino all'autonomia. Il misuratore in alto
+     dice a che punto è. -->
+<section class="bk-path" id="percorso">
+  <div class="bk-path-stage">
+    <div class="wrap bk-path-head">
+      <div>
+        <p class="eyebrow" data-i18n="bk.path.eyebrow">Dal tuo cliente all'autonomia</p>
+        <h2 data-i18n="bk.path.title">Ce li presenti. Li formiamo. Diventano indipendenti.</h2>
+      </div>
+      <div class="bk-meter" aria-hidden="true">
+        <span class="bk-meter-l" data-i18n="bk.path.m0">Guidato</span>
+        <span class="bk-meter-bar"><span class="bk-meter-fill"></span><span class="bk-meter-dot"></span></span>
+        <span class="bk-meter-r" data-i18n="bk.path.m1">Autonomo</span>
+      </div>
+    </div>
+
+    <div class="bk-path-view">
+      <ol class="bk-path-track" id="bk-path-track">
+
+        <li class="bk-step">
+          <div class="bk-art bk-art-link" aria-hidden="true">
+            <div class="mini-browser">
+              <span class="mb-dots"><i></i><i></i><i></i></span>
+              <span class="mb-url">spacequantalgo.com/abbonati.html?ref=<b data-i18n="bk.path.s1.ref">tuobroker</b></span>
+            </div>
+            <span class="art-badge" data-i18n="bk.path.s1.badge">cliente presentato da te</span>
+          </div>
+          <span class="bk-step-n">1</span>
+          <h3 data-i18n="bk.path.s1.t">Ce lo presenti</h3>
+          <p data-i18n="bk.path.s1.b">Il cliente arriva da un link tuo e si abbona da lì: da quel momento è riconosciuto come tuo.</p>
+        </li>
+
+        <li class="bk-step">
+          <div class="bk-art bk-art-lessons" aria-hidden="true">
+            <span class="lesson"><i class="ok"></i><span data-i18n="bk.path.s2.l1">La prima idea, scritta come regola</span></span>
+            <span class="lesson"><i class="ok"></i><span data-i18n="bk.path.s2.l2">Il primo backtest, letto bene</span></span>
+            <span class="lesson lesson-now"><i></i><span data-i18n="bk.path.s2.l3">Ottimizzare senza ingannarsi</span></span>
+            <span class="lesson lesson-next"><i></i><span data-i18n="bk.path.s2.l4">Dall'EA al conto</span></span>
+          </div>
+          <span class="bk-step-n">2</span>
+          <h3 data-i18n="bk.path.s2.t">Lo formiamo noi</h3>
+          <p data-i18n="bk.path.s2.b">Un percorso guidato, sui mercati su cui opera: dalla prima idea alla prima strategia misurata. Il tempo del tuo supporto non serve.</p>
+        </li>
+
+        <li class="bk-step">
+          <div class="bk-art bk-art-vault" aria-hidden="true">
+            <span class="vault-bar"><span class="vault-free"></span><span class="vault-lock">25%</span></span>
+            <span class="vault-checks"><i class="used"></i><i class="used"></i><i></i><i></i><i></i></span>
+            <span class="vault-cap" data-i18n="bk.path.s3.cap">verifiche rimaste: 3 di 5</span>
+          </div>
+          <span class="bk-step-n">3</span>
+          <h3 data-i18n="bk.path.s3.t">Costruisce e misura</h3>
+          <p data-i18n="bk.path.s3.b">Backtest, ottimizzazione, e un quarto dello storico tenuto da parte per la verifica finale. Impara a distinguere un vantaggio dal rumore.</p>
+        </li>
+
+        <li class="bk-step">
+          <div class="bk-art bk-art-file" aria-hidden="true">
+            <span class="file-icon"><span class="file-ext">.mq5</span></span>
+            <span class="file-lines"><i class="w90"></i><i class="w70"></i><i class="w80"></i><i class="w55"></i></span>
+            <span class="file-ok" data-i18n="bk.path.s4.ok">pronto per MetaEditor</span>
+          </div>
+          <span class="bk-step-n">4</span>
+          <h3 data-i18n="bk.path.s4.t">Esporta l'Expert Advisor</h3>
+          <p data-i18n-html="bk.path.s4.b">La strategia diventa un file <code>.mq5</code> standard, che si compila in MetaEditor come qualunque altro.</p>
+        </li>
+
+        <li class="bk-step">
+          <div class="bk-art bk-art-term" aria-hidden="true">
+            <div class="term">
+              <div class="term-bar"><span>MetaTrader 5</span><span class="term-ea">EA ●</span></div>
+              <div class="term-rows" id="bk-term"></div>
+            </div>
+          </div>
+          <span class="bk-step-n">5</span>
+          <h3 data-i18n="bk.path.s5.t">Opera da te, in autonomia</h3>
+          <p data-i18n="bk.path.s5.b">L'EA gira sul conto MetaTrader&nbsp;5 aperto presso di te. Il cliente sa costruirlo, verificarlo e rifarlo — senza di noi.</p>
+        </li>
+
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4. PER CHI È: IL TRIANGOLO =====================
+     Tre parti, quattro flussi. I vertici sono pulsanti: se ne sceglie uno e si
+     accendono i flussi che lo toccano, con a fianco cosa ci guadagna. -->
+<section class="bk-tri" id="valore">
+  <div class="wrap">
+    <header class="sec-head bk-head">
+      <p class="eyebrow" data-i18n="bk.tri.eyebrow">Per chi è</p>
+      <h2 data-i18n="bk.tri.title">Tre parti, e ciascuna ci guadagna qualcosa</h2>
+      <p class="lead" data-i18n="bk.tri.lead">Scegli un vertice: si accendono i flussi che lo riguardano.</p>
+    </header>
+
+    <div class="bk-tri-grid">
+      <div class="bk-tri-fig" id="bk-tri">
+        <svg viewBox="0 0 600 500" aria-hidden="true" class="bk-tri-svg">
+          <defs>
+            <linearGradient id="bk-g" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#3b6ef5"/><stop offset=".52" stop-color="#7b3fe4"/><stop offset="1" stop-color="#e0489f"/>
+            </linearGradient>
+          </defs>
+          <!-- Quattro archi. Fra broker e SpaceQuant sono due, uno per verso:
+               i clienti vanno da una parte, la quota dei ricavi dall'altra. -->
+          <path class="tri-edge" data-from="broker" data-to="sq"     id="e-clienti" d="M 128 392 Q 150 210 286 104"/>
+          <path class="tri-edge" data-from="sq"     data-to="broker" id="e-quota"   d="M 316 128 Q 248 300 152 410"/>
+          <path class="tri-edge" data-from="sq"     data-to="trader" id="e-forma"   d="M 320 104 Q 450 210 472 392"/>
+          <path class="tri-edge" data-from="trader" data-to="broker" id="e-opera"   d="M 448 432 Q 300 492 152 432"/>
+          <g class="tri-dots"></g>
+        </svg>
+
+        <button type="button" class="bk-node" data-node="sq"     style="--x:50%;--y:20%"><span class="bk-node-ring"><img src="assets/img/logo-small.png" alt=""></span><span data-i18n="bk.tri.n.sq">SpaceQuant</span></button>
+        <button type="button" class="bk-node" data-node="broker" style="--x:21%;--y:84%"><span class="bk-node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5M5 10v8M9.7 10v8M14.3 10v8M19 10v8M3 20.5h18"/></svg></span><span data-i18n="bk.tri.n.broker">Il broker</span></button>
+        <button type="button" class="bk-node" data-node="trader" style="--x:79%;--y:84%"><span class="bk-node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c.9-4 3.8-6.2 7.5-6.2s6.6 2.2 7.5 6.2"/></svg></span><span data-i18n="bk.tri.n.trader">Il trader</span></button>
+
+        <span class="tri-label" data-edge="e-clienti" style="--x:20%;--y:44%" data-i18n="bk.tri.e.clienti">clienti presentati</span>
+        <span class="tri-label" data-edge="e-quota"   style="--x:44%;--y:58%" data-i18n="bk.tri.e.quota">quota dei ricavi della formazione</span>
+        <span class="tri-label" data-edge="e-forma"   style="--x:80%;--y:44%" data-i18n="bk.tri.e.forma">piattaforma e formazione</span>
+        <span class="tri-label" data-edge="e-opera"   style="--x:50%;--y:99%" data-i18n="bk.tri.e.opera">operatività sul conto</span>
+      </div>
+
+      <div class="bk-tri-panel" aria-live="polite">
+        <article class="bk-tri-card" data-node="broker">
+          <p class="eyebrow" data-i18n="bk.tri.n.broker">Il broker</p>
+          <h3 data-i18n="bk.tri.c.broker.t">Clienti che restano, e una quota sulla formazione</h3>
+          <p data-i18n="bk.tri.c.broker.b">I clienti che ci presenti costruiscono strategie proprie e le fanno girare sul tuo MetaTrader&nbsp;5. La formazione la facciamo noi, senza impegnare il tuo supporto, e una percentuale dei suoi ricavi torna a te.</p>
+        </article>
+        <article class="bk-tri-card" data-node="trader" hidden>
+          <p class="eyebrow" data-i18n="bk.tri.n.trader">Il trader</p>
+          <h3 data-i18n="bk.tri.c.trader.t">Un metodo, al posto dell'istinto</h3>
+          <p data-i18n="bk.tri.c.trader.b">Impara a scrivere le sue regole, a misurarle su anni di storia e a verificarle prima di rischiare. Alla fine del percorso è autonomo: sa costruire, verificare ed esportare da solo.</p>
+        </article>
+        <article class="bk-tri-card" data-node="sq" hidden>
+          <p class="eyebrow">SpaceQuant</p>
+          <h3 data-i18n="bk.tri.c.sq.t">Utenti formati bene, fin dal primo giorno</h3>
+          <p data-i18n="bk.tri.c.sq.b">Persone che arrivano con un broker alle spalle e un obiettivo chiaro. Formarle è il modo migliore che conosciamo per farle restare — su SpaceQuant, e sul conto da cui operano.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. IL MODELLO: LA QUOTA =====================
+     L'anello si riempie con lo scorrimento. La fetta del partner è a
+     tratteggio e NON ha un numero: la percentuale si concorda, e un numero
+     disegnato qui sarebbe una promessa che nessuno ha fatto. -->
+<section class="bk-share bg-soft" id="ricavi">
+  <div class="wrap bk-share-grid">
+    <figure class="bk-ring" id="bk-ring">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <defs>
+          <pattern id="bk-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill="#f1ecfd"/>
+            <rect width="2.4" height="6" fill="#7b3fe4"/>
+          </pattern>
+        </defs>
+        <circle class="ring-bg"   cx="100" cy="100" r="78"/>
+        <circle class="ring-sq"   cx="100" cy="100" r="78" pathLength="100"/>
+        <circle class="ring-you"  cx="100" cy="100" r="78" pathLength="100"/>
+      </svg>
+      <div class="bk-ring-c">
+        <span class="bk-ring-pct">%</span>
+        <span class="bk-ring-cap" data-i18n="bk.share.ring">la tua quota, da concordare</span>
+      </div>
+      <p class="bk-ring-leg" aria-hidden="true">
+        <span><i class="leg-sq"></i>SpaceQuant</span>
+        <span><i class="leg-you"></i><span data-i18n="bk.share.you">la tua quota</span></span>
+      </p>
+      <figcaption class="sr-only" data-i18n="bk.share.alt">Un anello diviso in due: una parte dei ricavi della formazione resta a SpaceQuant, l'altra va al broker partner. La proporzione non è indicata perché si concorda caso per caso.</figcaption>
+    </figure>
+
+    <div class="bk-share-text">
+      <p class="eyebrow" data-i18n="bk.share.eyebrow">Il modello</p>
+      <h2 data-i18n="bk.share.title">Sulla formazione, una quota dei ricavi è tua.</h2>
+      <p class="lead" data-i18n="bk.share.lead">Per ogni cliente che ci presenti e che formiamo, una percentuale dei ricavi della formazione torna a te. La cifra si concorda insieme, prima di partire.</p>
+      <div class="bk-facts bk-swipe" data-swipe>
+        <div class="bk-fact" data-rv>
+          <span class="bk-fact-i" aria-hidden="true">✎</span>
+          <p><strong data-i18n="bk.share.f1.t">Accordo prima di partire</strong><br><span data-i18n="bk.share.f1.b">La percentuale è scritta prima del primo cliente, non dopo.</span></p>
+        </div>
+        <div class="bk-fact" data-rv>
+          <span class="bk-fact-i" aria-hidden="true">⌁</span>
+          <p><strong data-i18n="bk.share.f2.t">Clienti riconosciuti dal tuo link</strong><br><span data-i18n="bk.share.f2.b">Chi si abbona da lì è attribuito a te, dal primo giorno.</span></p>
+        </div>
+        <div class="bk-fact" data-rv>
+          <span class="bk-fact-i" aria-hidden="true">∅</span>
+          <p><strong data-i18n="bk.share.f3.t">Nessuna integrazione tecnica</strong><br><span data-i18n="bk.share.f3.b">Niente API da collegare, niente plugin sul server: l'EA è un file MQL5 standard.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6. NESSUN CONFLITTO ===================== -->
+<section class="bk-safe" id="garanzie">
+  <div class="wrap">
+    <header class="sec-head bk-head center">
+      <p class="eyebrow" data-i18n="bk.safe.eyebrow">Nessun conflitto</p>
+      <h2 data-i18n="bk.safe.title">Non siamo un broker. Il cliente resta tuo.</h2>
+    </header>
+    <div class="bk-safe-grid bk-swipe" data-swipe>
+      <article class="bk-no" data-rv>
+        <span class="bk-no-x" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/><path d="M13 13 L27 27 M27 13 L13 27"/></svg></span>
+        <h3 data-i18n="bk.safe.1.t">Non eseguiamo ordini</h3>
+        <p data-i18n="bk.safe.1.b">Gli ordini partono dal MetaTrader&nbsp;5 del cliente e arrivano a te. Noi non stiamo in mezzo.</p>
+      </article>
+      <article class="bk-no" data-rv>
+        <span class="bk-no-x" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/><path d="M13 13 L27 27 M27 13 L13 27"/></svg></span>
+        <h3 data-i18n="bk.safe.2.t">Non tocchiamo i conti</h3>
+        <p data-i18n="bk.safe.2.b">SpaceQuant non accede al conto di trading: non vede saldi, posizioni, depositi.</p>
+      </article>
+      <article class="bk-no" data-rv>
+        <span class="bk-no-x" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/><path d="M13 13 L27 27 M27 13 L13 27"/></svg></span>
+        <h3 data-i18n="bk.safe.3.t">Non spostiamo i clienti</h3>
+        <p data-i18n="bk.safe.3.b">Nessun broker da consigliare, nessun conto da aprire altrove. Chi ci presenti continua a operare da te.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7. LA PIATTAFORMA IN QUATTRO NUMERI =====================
+     I numeri contano con lo scorrimento. Sono tutti del prodotto — la verifica
+     dell'export e le regole della riserva — e nessuno è un rendimento. -->
+<section class="bk-nums bg-soft" id="numeri">
+  <div class="wrap">
+    <header class="sec-head bk-head">
+      <p class="eyebrow" data-i18n="bk.nums.eyebrow">Cosa c'è sotto</p>
+      <h2 data-i18n="bk.nums.title">Uno strumento serio, per clienti che fanno sul serio</h2>
+    </header>
+    <div class="bk-num-grid bk-swipe" data-swipe>
+      <div class="bk-num" data-rv>
+        <span class="bk-num-v" data-count="4986" data-sep="1">4.986</span>
+        <p data-i18n="bk.nums.1">barre confrontate una per una fra il motore di SpaceQuant e MetaTrader&nbsp;5, su AUDUSD M5 il 13 agosto 2026: zero divergenze</p>
+      </div>
+      <div class="bk-num" data-rv>
+        <span class="bk-num-v" data-count="25" data-suffix="%">25%</span>
+        <p data-i18n="bk.nums.2">dello storico di ogni mercato tenuto da parte, invisibile durante la ricerca</p>
+      </div>
+      <div class="bk-num" data-rv>
+        <span class="bk-num-v" data-count="5">5</span>
+        <p data-i18n="bk.nums.3">verifiche finali per strategia, su una configurazione già congelata</p>
+      </div>
+      <div class="bk-num" data-rv>
+        <span class="bk-num-v" data-count="2">2</span>
+        <p data-i18n="bk.nums.4">sistemi, macOS e Windows: gira sul computer del cliente, nessun dato che parte</p>
+      </div>
+    </div>
+    <p class="text-small t3 bk-nums-note" data-i18n="bk.nums.note">Un backtest resta una misura su dati storici, non una previsione dei risultati futuri.</p>
+  </div>
+</section>
+
+<!-- ===================== 8. INCONTRIAMOCI =====================
+     Niente server: le risposte esistono solo dentro il messaggio che chi
+     scrive vede e decide di mandare. -->
+<section class="bk-meet" id="incontro">
+  <div class="wrap">
+    <div class="bk-meet-card">
+      <div class="bk-meet-event">
+        <p class="eyebrow" data-i18n="bk.meet.eyebrow">Ci vediamo a Roma</p>
+        <h2 class="bk-meet-title">SiGMA World <span class="bk-grad">2026</span></h2>
+        <p class="bk-meet-where"><span>FX World</span> · <span data-i18n="bk.meet.where">Fiera Roma</span></p>
+        <!-- ⚠️ I giorni scritti qui sono gli stessi di CONFIG.event.days: cambiando
+             l'uno si cambia anche l'altro. -->
+        <p class="bk-meet-lead" data-i18n="bk.meet.lead">Saremo al SiGMA World il 3, il 4 e il 5 novembre. Dicci quando ti va bene: ti mostriamo la piattaforma dal vivo e parliamo di come lavorare insieme.</p>
+      </div>
+
+      <form class="bk-form" id="bk-form" novalidate>
+        <label class="bk-field">
+          <span data-i18n="bk.meet.name">Il tuo nome</span>
+          <input type="text" name="nome" maxlength="80" autocomplete="name" required>
+        </label>
+        <label class="bk-field">
+          <span data-i18n="bk.meet.company">Broker o società</span>
+          <input type="text" name="societa" maxlength="80" autocomplete="organization" required>
+        </label>
+
+        <fieldset class="bk-days">
+          <legend data-i18n="bk.meet.day">Quando ti va bene?</legend>
+          <div class="bk-days-row" id="bk-days">
+            <!-- I giorni li costruisce broker.js da CONFIG.event.days, col nome
+                 del giorno nella lingua della pagina. Senza JavaScript resta
+                 solo l'opzione «qualunque giorno», che basta a scrivere. -->
+            <label class="bk-day bk-day-any"><input type="radio" name="giorno" value="" checked>
+              <span data-i18n="bk.meet.any">Qualunque giorno</span></label>
+          </div>
+        </fieldset>
+
+        <p class="bk-manca" id="bk-manca" hidden data-i18n="bk.meet.manca">Mancano ancora il nome o la società.</p>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block" data-i18n="bk.meet.cta">Fissa l'incontro su WhatsApp</button>
+        <p class="bk-form-note" data-i18n="bk.meet.note">Si apre WhatsApp con il messaggio già scritto: l'invio lo premi tu.</p>
+      </form>
+
+      <!-- Il risultato, al posto del modulo -->
+      <div class="bk-done" id="bk-done" hidden>
+        <p class="eyebrow" data-i18n="bk.done.eyebrow">Ci siamo</p>
+        <h3 data-i18n="bk.done.h">Il messaggio è pronto</h3>
+        <a class="btn btn-primary btn-lg" id="bk-wa" href="#" data-i18n="bk.done.cta">Apri WhatsApp</a>
+        <div class="bk-qr-wrap" id="bk-qr-wrap">
+          <p class="text-small" data-i18n="bk.done.qr">Sei al computer? Inquadra questo codice col telefono: si apre la stessa chat, con lo stesso messaggio.</p>
+          <div class="qr-box" id="bk-qr"></div>
+        </div>
+        <pre class="pre bk-msg" id="bk-msg"></pre>
+        <p class="text-small">
+          <span data-i18n="bk.done.alt">Preferisci l'email?</span>
+          <a id="bk-mail" href="#" data-i18n="bk.meet.mail">Scrivi con lo stesso messaggio</a>
+        </p>
+        <p class="text-small"><a href="#" id="bk-back" data-i18n="bk.meet.back">← Modifica</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:14px">
+          <img src="assets/img/logo-small.png" alt="">
+          <span>SpaceQuant</span>
+        </a>
+        <p class="text-small t3" data-i18n="ft.tag">
+          Ricerca su strategie algoritmiche, con export verificabile verso
+          MetaTrader 5.
+        </p>
+      </div>
+      <div>
+        <h4 data-i18n="ft.product">Prodotto</h4>
+        <a href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
+        <a href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
+        <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+        <a href="download.html" data-i18n="nav.dl">Download</a>
+        <a href="broker.html" aria-current="page" data-i18n="nav.broker">Per i broker</a>
+      </div>
+      <div>
+        <h4 data-i18n="ft.support">Assistenza</h4>
+        <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">da definire</span></a>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <p data-i18n="ft.d1">
+        SpaceQuant è uno strumento di ricerca e di sviluppo. Non è un broker, non
+        esegue ordini, non accede al tuo conto di trading e non fornisce
+        consulenza finanziaria.
+      </p>
+      <p data-i18n="ft.d2">
+        Un backtest è una misura su dati storici e non è una previsione dei
+        risultati futuri. Fare trading comporta il rischio di perdere il capitale
+        investito.
+      </p>
+      <!-- ⚠️ Identità dell'azienda: NON passa dal dizionario. Ragione sociale,
+           indirizzo e codice fiscale non si traducono — tradurli sarebbe un
+           errore, non una cortesia. L'email invece viene da assets/config.js,
+           come ovunque nel sito: una sola sorgente. -->
+      <p class="azienda">
+        <strong>Orion Trade Dynamics LLC</strong> · EIN 61-2254267<br>
+        30 N Gould St, STE R, Sheridan, Wyoming 82801, USA ·
+        <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">info@oriontradedynamics.com</span></a>
+      </p>
+      <p class="t3" data-i18n="ft.copy">© 2026 Orion Trade Dynamics LLC — SpaceQuant è un suo prodotto.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== BARRA DELLA PROMOZIONE =====================
+     Lo stesso codice del banner, in fondo allo schermo: compare quando il
+     banner in cima non si vede più (lo decide site.js), così il codice resta
+     a portata mentre si legge. Una croce chiude banner e barra insieme.
+     Non c'è in abbonati.html: lì il codice sta nel riepilogo, già inserito
+     nel modulo, e una barra fissa coprirebbe il pagamento. -->
+<aside class="promo-bar" id="promo-bar" hidden>
+  <span class="promo-txt" data-i18n="promo.bar">Sconto sul mensile</span>
+  <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+  <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  <button type="button" class="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
+
+<script src="assets/config.js"></script>
+<script src="assets/i18n.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/qr.js"></script>
+<script src="assets/broker.js"></script>
+</body>
+</html>

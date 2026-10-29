@@ -5,24 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-i18n="head.dl.t">Scarica SpaceQuant</title>
 <meta name="description" data-i18n-attr="content:head.dl.d" content="Scarica SpaceQuant per macOS e Windows. Installer verificabili con SHA256.">
-<!-- Pagina non pubblicizzata: ci si arriva dal link consegnato dopo l'attivazione
-     dell'abbonamento. Fuori dai motori di ricerca e da ogni menu del sito.
-     ⚠️ Non è una protezione: chi ha l'indirizzo entra. Va bene così perché
-     l'installer senza una licenza valida non fa nulla — la stessa ragione per
-     cui il download non sta dietro un login. -->
-<meta name="robots" content="noindex, nofollow">
+<!-- Pagina PUBBLICA dal lancio (ottobre 2026): sta nel menu, nella sitemap e
+     nei motori di ricerca. Prima era nascosta e raggiungibile solo dal link
+     consegnato dopo il pagamento — ma nasconderla non è mai stata una
+     protezione, e a sito aperto a tutti costava soltanto la domanda «dove si
+     scarica?». A proteggere resta ciò che proteggeva già: l'installer senza
+     una licenza valida non fa nulla. -->
 <link rel="icon" href="assets/img/logo-small.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta name="theme-color" content="#ffffff">
 
-<!-- Anteprima del link SÌ, `canonical` NO — e sono due decisioni distinte.
-     Il canonical non c'è perché questa pagina è `noindex`: dire a un motore
-     «non indicizzarmi» e insieme «la mia versione ufficiale è questa» sono due
-     istruzioni che si contraddicono.
-     L'anteprima invece serve: questo indirizzo arriva a chi ha appena pagato,
-     spesso via mail o messaggio, e un link nudo accanto a un pagamento appena
-     fatto è esattamente ciò che fa esitare. Non è un buco: questa pagina non è
-     mai stata una protezione — l'installer senza licenza valida non fa nulla. -->
+<!-- Vedi la nota estesa in index.html: valori assoluti, in italiano, riscritti
+     tutti insieme da tools/dominio.py. -->
+<link rel="canonical" href="https://spacequantalgo.com/download.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SpaceQuant">
 <meta property="og:locale" content="it_IT">
@@ -39,6 +34,23 @@
 </head>
 <body>
 
+<!-- ===================== PROMOZIONE =====================
+     Il codice sconto di CONFIG.promo, uguale in ogni pagina. Lo riempie e lo
+     nasconde site.js: con `promo: null`, o chiuso dalla croce, non c'è.
+     «Abbonati» porta al pagamento del piano scontato, col codice già
+     inserito; nella pagina abbonamento apre la finestra invece di cambiare
+     pagina. -->
+<aside class="promo" id="promo" hidden>
+  <div class="promo-in">
+    <span class="promo-txt" data-i18n="promo.text">Sconto sul piano mensile con il codice</span>
+    <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+    <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  </div>
+  <button type="button" class="promo-x" id="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
+
 <!-- ===================== HEADER ===================== -->
 <header class="site-header">
   <div class="wrap">
@@ -50,6 +62,7 @@
       <a class="hide-sm" href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
       <a class="hide-sm" href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
       <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
+      <a href="download.html" aria-current="page" data-i18n="nav.dl">Download</a>
       <div class="lang" role="group" aria-label="Lingua / Language">
         <button type="button" data-lang="it" aria-pressed="true">IT</button>
         <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -70,10 +83,25 @@
       <span data-cfg="commit">0e28f9e</span>
     </p>
     <h1 data-i18n="dl.title">Scarica SpaceQuant</h1>
+
+    <!-- Chi arriva dal pagamento (abbonati.html → download.html?attivato=1)
+         trova la conferma qui, al primo sguardo, e il passo che viene dopo.
+         È solo un messaggio: l'abbonamento lo verifica l'app all'accesso, non
+         questa pagina — chiunque può scrivere `?attivato=1` nell'indirizzo, e
+         non ottiene niente di più. -->
+    <div class="note note-ok dl-welcome" id="dl-welcome" hidden>
+      <div class="note-title" data-i18n="dl.welcome.t">Abbonamento attivo. Benvenuto.</div>
+      <p data-i18n="dl.welcome.b">Scarica il file per il tuo computer qui sotto. Al primo avvio accedi con lo stesso account Whop con cui hai appena pagato: la licenza arriva da lì.</p>
+    </div>
+
     <p class="lead" data-i18n="dl.sub">
       Il download è libero e non richiede di accedere. Per usare l'applicazione
       serve però un abbonamento attivo: senza una licenza valida l'installer si
       installa ma l'app non fa nulla.
+    </p>
+    <p class="dl-nosub text-small" id="dl-nosub">
+      <span data-i18n="dl.nosub">Non hai ancora un abbonamento?</span>
+      <a href="pricing.html" data-i18n="dl.nosub.cta">Abbonati →</a>
     </p>
   </div>
 </section>
@@ -438,7 +466,9 @@
         <a href="index.html#come-funziona" data-i18n="nav.how">Come funziona</a>
         <a href="index.html#ottimizzazione" data-i18n="nav.opt">Ottimizzazione</a>
         <a href="pricing.html" data-i18n="nav.pricing">Abbonamento</a>
-        </div>
+        <a href="download.html" data-i18n="nav.dl">Download</a>
+        <a href="broker.html" data-i18n="nav.broker">Per i broker</a>
+      </div>
       <div>
         <h4 data-i18n="ft.support">Assistenza</h4>
         <a data-cfg-href="supportEmail" href="#"><span data-cfg="supportEmail">da definire</span></a>
@@ -468,6 +498,21 @@
     </div>
   </div>
 </footer>
+
+<!-- ===================== BARRA DELLA PROMOZIONE =====================
+     Lo stesso codice del banner, in fondo allo schermo: compare quando il
+     banner in cima non si vede più (lo decide site.js), così il codice resta
+     a portata mentre si legge. Una croce chiude banner e barra insieme.
+     Non c'è in abbonati.html: lì il codice sta nel riepilogo, già inserito
+     nel modulo, e una barra fissa coprirebbe il pagamento. -->
+<aside class="promo-bar" id="promo-bar" hidden>
+  <span class="promo-txt" data-i18n="promo.bar">Sconto sul mensile</span>
+  <button type="button" class="promo-code" data-copy="" data-i18n-attr="title:promo.copy" title="Copia il codice"><span class="copy-label" data-cfg="promo.code"></span></button>
+  <a class="promo-cta" data-paga="mensile" href="abbonati.html?piano=mensile" data-i18n="promo.cta">Abbonati →</a>
+  <button type="button" class="promo-x" data-i18n-attr="aria-label:promo.close" aria-label="Chiudi">
+    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</aside>
 
 <script src="assets/config.js"></script>
 <script src="assets/i18n.js"></script>
