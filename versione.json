@@ -1,35 +1,35 @@
 {
-  "versione": "3.8.8",
+  "versione": "3.9.0",
   "pagina_download": "https://spacequantalgo.com/download",
-  "note": "Nuovo: Market Research, Simulatore Challenge Prop, paper in PDF dei backtest e dei Portafogli, traduzione AI dei Concetti ed EA MT5 con pannello e regole prop; ogni numero al netto o al lordo dei costi; più veloce su Windows.",
+  "note": "Arriva SpaceQuant Algo 1.0.0: da qui la numerazione riparte dalla 1.0. Spread e commissioni in percentuale del prezzo (costi FTMO corretti), Strategie e Replay su più mercati, pagina Backtest più pulita.",
   "artefatti": {
     "macArm": {
       "file": "SpaceQuant-Algo-arm64.dmg",
-      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.8/SpaceQuant-Algo-arm64.dmg",
-      "sha256": "09cc040269060b42535b82ff3281aef72bdfa0f383d218853bd580b7eb27ff1c",
-      "size_mb": 469,
-      "size_byte": 469048650
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/1.0.0/SpaceQuant-Algo-arm64.dmg",
+      "sha256": "ab72f6cf3ad7166ac6fdb4c36c9851878f5606b2877fc331c091274dbdc1746f",
+      "size_mb": 470,
+      "size_byte": 470041799
     },
     "macIntel": {
       "file": "SpaceQuant-Algo-x64.dmg",
-      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.8/SpaceQuant-Algo-x64.dmg",
-      "sha256": "dfbe461f7fb72d1e8da8a9c772f750081513c6333b64744be96b353c472e1da3",
-      "size_mb": 516,
-      "size_byte": 515843379
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/1.0.0/SpaceQuant-Algo-x64.dmg",
+      "sha256": "d55b55d3954d82fe662f43d96cf6ed9e7c04d3dd358fb080733ecba66a29343f",
+      "size_mb": 517,
+      "size_byte": 516871259
     },
     "winSetup": {
       "file": "SpaceQuant-Algo-Setup-x64.exe",
-      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.8/SpaceQuant-Algo-Setup-x64.exe",
-      "sha256": "6aaa9e22206f4e2d6be6b66db9e3ae48dc6438e5d75ccba2e1221c9a9a2fc0e0",
-      "size_mb": 312,
-      "size_byte": 312009520
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/1.0.0/SpaceQuant-Algo-Setup-x64.exe",
+      "sha256": "326f0b87d374adf7d366ae2264129099b2053e8630653da39437b25f45dca0e5",
+      "size_mb": 313,
+      "size_byte": 312638258
     },
     "winPortable": {
       "file": "SpaceQuant-Algo-portable-x64.zip",
-      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/3.8.8/SpaceQuant-Algo-portable-x64.zip",
-      "sha256": "d960c9262ae9089839661103928da1b26cc6530022ae319477ce253d37fad75c",
+      "url": "https://github.com/alessandroarzuffispacetraders/spacequant-releases/releases/download/1.0.0/SpaceQuant-Algo-portable-x64.zip",
+      "sha256": "3fa16a179e22978f92bd9e9d10c03626ea7d0ac3596adcd18a59894533c637f7",
       "size_mb": 459,
-      "size_byte": 458608305
+      "size_byte": 459283282
     }
   }
 }
